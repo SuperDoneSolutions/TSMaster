@@ -11,11 +11,16 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class UserMatch
     {
+        [Display(Name = "User ID")]
         public int userId { get; set; }
+
+        [Display(Name = "Game ID")]
         public int gameId { get; set; }
+
         public Nullable<int> score { get; set; }
     
         public virtual Match Match { get; set; }

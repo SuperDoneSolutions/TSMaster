@@ -14,3 +14,11 @@ C:\TotalSquashNext3\TSClassLibrary\bin\Debug\Newtonsoft.Json.xml
 C:\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.csprojResolveAssemblyReference.cache
 C:\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.dll
 C:\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.pdb
+C:\Users\Emily\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\bin\Debug\TSClassLibrary.dll
+C:\Users\Emily\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\bin\Debug\TSClassLibrary.pdb
+C:\Users\Emily\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\bin\Debug\CloudinaryDotNet.dll
+C:\Users\Emily\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Emily\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Emily\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\obj\Debug\TSClassLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Emily\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\obj\Debug\TSClassLibrary.dll
+C:\Users\Emily\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\obj\Debug\TSClassLibrary.pdb
