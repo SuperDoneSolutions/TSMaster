@@ -11,7 +11,6 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Booking
     {
@@ -19,31 +18,20 @@ namespace TotalSquashNext.Models
         {
             this.Matches = new HashSet<Match>();
         }
-
-        [Display(Name = "Court ID")]
+    
         public int courtId { get; set; }
-
-        [Display(Name = "Booking Number")]
         public int bookingNumber { get; set; }
-
-        [Display(Name = "Booking Date")]
         public System.DateTime bookingDate { get; set; }
-
-        [Display(Name = "Booking Code")]
         public int bookingCode { get; set; }
-
-        [Display(Name = "User ID")]
         public int userId { get; set; }
-
-        [Display(Name = "Date")]
         public System.DateTime date { get; set; }
-
-        [Display(Name = "Booking Rules")]
         public int bookingRulesId { get; set; }
+        public int buildingId { get; set; }
     
         public virtual BookingType BookingType { get; set; }
         public virtual ICollection<Match> Matches { get; set; }
         public virtual BookingRule BookingRule { get; set; }
+        public virtual Building Building { get; set; }
         public virtual Court Court { get; set; }
     }
 }

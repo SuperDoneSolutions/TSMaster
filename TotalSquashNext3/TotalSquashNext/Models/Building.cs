@@ -16,6 +16,7 @@ namespace TotalSquashNext.Models
     {
         public Building()
         {
+            this.Bookings = new HashSet<Booking>();
             this.Courts = new HashSet<Court>();
         }
     
@@ -23,6 +24,7 @@ namespace TotalSquashNext.Models
         public string address { get; set; }
         public int organizationId { get; set; }
     
+        public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<Court> Courts { get; set; }
         public virtual Organization Organization { get; set; }
     }

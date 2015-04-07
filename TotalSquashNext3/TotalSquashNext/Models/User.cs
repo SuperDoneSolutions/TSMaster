@@ -11,7 +11,6 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class User
     {
@@ -20,99 +19,36 @@ namespace TotalSquashNext.Models
             this.UserMatches = new HashSet<UserMatch>();
             this.UserLadders = new HashSet<UserLadder>();
         }
-
-        [Display(Name = "User ID")]
-        public int id { get; set; }
-        
-        [Required]
-        [Display(Name = "Username")]
-        public string username { get; set; }
-
-        [Display(Name = "Skill Level")]
-        public int skillId { get; set; }
-
-        [Required]
-        [Display(Name = "Password")]
-        public string password { get; set; }
-
-        [Display(Name = "Photo")]
-        public string photo { get; set; }
-
-        [Display(Name = "Wins")]
-        public Nullable<int> wins { get; set; }
-
-        [Display(Name = "Losses")]
-        public Nullable<int> losses { get; set; }
-
-        [Display(Name = "Ties")]
-        public Nullable<int> ties { get; set; }
-
-        [Required]
-        [Display(Name = "First Name")]
-        [RegularExpression("([a-zA-Z0-9 .&'-]+)", ErrorMessage = "Enter only alphabets and numbers of First Name")]
-        public string firstName { get; set; }
-
-        [Required]
-        [Display(Name = "Last Name")]
-        [RegularExpression("([a-zA-Z0-9 .&'-]+)", ErrorMessage = "Enter only alphabets and numbers of Last Name")]
-        public string lastName { get; set; }
-
-        [Required]
-        [Display(Name = "Address")]
-        public string streetAddress { get; set; }
-
-        [Required]
-        [Display(Name = "City")]
-        public string city { get; set; }
-
-        [Required]
-        [Display(Name = "Province")]
-        public string provinceId { get; set; }
-
-        [Required]
-        [Display(Name = "Country")]
-        public int countryId { get; set; }
-
-        [Required]
-        [Display(Name = "Phone Number")]
-        [RegularExpression(@"^\d{3}-\d{3}-\d{4}$", ErrorMessage = "Please enter: 123-123-1234")]
-        public string phoneNumber { get; set; }
-
-        [Required]
-        [Display(Name = "E-mail")]
-        public string emailAddress { get; set; }
-
-        [Required]
-        [Display(Name = "Identified Gender")]
-        public string gender { get; set; }
-
-        [Required]
-        [Display(Name = "Date of Birth (DD/MMM/YYYY)")]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}", ApplyFormatInEditMode = true)]
-        public System.DateTime birthDate { get; set; }
-
-        [Display(Name = "Account Type")]
-        public int accountId { get; set; }
-
-        [Display(Name = "Locked")]
-        public bool locked { get; set; }
-
-        [Required]
-        [Display(Name = "Organization")]
-        public int organizationId { get; set; }
-
-        [Required]
-        [Display(Name = "Postal Code")]
-        [RegularExpression(@"[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d", ErrorMessage = "Please enter like: L7N2Y2")] 
-        public string postalCode { get; set; }
     
-       
+        public int id { get; set; }
+        public string username { get; set; }
+        public int skillId { get; set; }
+        public string password { get; set; }
+        public string photo { get; set; }
+        public Nullable<int> wins { get; set; }
+        public Nullable<int> losses { get; set; }
+        public Nullable<int> ties { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string streetAddress { get; set; }
+        public string city { get; set; }
+        public string provinceId { get; set; }
+        public int countryId { get; set; }
+        public string phoneNumber { get; set; }
+        public string emailAddress { get; set; }
+        public string gender { get; set; }
+        public System.DateTime birthDate { get; set; }
+        public int accountId { get; set; }
+        public bool locked { get; set; }
+        public int organizationId { get; set; }
+        public string postalCode { get; set; }
+        public Nullable<int> strike { get; set; }
+    
         public virtual AccountType AccountType { get; set; }
         public virtual Country Country { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual Province Province { get; set; }
         public virtual Skill Skill { get; set; }
-        
         public virtual ICollection<UserMatch> UserMatches { get; set; }
         public virtual ICollection<UserLadder> UserLadders { get; set; }
     }

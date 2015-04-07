@@ -14,11 +14,11 @@ C:\TotalSquashNext3\TSClassLibrary\bin\Debug\Newtonsoft.Json.xml
 C:\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.csprojResolveAssemblyReference.cache
 C:\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.dll
 C:\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.pdb
-C:\Users\Kirsti\Desktop\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\TSClassLibrary.dll
-C:\Users\Kirsti\Desktop\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\TSClassLibrary.pdb
-C:\Users\Kirsti\Desktop\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\CloudinaryDotNet.dll
-C:\Users\Kirsti\Desktop\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Kirsti\Desktop\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Kirsti\Desktop\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.csprojResolveAssemblyReference.cache
-C:\Users\Kirsti\Desktop\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.dll
-C:\Users\Kirsti\Desktop\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.pdb
+C:\Users\Kirsti\Downloads\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\TSClassLibrary.dll
+C:\Users\Kirsti\Downloads\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\TSClassLibrary.pdb
+C:\Users\Kirsti\Downloads\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\CloudinaryDotNet.dll
+C:\Users\Kirsti\Downloads\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Kirsti\Downloads\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Kirsti\Downloads\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Kirsti\Downloads\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.dll
+C:\Users\Kirsti\Downloads\TotalSquashNext3 (1)\TotalSquashNext3\TSClassLibrary\obj\Debug\TSClassLibrary.pdb
