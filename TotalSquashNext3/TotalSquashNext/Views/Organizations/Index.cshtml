@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TotalSquashNext.Models.Organization>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.orgName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.orgAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.orgCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.orgPhoneNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.orgName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.orgAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.orgCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.orgPhoneNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.organizationId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.organizationId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.organizationId })
+        </td>
+    </tr>
+}
+
+</table>

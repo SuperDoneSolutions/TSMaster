@@ -1,0 +1,40 @@
+﻿@model TotalSquashNext.Models.Ladder
+
+@{
+    ViewBag.Title = "Delete Ladder";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Ladder</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ladderDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ladderDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LadderRule.LadderRuleId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LadderRule.LadderRuleId)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

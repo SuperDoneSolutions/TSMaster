@@ -1,0 +1,312 @@
+﻿@model TotalSquashNext.Models.User
+
+
+@{
+    ViewBag.Title = "Your Total Squash Home";
+}
+@{
+    Layout = null;
+}
+
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Total Squash</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="layout" content="main" />
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script src="../../js/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <link href="~/Content/customize-template.css" type="text/css" media="screen, projection" rel="stylesheet" />
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-fixed-top" >
+        <div class="navbar-inner">
+            <div class="container" >
+                <a href="~/Views/Login/LandingPage.cshtml" class="brand"><img src="~/Images/TSheader02.png" style="padding-top: 10px;" /></a>
+                @*@Html.ActionLink("Total Squash", "LandingPage", "Login", null, new { @class = "brand" })*@
+                <ul class="nav pull-right">
+                    <li>
+                        @Html.ActionLink("Logout", "VerifyLogin", Session["currentUser"] == null)
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <div id="body-content">
+            <div class="body-nav body-nav-horizontal body-nav-fixed">
+                <div class="container">
+                    
+                    <br />
+                    <ul>
+                        <li>
+
+                            <a href="@Url.Action("Create","Booking", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-calendar icon-large"></i>
+                                <span class="sr-only">Book a Court</span>
+                            </a>
+                        </li>
+
+                        <li>
+
+                            <a href="@Url.Action("Edit","Users", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+
+                                <i class="icon-group icon-large"></i>
+                                <span class="sr-only">Edit Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index","Ladder", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-list-alt icon-large"></i>
+                                <span class="sr-only">Squash Ladder</span>
+                            </a>
+                        </li>
+                        <li>
+
+                            <a href="@Url.Action("Index","UserMatch", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-bar-chart icon-large"></i>
+                                <span class="sr-only">Match History</span>
+                            </a>
+                        </li>
+                        <!--Shows link to administration only, for easy navigation to court booking rules, ladder rules, etc.-->
+                        @if ((((TotalSquashNext.Models.User)Session["currentUser"]).accountId == 1))
+                        {
+                            <li>
+
+                                <a href="@Url.Action("AdministrativeTools","Login", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                    <i class="icon-cogs icon-large"></i>
+                                    <span class="sr-only">Administration</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+
+            <section class="nav nav-page">
+                <div class="container">
+                    <div class="row">
+                        <div class="span7">
+                            <header class="page-header">
+                                <h3>
+                                    Welcome @(((TotalSquashNext.Models.User)Session["currentUser"]).firstName) </br>
+                                    <small>@Session["currentOrg"]</small>
+                                </h3>
+                            </header>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="page container">
+
+                <div class="span8">
+                    <div>
+
+                        <p>
+                            <img src=@Session["currentImage"]></br>
+                            Username: @(((TotalSquashNext.Models.User)Session["currentUser"]).username)</br>
+                            Level: @Session["currentSkill"]
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span8">
+                        <div class="box pattern pattern-sandstone">
+                            <div class="box-header">
+                                <i class="icon-bar-chart"></i>
+                                <h5>Statistics</h5>
+                                
+                            </div>
+                            <div class="box-content box-table">
+                                <table id="sample-table" class="table table-hover table-bordered tablesorter">
+                                    
+                                    <thead>
+                                        <tr>
+                                            <th>Wins</th>
+                                            <th>Losses</th>
+                                            <th>Ties</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>@(((TotalSquashNext.Models.User)Session["currentUser"]).wins)</td>
+                                            <td>@(((TotalSquashNext.Models.User)Session["currentUser"]).losses)</td>
+                                            <td>
+                                                @(((TotalSquashNext.Models.User)Session["currentUser"]).ties)
+                                            </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="span8">
+                        <div class="box">
+                            <div class="box-header">
+                                <i class="icon-book"></i>
+                                <h5>Book a Court</h5>
+                            </div>
+                            <div class="box-content">
+
+                                @*<form class="form-inline">*@
+                                <p>Pick a date & Time</p>
+              
+                                <tr>
+                                    @using (Html.BeginForm())
+                                    {
+
+                                        <td>
+                                            @*@Html.TextBoxFor(b => b.date, new { @class = "form-control" })*@
+                                        </td>
+                                        <td>
+                                            <input type="submit" value="Check Date" class="btn-xs" style="margin-top:1em;" />
+                                        </td>
+                                    }
+                                </tr>
+                                @*<div id="datepicker" class="input-prepend date">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <input class="span2" type="text" value="Today's date...'">
+                                </div>
+                                <select class="chosen span4" data-placeholder="Choose a Time...">
+                                    <option value="530">5:30am-6:15am</option>
+                                    <option value=""></option>
+                                    <option value=""></option>
+                                    <option value="United States">9:00-9:45am</option>
+                                    <option value="United Kingdom">9:45-10:30am</option>
+                                    <option value="Afghanistan">10:30-11:15am</option>
+                                    <option value="Albania">11:15am-12:00pm</option>
+                                    <option value="Algeria">12:00-12:45pm</option>
+                                    <option value="American Samoa">12:45-1:30pm</option>
+                                    <option value="Andorra">1:30-2:15pm</option>
+                                    <option value="Angola">etc...</option>
+
+                                </select>
+                            </form>*@
+                            </div>
+                            <div class="box-footer">
+                                <a href="booking.html" class="btn btn-primary">
+                                    <i class="icon-ok"></i>
+                                    Check Availabilty
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span8">
+                        <div class="box pattern pattern-sandstone">
+                            <div class="box-header">
+                                <i class="icon-table"></i>
+                                <h5>
+                                    Booked Court Dates
+                                </h5>
+                            </div>
+                            <div class="box-content box-table">
+                                <table id="sample-table" class="table table-hover table-bordered tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th>Court</th>
+                                            <th>Date & Time</th>
+                                            <th class="td-actions"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>February 16th, 2015 4:00-4:45pm</td>
+                                            <td class="td-actions">
+                                                <a href="javascript:;" class="btn btn-small btn-danger">
+                                                    <i class="btn-icon-only icon-remove"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>March 23rd, 2015 2:15-3:00pm</td>
+                                            <td class="td-actions">
+                                                <a href="javascript:;" class="btn btn-small btn-danger">
+                                                    <i class="btn-icon-only icon-remove"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span8">
+                        <div class="box">
+                            <div class="box-header">
+                                <i class="icon-folder-open"></i>
+                                <h5>News</h5>
+                            </div>
+                            <div class="box-content">
+                                <p>
+                                    @ViewBag.NewsItemOne
+                                </p>
+                                <p>
+                                    @ViewBag.NewsItemTwo
+                                </p>
+                                <p>
+                                  @ViewBag.NewsItemThree
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+<footer class="application-footer">
+    <div class="container">
+        <p>Total Squash</p>
+        <div class="disclaimer">
+            <a style="color:#dfdfdf;" href="mailto:superdonesolutions@gmail.com">Contact Us</a>
+            <p>Copyright © Super Done Solutions 2015</p>
+        </div>
+    </div>
+</footer>
+
+<script src="../../js/bootstrap/bootstrap-transition.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-alert.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-modal.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-dropdown.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-scrollspy.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-tab.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-tooltip.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-popover.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-button.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-collapse.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-carousel.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-typeahead.js" type="text/javascript"></script>
+<script src="../../js/bootstrap/bootstrap-affix.js" type="text/javascript"></script>
+@*<script src="../../js/bootstrap/bootstrap-datepicker.js" type="text/javascript"></script>*@
+<script src="../../js/jquery/jquery-tablesorter.js" type="text/javascript"></script>
+<script src="../../js/jquery/jquery-chosen.js" type="text/javascript"></script>
+<script src="../../js/jquery/virtual-tour.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#sample-table').tablesorter();
+        //$('#datepicker').datepicker();
+        $(".chosen").chosen();
+    });
+</script>
+
+</body>
+
+</html>

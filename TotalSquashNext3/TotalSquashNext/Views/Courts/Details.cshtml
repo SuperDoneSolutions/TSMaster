@@ -1,0 +1,50 @@
+﻿@model TotalSquashNext.Models.Court
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Court</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.courtDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.courtDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.courtImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.courtImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.doublesCourt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.doublesCourt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Building.address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Building.address)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.courtId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

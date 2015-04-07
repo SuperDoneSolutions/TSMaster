@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TotalSquashNext", "TotalSquashNext\TotalSquashNext.csproj", "{D063533D-D5BE-4D88-9943-5499096B8917}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TotalSquashNext.Tests", "TotalSquashNext.Tests\TotalSquashNext.Tests.csproj", "{D297DBCF-55F9-4B83-AE4E-77039090751E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSClassLibrary", "TSClassLibrary\TSClassLibrary.csproj", "{BA6B297A-A39B-44AE-AC75-5D7475743717}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D063533D-D5BE-4D88-9943-5499096B8917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D063533D-D5BE-4D88-9943-5499096B8917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D063533D-D5BE-4D88-9943-5499096B8917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D063533D-D5BE-4D88-9943-5499096B8917}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D297DBCF-55F9-4B83-AE4E-77039090751E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D297DBCF-55F9-4B83-AE4E-77039090751E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D297DBCF-55F9-4B83-AE4E-77039090751E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D297DBCF-55F9-4B83-AE4E-77039090751E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA6B297A-A39B-44AE-AC75-5D7475743717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA6B297A-A39B-44AE-AC75-5D7475743717}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA6B297A-A39B-44AE-AC75-5D7475743717}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA6B297A-A39B-44AE-AC75-5D7475743717}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

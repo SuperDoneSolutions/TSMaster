@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="98c775e549fd4599a87b31d6e7b511cb" Name="Diagram1">
+        <EntityTypeShape EntityType="PrimarySquashDBModel.AccountType" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.Booking" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.BookingRule" Width="1.5" PointX="0.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.BookingType" Width="1.5" PointX="0.75" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.Building" Width="1.5" PointX="0.75" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.Country" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.Court" Width="1.5" PointX="0.75" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.Ladder" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.LadderRule" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.Match" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.Organization" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.Province" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.Skill" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.sysdiagram" Width="1.5" PointX="7.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.TournamentRule" Width="1.5" PointX="9.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.User" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.UserLadder" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimarySquashDBModel.UserMatch" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_accountId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_bookingCode" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_bookingNumber" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_BookingRules" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_building_Booking" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_courtId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_buildingId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_organizationId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_connectCountry" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_countryId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_ladderId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_LadderRules" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_matchId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_organization" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_provinceId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_skillId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_userId" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimarySquashDBModel.FK_UserLadder_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

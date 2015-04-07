@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TotalSquashNext.Models.BookingRule>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.organizationID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.daysInAdvance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numOfBookings)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numOfStrikes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dayStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookingLength)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.organizationID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.daysInAdvance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numOfBookings)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numOfStrikes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dayStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bookingLength)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.bookingRuleId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.bookingRuleId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.bookingRuleId })
+        </td>
+    </tr>
+}
+
+</table>

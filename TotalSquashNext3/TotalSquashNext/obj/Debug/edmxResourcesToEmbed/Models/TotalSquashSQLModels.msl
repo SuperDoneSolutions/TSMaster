@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PrimarySquashDBModelStoreContainer" CdmEntityContainer="PrimarySquashDBContext">
+    <EntitySetMapping Name="AccountTypes">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.AccountType">
+        <MappingFragment StoreEntitySet="AccountType">
+          <ScalarProperty Name="accountId" ColumnName="accountId" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bookings">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.Booking">
+        <MappingFragment StoreEntitySet="Booking">
+          <ScalarProperty Name="courtId" ColumnName="courtId" />
+          <ScalarProperty Name="bookingNumber" ColumnName="bookingNumber" />
+          <ScalarProperty Name="bookingDate" ColumnName="bookingDate" />
+          <ScalarProperty Name="bookingCode" ColumnName="bookingCode" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="bookingRulesId" ColumnName="bookingRulesId" />
+          <ScalarProperty Name="buildingId" ColumnName="buildingId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BookingRules">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.BookingRule">
+        <MappingFragment StoreEntitySet="BookingRules">
+          <ScalarProperty Name="bookingRuleId" ColumnName="bookingRuleId" />
+          <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+          <ScalarProperty Name="daysInAdvance" ColumnName="daysInAdvance" />
+          <ScalarProperty Name="numOfBookings" ColumnName="numOfBookings" />
+          <ScalarProperty Name="numOfStrikes" ColumnName="numOfStrikes" />
+          <ScalarProperty Name="dayStart" ColumnName="dayStart" />
+          <ScalarProperty Name="bookingLength" ColumnName="bookingLength" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BookingTypes">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.BookingType">
+        <MappingFragment StoreEntitySet="BookingType">
+          <ScalarProperty Name="bookingCode" ColumnName="bookingCode" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Buildings">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.Building">
+        <MappingFragment StoreEntitySet="Building">
+          <ScalarProperty Name="buildingId" ColumnName="buildingId" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="organizationId" ColumnName="organizationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="countryId" ColumnName="countryId" />
+          <ScalarProperty Name="countryName" ColumnName="countryName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courts">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.Court">
+        <MappingFragment StoreEntitySet="Court">
+          <ScalarProperty Name="courtId" ColumnName="courtId" />
+          <ScalarProperty Name="courtDescription" ColumnName="courtDescription" />
+          <ScalarProperty Name="courtImage" ColumnName="courtImage" />
+          <ScalarProperty Name="doublesCourt" ColumnName="doublesCourt" />
+          <ScalarProperty Name="buildingId" ColumnName="buildingId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ladders">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.Ladder">
+        <MappingFragment StoreEntitySet="Ladder">
+          <ScalarProperty Name="ladderId" ColumnName="ladderId" />
+          <ScalarProperty Name="ladderDescription" ColumnName="ladderDescription" />
+          <ScalarProperty Name="ladderRuleId" ColumnName="ladderRuleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LadderRules">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.LadderRule">
+        <MappingFragment StoreEntitySet="LadderRules">
+          <ScalarProperty Name="LadderRuleId" ColumnName="LadderRuleId" />
+          <ScalarProperty Name="challengeRange" ColumnName="challengeRange" />
+          <ScalarProperty Name="challengeLower" ColumnName="challengeLower" />
+          <ScalarProperty Name="numLadders" ColumnName="numLadders" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Matches">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.Match">
+        <MappingFragment StoreEntitySet="Match">
+          <ScalarProperty Name="matchId" ColumnName="matchId" />
+          <ScalarProperty Name="bookingNumber" ColumnName="bookingNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Organizations">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.Organization">
+        <MappingFragment StoreEntitySet="Organization">
+          <ScalarProperty Name="organizationId" ColumnName="organizationId" />
+          <ScalarProperty Name="orgName" ColumnName="orgName" />
+          <ScalarProperty Name="orgAddress" ColumnName="orgAddress" />
+          <ScalarProperty Name="orgCity" ColumnName="orgCity" />
+          <ScalarProperty Name="orgPhoneNumber" ColumnName="orgPhoneNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Provinces">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.Province">
+        <MappingFragment StoreEntitySet="Province">
+          <ScalarProperty Name="provinceId" ColumnName="provinceId" />
+          <ScalarProperty Name="provinceName" ColumnName="provinceName" />
+          <ScalarProperty Name="countryId" ColumnName="countryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Skills">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.Skill">
+        <MappingFragment StoreEntitySet="Skill">
+          <ScalarProperty Name="skillId" ColumnName="skillId" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TournamentRules">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.TournamentRule">
+        <MappingFragment StoreEntitySet="TournamentRules">
+          <ScalarProperty Name="tournamentRuleId" ColumnName="tournamentRuleId" />
+          <ScalarProperty Name="placeholder" ColumnName="placeholder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="skillId" ColumnName="skillId" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="photo" ColumnName="photo" />
+          <ScalarProperty Name="wins" ColumnName="wins" />
+          <ScalarProperty Name="losses" ColumnName="losses" />
+          <ScalarProperty Name="ties" ColumnName="ties" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="streetAddress" ColumnName="streetAddress" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="provinceId" ColumnName="provinceId" />
+          <ScalarProperty Name="countryId" ColumnName="countryId" />
+          <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+          <ScalarProperty Name="emailAddress" ColumnName="emailAddress" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+          <ScalarProperty Name="accountId" ColumnName="accountId" />
+          <ScalarProperty Name="locked" ColumnName="locked" />
+          <ScalarProperty Name="organizationId" ColumnName="organizationId" />
+          <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+          <ScalarProperty Name="strike" ColumnName="strike" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLadders">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.UserLadder">
+        <MappingFragment StoreEntitySet="UserLadder">
+          <ScalarProperty Name="position" ColumnName="position" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="ladderId" ColumnName="ladderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserMatches">
+      <EntityTypeMapping TypeName="PrimarySquashDBModel.UserMatch">
+        <MappingFragment StoreEntitySet="UserMatch">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="gameId" ColumnName="gameId" />
+          <ScalarProperty Name="score" ColumnName="score" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

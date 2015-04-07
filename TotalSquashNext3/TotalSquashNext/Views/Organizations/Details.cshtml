@@ -1,0 +1,50 @@
+﻿@model TotalSquashNext.Models.Organization
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Organization</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.orgName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.orgName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.orgAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.orgAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.orgCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.orgCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.orgPhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.orgPhoneNumber)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.organizationId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--Didn't change anything in the head EBos2015-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Squash</title>
+    @*@Styles.Render("~/Content/css")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+
+    <link href="@Url.Content("~/Content/customize-template.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <!--Very minimal code added to the body EBos2015-->
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button class="btn btn-navbar" data-toggle="collapse" data-target="#app-nav-top-bar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="~/Views/Login/LandingPage.cshtml" class="brand"><img src="~/Images/TSheader02.png" style="padding-top: 10px;" /></a>
+                @*<a class="brand" href="@Url.Action("LandingPage","Login")">Total Squash</a>*@
+
+                <ul class="nav pull-right">
+                    <li>
+                        <a class="brand" href="@Url.Action("VerifyLogin","Login")">Logout</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <div id="body-content">
+            <div class="body-nav body-nav-horizontal body-nav-fixed" style="padding-bottom:7em;">
+                <div class="container">
+                    <br />
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("Create","Booking", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-calendar icon-large"></i>
+                                <span>Book a Court</span>
+                            </a>
+                        </li>
+
+                        <li>
+
+                            <a href="@Url.Action("Edit","Users", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-group icon-large"></i>
+                                <span>Edit Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index","Ladder", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-list-alt icon-large"></i>
+                                <span>Squash Ladder</span>
+                            </a>
+                        </li>
+                        <li>
+
+                            <a href="@Url.Action("Index","UserMatch", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-bar-chart icon-large"></i>
+                                <span>Statistics</span>
+                            </a>
+                        </li>
+                        <!--Shows link to administration only, for easy navigation to court booking rules, ladder rules, etc.-->
+                        @if ((((TotalSquashNext.Models.User)Session["currentUser"]).accountId == 1))
+                        {
+                            <li>
+
+                                <a href="@Url.Action("AdministrativeTools","Login", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                    <i class="icon-cogs icon-large"></i>
+                                    <span>Administration</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            
+        
+
+
+            
+            <div class="container body-content">
+                <p class="text-danger">@TempData["message"]</p>
+                @RenderBody()
+                <hr />
+                </br>
+                </br>
+                </br>
+                </br>
+                </br>
+            </div>
+    </div>
+        </div>
+            <footer class="application-footer">
+                <div class="container">
+                    <p>Total Squash</p>
+                    <div class="disclaimer">
+                        <a style="color:#dfdfdf;" href="mailto:superdonesolutions@gmail.com">Contact Us</a>
+                        <p>Copyright © Super Done Solutions 2015</p>
+                    </div>
+                </div>
+            </footer>
+
+
+            <script src="../../js/bootstrap/bootstrap-transition.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-alert.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-modal.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-dropdown.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-scrollspy.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-tab.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-tooltip.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-popover.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-button.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-collapse.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-carousel.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-typeahead.js" type="text/javascript"></script>
+            <script src="../../js/bootstrap/bootstrap-affix.js" type="text/javascript"></script>
+            @*<script src="../../js/bootstrap/bootstrap-datepicker.js" type="text/javascript"></script>*@
+            <script src="../../js/jquery/jquery-tablesorter.js" type="text/javascript"></script>
+            <script src="../../js/jquery/jquery-chosen.js" type="text/javascript"></script>
+            <script src="../../js/jquery/virtual-tour.js" type="text/javascript"></script>
+            <script type="text/javascript">
+                $(function () {
+                    $('#sample-table').tablesorter();
+                    //$('#datepicker').datepicker();
+                    $(".chosen").chosen();
+                });
+            </script>
+
+
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)
+</body>
+</html>

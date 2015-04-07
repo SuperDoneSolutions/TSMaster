@@ -1,0 +1,42 @@
+﻿@model TotalSquashNext.Models.LadderRule
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LadderRule</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.challengeRange)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.challengeRange)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.challengeLower)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.challengeLower)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numLadders)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numLadders)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LadderRuleId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

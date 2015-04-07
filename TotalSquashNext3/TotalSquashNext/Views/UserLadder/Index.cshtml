@@ -1,0 +1,43 @@
+﻿@model IEnumerable<TotalSquashNext.Models.UserLadder>
+
+@{
+    ViewBag.Title = "All Users Registered for Ladders";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Register For Ladder", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ladder.ladderDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.username)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.position)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ladder.ladderDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.username)
+        </td>
+        <td>
+            <a href="mailto:" +item.user.email>Contact</a>
+        </td>
+    </tr>
+}
+
+</table>

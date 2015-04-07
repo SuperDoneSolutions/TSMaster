@@ -1,0 +1,72 @@
+﻿@model TotalSquashNext.Models.BookingRule
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BookingRule</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.organizationID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.organizationID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.daysInAdvance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.daysInAdvance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numOfBookings)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numOfBookings)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numOfStrikes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numOfStrikes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dayStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dayStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookingLength)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookingLength)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

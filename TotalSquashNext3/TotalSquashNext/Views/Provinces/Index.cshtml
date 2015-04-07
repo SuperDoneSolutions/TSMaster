@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TotalSquashNext.Models.Province>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.provinceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country.countryName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.provinceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.countryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.provinceId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.provinceId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.provinceId })
+        </td>
+    </tr>
+}
+
+</table>

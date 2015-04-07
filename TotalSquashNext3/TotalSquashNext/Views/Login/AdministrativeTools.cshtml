@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Administrative Tools";
+}
+
+<h2>Administrative Tools</h2>
+<br />
+<div class="body-nav-vertical">
+    <a href="@Url.Action("Index","Users", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Users
+    </a><br />
+
+    <a href="@Url.Action("Index","Booking", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Bookings
+    </a><br />
+
+    <a href="@Url.Action("Edit","BookingRules", new { id = 1 })">
+        Edit Booking Rules
+    </a><br />
+
+    <a href="@Url.Action("Index","BookingTypes", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Booking Types
+    </a><br />
+
+    <a href="@Url.Action("Index","Ladder", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Ladders
+    </a><br />
+
+    <a href="@Url.Action("Edit","LadderRule", new{id=1})">
+        Edit Ladder Rules
+    </a><br />
+
+    <a href="@Url.Action("Index","Match", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Booked Matches
+    </a><br />
+
+    <a href="@Url.Action("Index","UserMatch", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Users' Matches
+    </a><br />
+
+    <a href="@Url.Action("Index","Provinces", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Provinces
+    </a><br />
+    <a href="@Url.Action("Index","Countries", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Countries
+    </a><br />
+    <a href="@Url.Action("Index","Skills", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Skill Levels
+    </a><br />
+    <a href="@Url.Action("Index","AccountTypes", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Account Types
+    </a><br />
+    <a href="@Url.Action("Index","Organizations", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Organizations
+    </a><br />
+    <a href="@Url.Action("Index","Buildings", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Manage Buildings
+    </a><br />
+
+</div>
+
+
+
+
+@*@using (Html.BeginForm())
+    {
+        @Html.TextBox((string)ViewBag.NewsItemOne)
+        <input type="submit" value="Submit" />
+    }*@

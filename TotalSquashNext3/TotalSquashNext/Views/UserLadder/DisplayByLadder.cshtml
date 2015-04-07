@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TotalSquashNext.Models.UserLadder>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ladder.ladderDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.username)
+        </th>
+        <th></th>
+    </tr>
+    @{int count=0;}
+    @foreach (var item in Model)
+    {
+        
+        <tr>
+            <td>
+                @count++;
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ladder.ladderDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.username)
+            </td>
+            <td>
+                <a href="mailto:"+item.User.email>Contact</a>
+
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<TotalSquashNext.Models.Ladder>
+
+@{
+    ViewBag.Title = "Current Squash Ladders";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Register For Squash Ladder", "Create", "UserLadder",null,null)
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ladderDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LadderRule.LadderRuleId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ladderDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LadderRule.LadderRuleId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ladderId }) |
+            @Html.ActionLink("View Ladder", "DisplayByLadder", "UserLadder", new { ladderId = item.ladderId, userId = (((TotalSquashNext.Models.User)Session["currentUser"]).id) }, null) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ladderId })
+        </td>
+    </tr>
+}
+
+</table>

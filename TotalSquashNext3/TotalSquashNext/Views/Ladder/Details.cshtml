@@ -1,0 +1,34 @@
+﻿@model TotalSquashNext.Models.Ladder
+
+@{
+    ViewBag.Title = "Ladder Details";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>Ladder</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ladderDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ladderDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LadderRule.LadderRuleId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LadderRule.LadderRuleId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ladderId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TotalSquashNext.Models.Court>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.courtDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.courtImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.doublesCourt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Building.address)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.courtDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.courtImage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.doublesCourt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Building.address)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.courtId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.courtId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.courtId })
+        </td>
+    </tr>
+}
+
+</table>
