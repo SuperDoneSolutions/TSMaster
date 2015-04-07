@@ -1,0 +1,523 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PrimarySquashDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AccountType">
+    <Key>
+      <PropertyRef Name="accountId" />
+    </Key>
+    <Property Name="accountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_accountId" FromRole="AccountType" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="bookingNumber" />
+    </Key>
+    <Property Name="courtId" Type="Int32" Nullable="false" />
+    <Property Name="bookingNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="bookingDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="bookingCode" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="bookingRulesId" Type="Int32" Nullable="false" />
+    <Property Name="buildingId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BookingType" Relationship="Self.FK_bookingCode" FromRole="Booking" ToRole="BookingType" />
+    <NavigationProperty Name="Matches" Relationship="Self.FK_bookingNumber" FromRole="Booking" ToRole="Match" />
+    <NavigationProperty Name="BookingRule" Relationship="Self.FK_BookingRules" FromRole="Booking" ToRole="BookingRules" />
+    <NavigationProperty Name="Building" Relationship="Self.FK_building_Booking" FromRole="Booking" ToRole="Building" />
+    <NavigationProperty Name="Court" Relationship="Self.FK_courtId" FromRole="Booking" ToRole="Court" />
+  </EntityType>
+  <EntityType Name="BookingRule">
+    <Key>
+      <PropertyRef Name="bookingRuleId" />
+    </Key>
+    <Property Name="bookingRuleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="organizationID" Type="Int32" Nullable="false" />
+    <Property Name="daysInAdvance" Type="Int32" Nullable="false" />
+    <Property Name="numOfBookings" Type="Int32" Nullable="false" />
+    <Property Name="numOfStrikes" Type="Int32" Nullable="false" />
+    <Property Name="dayStart" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="bookingLength" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Bookings" Relationship="Self.FK_BookingRules" FromRole="BookingRules" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="BookingType">
+    <Key>
+      <PropertyRef Name="bookingCode" />
+    </Key>
+    <Property Name="bookingCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Bookings" Relationship="Self.FK_bookingCode" FromRole="BookingType" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="Building">
+    <Key>
+      <PropertyRef Name="buildingId" />
+    </Key>
+    <Property Name="buildingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="organizationId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Bookings" Relationship="Self.FK_building_Booking" FromRole="Building" ToRole="Booking" />
+    <NavigationProperty Name="Courts" Relationship="Self.FK_buildingId" FromRole="Building" ToRole="Court" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_organizationId" FromRole="Building" ToRole="Organization" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="countryId" />
+    </Key>
+    <Property Name="countryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="countryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Provinces" Relationship="Self.FK_connectCountry" FromRole="Country" ToRole="Province" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_countryId" FromRole="Country" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Court">
+    <Key>
+      <PropertyRef Name="courtId" />
+    </Key>
+    <Property Name="courtId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="courtDescription" Type="String" MaxLength="60" FixedLength="true" Unicode="true" />
+    <Property Name="courtImage" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="doublesCourt" Type="Boolean" Nullable="false" />
+    <Property Name="buildingId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Bookings" Relationship="Self.FK_courtId" FromRole="Court" ToRole="Booking" />
+    <NavigationProperty Name="Building" Relationship="Self.FK_buildingId" FromRole="Court" ToRole="Building" />
+  </EntityType>
+  <EntityType Name="Ladder">
+    <Key>
+      <PropertyRef Name="ladderId" />
+    </Key>
+    <Property Name="ladderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ladderDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ladderRuleId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserLadders" Relationship="Self.FK_ladderId" FromRole="Ladder" ToRole="UserLadder" />
+    <NavigationProperty Name="LadderRule" Relationship="Self.FK_LadderRules" FromRole="Ladder" ToRole="LadderRules" />
+  </EntityType>
+  <EntityType Name="LadderRule">
+    <Key>
+      <PropertyRef Name="LadderRuleId" />
+    </Key>
+    <Property Name="LadderRuleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="challengeRange" Type="Int32" Nullable="false" />
+    <Property Name="challengeLower" Type="Boolean" Nullable="false" />
+    <Property Name="numLadders" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ladders" Relationship="Self.FK_LadderRules" FromRole="LadderRules" ToRole="Ladder" />
+  </EntityType>
+  <EntityType Name="Match">
+    <Key>
+      <PropertyRef Name="matchId" />
+    </Key>
+    <Property Name="matchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="bookingNumber" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="Self.FK_bookingNumber" FromRole="Match" ToRole="Booking" />
+    <NavigationProperty Name="UserMatches" Relationship="Self.FK_matchId" FromRole="Match" ToRole="UserMatch" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="organizationId" />
+    </Key>
+    <Property Name="organizationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="orgName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="orgAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="orgCity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="orgPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Buildings" Relationship="Self.FK_organizationId" FromRole="Organization" ToRole="Building" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_organization" FromRole="Organization" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="provinceId" />
+    </Key>
+    <Property Name="provinceId" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="provinceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="countryId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_connectCountry" FromRole="Province" ToRole="Country" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_provinceId" FromRole="Province" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="skillId" />
+    </Key>
+    <Property Name="skillId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_skillId" FromRole="Skill" ToRole="User" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TournamentRule">
+    <Key>
+      <PropertyRef Name="tournamentRuleId" />
+    </Key>
+    <Property Name="tournamentRuleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="placeholder" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="skillId" Type="Int32" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="wins" Type="Int32" />
+    <Property Name="losses" Type="Int32" />
+    <Property Name="ties" Type="Int32" />
+    <Property Name="firstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="streetAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="city" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="provinceId" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="countryId" Type="Int32" Nullable="false" />
+    <Property Name="phoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="emailAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="accountId" Type="Int32" Nullable="false" />
+    <Property Name="locked" Type="Boolean" Nullable="false" />
+    <Property Name="organizationId" Type="Int32" Nullable="false" />
+    <Property Name="postalCode" Type="String" MaxLength="7" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="strike" Type="Int32" />
+    <NavigationProperty Name="AccountType" Relationship="Self.FK_accountId" FromRole="User" ToRole="AccountType" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_countryId" FromRole="User" ToRole="Country" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_organization" FromRole="User" ToRole="Organization" />
+    <NavigationProperty Name="Province" Relationship="Self.FK_provinceId" FromRole="User" ToRole="Province" />
+    <NavigationProperty Name="Skill" Relationship="Self.FK_skillId" FromRole="User" ToRole="Skill" />
+    <NavigationProperty Name="UserMatches" Relationship="Self.FK_userId" FromRole="User" ToRole="UserMatch" />
+    <NavigationProperty Name="UserLadders" Relationship="Self.FK_UserLadder_User" FromRole="User" ToRole="UserLadder" />
+  </EntityType>
+  <EntityType Name="UserLadder">
+    <Key>
+      <PropertyRef Name="userId" />
+      <PropertyRef Name="ladderId" />
+    </Key>
+    <Property Name="position" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="ladderId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ladder" Relationship="Self.FK_ladderId" FromRole="UserLadder" ToRole="Ladder" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserLadder_User" FromRole="UserLadder" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserMatch">
+    <Key>
+      <PropertyRef Name="userId" />
+      <PropertyRef Name="gameId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="gameId" Type="Int32" Nullable="false" />
+    <Property Name="score" Type="Int32" />
+    <NavigationProperty Name="Match" Relationship="Self.FK_matchId" FromRole="UserMatch" ToRole="Match" />
+    <NavigationProperty Name="User" Relationship="Self.FK_userId" FromRole="UserMatch" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_accountId">
+    <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="accountId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="accountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_bookingCode">
+    <End Role="BookingType" Type="Self.BookingType" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookingType">
+        <PropertyRef Name="bookingCode" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="bookingCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_bookingNumber">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+    <End Role="Match" Type="Self.Match" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="bookingNumber" />
+      </Principal>
+      <Dependent Role="Match">
+        <PropertyRef Name="bookingNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingRules">
+    <End Role="BookingRules" Type="Self.BookingRule" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookingRules">
+        <PropertyRef Name="bookingRuleId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="bookingRulesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_building_Booking">
+    <End Role="Building" Type="Self.Building" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Building">
+        <PropertyRef Name="buildingId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="buildingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_courtId">
+    <End Role="Court" Type="Self.Court" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Court">
+        <PropertyRef Name="courtId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="courtId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_buildingId">
+    <End Role="Building" Type="Self.Building" Multiplicity="1" />
+    <End Role="Court" Type="Self.Court" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Building">
+        <PropertyRef Name="buildingId" />
+      </Principal>
+      <Dependent Role="Court">
+        <PropertyRef Name="buildingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_organizationId">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="Building" Type="Self.Building" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="organizationId" />
+      </Principal>
+      <Dependent Role="Building">
+        <PropertyRef Name="organizationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_connectCountry">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="Province" Type="Self.Province" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="countryId" />
+      </Principal>
+      <Dependent Role="Province">
+        <PropertyRef Name="countryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_countryId">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="countryId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="countryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ladderId">
+    <End Role="Ladder" Type="Self.Ladder" Multiplicity="1" />
+    <End Role="UserLadder" Type="Self.UserLadder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ladder">
+        <PropertyRef Name="ladderId" />
+      </Principal>
+      <Dependent Role="UserLadder">
+        <PropertyRef Name="ladderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LadderRules">
+    <End Role="LadderRules" Type="Self.LadderRule" Multiplicity="1" />
+    <End Role="Ladder" Type="Self.Ladder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LadderRules">
+        <PropertyRef Name="LadderRuleId" />
+      </Principal>
+      <Dependent Role="Ladder">
+        <PropertyRef Name="ladderRuleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_matchId">
+    <End Role="Match" Type="Self.Match" Multiplicity="1" />
+    <End Role="UserMatch" Type="Self.UserMatch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Match">
+        <PropertyRef Name="matchId" />
+      </Principal>
+      <Dependent Role="UserMatch">
+        <PropertyRef Name="gameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="organizationId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="organizationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_provinceId">
+    <End Role="Province" Type="Self.Province" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="provinceId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="provinceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_skillId">
+    <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skill">
+        <PropertyRef Name="skillId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="skillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_userId">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserMatch" Type="Self.UserMatch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="UserMatch">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserLadder_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserLadder" Type="Self.UserLadder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="UserLadder">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PrimarySquashDBContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AccountTypes" EntityType="Self.AccountType" />
+    <EntitySet Name="Bookings" EntityType="Self.Booking" />
+    <EntitySet Name="BookingRules" EntityType="Self.BookingRule" />
+    <EntitySet Name="BookingTypes" EntityType="Self.BookingType" />
+    <EntitySet Name="Buildings" EntityType="Self.Building" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Courts" EntityType="Self.Court" />
+    <EntitySet Name="Ladders" EntityType="Self.Ladder" />
+    <EntitySet Name="LadderRules" EntityType="Self.LadderRule" />
+    <EntitySet Name="Matches" EntityType="Self.Match" />
+    <EntitySet Name="Organizations" EntityType="Self.Organization" />
+    <EntitySet Name="Provinces" EntityType="Self.Province" />
+    <EntitySet Name="Skills" EntityType="Self.Skill" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TournamentRules" EntityType="Self.TournamentRule" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserLadders" EntityType="Self.UserLadder" />
+    <EntitySet Name="UserMatches" EntityType="Self.UserMatch" />
+    <AssociationSet Name="FK_accountId" Association="Self.FK_accountId">
+      <End Role="AccountType" EntitySet="AccountTypes" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_bookingCode" Association="Self.FK_bookingCode">
+      <End Role="BookingType" EntitySet="BookingTypes" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_bookingNumber" Association="Self.FK_bookingNumber">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Match" EntitySet="Matches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingRules" Association="Self.FK_BookingRules">
+      <End Role="BookingRules" EntitySet="BookingRules" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_building_Booking" Association="Self.FK_building_Booking">
+      <End Role="Building" EntitySet="Buildings" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_courtId" Association="Self.FK_courtId">
+      <End Role="Court" EntitySet="Courts" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_buildingId" Association="Self.FK_buildingId">
+      <End Role="Building" EntitySet="Buildings" />
+      <End Role="Court" EntitySet="Courts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_organizationId" Association="Self.FK_organizationId">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Building" EntitySet="Buildings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_connectCountry" Association="Self.FK_connectCountry">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Province" EntitySet="Provinces" />
+    </AssociationSet>
+    <AssociationSet Name="FK_countryId" Association="Self.FK_countryId">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ladderId" Association="Self.FK_ladderId">
+      <End Role="Ladder" EntitySet="Ladders" />
+      <End Role="UserLadder" EntitySet="UserLadders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LadderRules" Association="Self.FK_LadderRules">
+      <End Role="LadderRules" EntitySet="LadderRules" />
+      <End Role="Ladder" EntitySet="Ladders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_matchId" Association="Self.FK_matchId">
+      <End Role="Match" EntitySet="Matches" />
+      <End Role="UserMatch" EntitySet="UserMatches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_organization" Association="Self.FK_organization">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_provinceId" Association="Self.FK_provinceId">
+      <End Role="Province" EntitySet="Provinces" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_skillId" Association="Self.FK_skillId">
+      <End Role="Skill" EntitySet="Skills" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_userId" Association="Self.FK_userId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserMatch" EntitySet="UserMatches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserLadder_User" Association="Self.FK_UserLadder_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserLadder" EntitySet="UserLadders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
