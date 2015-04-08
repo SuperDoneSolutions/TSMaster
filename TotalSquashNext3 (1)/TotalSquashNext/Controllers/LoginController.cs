@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -85,7 +86,7 @@ namespace TotalSquashNext.Controllers
 
                     if (passHolder.ToString() == tempPassVerify)
                     {
-                        
+
                         var currentUser = (from x in db.Users
                                            where x.emailAddress == tempEmailVerify
                                            select x).ToList();
@@ -158,5 +159,62 @@ namespace TotalSquashNext.Controllers
             }
             return View();
         }
+
+
+        public ActionResult ForgotPasswordSecurityCheck()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPasswordSecurityCheck([Bind(Include = "emailAddress,birthDate,postalCode")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var userCheck = (from x in db.Users
+                                 where user.emailAddress == x.emailAddress
+                                 select x).ToList();
+                User selectedUser = userCheck[0];
+
+                DateTime actualBirthDate = selectedUser.birthDate;
+                string actualPostalCode = selectedUser.postalCode.ToUpper();
+
+                if (actualBirthDate == user.birthDate && actualPostalCode == user.postalCode.ToUpper())
+                {
+                    return RedirectToAction("ChangePassword", new { id = selectedUser.id });
+                }
+                else
+                {
+                    TempData["message"] = "Sorry, the data you entered was incorrect. Please try again.";
+                    return View();
+                }
+
+            }
+            return View();
+        }
+
+        public ActionResult ChangePassword(int? id)
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword([Bind(Include = "id,password")] User user)
+        {
+            SimplerAES ep = new SimplerAES();
+            if (ModelState.IsValid)
+            {
+                var currentUser = db.Users.Find(user.id);
+                string tempPass = user.password;
+                string encryptedPass = ep.Encrypt(tempPass);
+                currentUser.password = encryptedPass;
+                db.SaveChanges();
+                TempData["message"] = "Password successfully changed!";
+                return RedirectToAction("VerifyLogin", "Login");
+
+            }
+            return View();
+        }
+
     }
 }
