@@ -37,7 +37,7 @@
                 <br />
             <h2>@ViewBag.Title</h2>
 
-            @*using (Html.BeginForm())*@
+            
                 <form method="post" enctype="multipart/form-data">
                     @{
 
@@ -78,7 +78,7 @@
                                     @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
                                 </div>
                             </div>*@
-
+                            
                             @using CloudinaryDotNet;
                             <div class="form-group">
                                 <form action="" method="post" enctype="multipart/form-data">
