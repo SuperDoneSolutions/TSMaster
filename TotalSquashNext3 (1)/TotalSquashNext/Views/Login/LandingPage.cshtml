@@ -181,24 +181,24 @@
                                                     });
                                                 });
 
-                                                Date.parseDate = function (input, format) {
-                                                    return Date.parse(input);
-                                                };
+                                                //Date.parseDate = function (input, format) {
+                                                //    return Date.parse(input);
+                                                //};
 
-                                                Date.prototype.dateFormat = function (format) {
-                                                    switch (format) {
-                                                        case 'd': return this.getDate();
-                                                        case 'H:i:s': return this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds();
-                                                        case 'h:i a': return ((this.getHours() % 12) ? this.getHours() % 12 : 12) + ':' + this.getMinutes() + (this.getHours() < 12 ? 'am' : 'pm');
-                                                    }
-                                                    return this.getDate()+'.'+(this.getMonth()+1)+'.'+this.getFullYear();
-                                                };
-
+                                                //Date.prototype.dateFormat = function (format) {
+                                                //    switch (format) {
+                                                //        case 'd': return this.getDate();
+                                                //        case 'H:i:s': return this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds();
+                                                //        case 'h:i a': return ((this.getHours() % 12) ? this.getHours() % 12 : 12) + ':' + this.getMinutes() + (this.getHours() < 12 ? 'am' : 'pm');
+                                                //    }
+                                                //    return this.getDate()+'.'+(this.getMonth()+1)+'.'+this.getFullYear();
+                                                //};
+                                                //Session["datePicked"] = Date.prototype.dateFormat;
                                             </script>
                                         </td>
-                                        <td>
+                                        @*<td>
                                             <input type="submit" value="Check Date" class="btn-xs" style="margin-top:1em;" />
-                                        </td>
+                                        </td>*@
                                     }
                                 </tr>
                                 @*<div id="datepicker" class="input-prepend date">
