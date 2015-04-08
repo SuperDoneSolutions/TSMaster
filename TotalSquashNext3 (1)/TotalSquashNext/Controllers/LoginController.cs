@@ -144,11 +144,26 @@ namespace TotalSquashNext.Controllers
 
         public ActionResult LandingPage()
         {
+
             if (Session["currentUser"] == null)
             {
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
+
+            int user = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
+            Session["userBookings"] = null;
+            var userBookings = (from x in db.Bookings
+                                where user == x.userId
+                                orderby x.bookingNumber descending
+                                select x).First();
+            if (userBookings!=null)
+            {
+                Session["userBookings"] = userBookings;
+            }
+            
+
+
             return View();
         }
         public ActionResult AdministrativeTools()
