@@ -506,6 +506,8 @@
     <Content Include="Views\Match\Details.cshtml" />
     <Content Include="Views\Match\Edit.cshtml" />
     <Content Include="Views\Match\Index.cshtml" />
+    <Content Include="Views\Login\ForgotPasswordSecurityCheck.cshtml" />
+    <Content Include="Views\Login\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
