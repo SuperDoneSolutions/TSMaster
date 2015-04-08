@@ -26,7 +26,7 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a href="dashboard.html" class="brand"><img src="~/Images/TSheader02.png" style="padding-top: 10px;"/></a>
+                <a href="@Url.Action("VerifyLogin","Login")" class="brand"><img src="~/Images/TSheader02.png" style="padding-top: 10px;"/></a>
                 <table class="nav pull-right">
 
                     <tr>
@@ -65,7 +65,7 @@
 
                         </td>
                         
-                        <td><a style="font-size:10px; color:#DFDFDF;" href=" ~ />Views/Login/ForgotPasswordSecurityCheck.cshtml">Forgot your password?</a></td>
+                        <td><a style="font-size:10px; color:#DFDFDF;" href="@Url.Action("ForgotPasswordSecurityCheck","Login")">Forgot your password?</a></td>
                     </tr>
 
                     

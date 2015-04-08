@@ -48,50 +48,71 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @{if(Session["datePicked"]!=null)
+                    @{if (Session["datePicked"] != null)
+                    {
+                        @*<p>You chose: @Session["datePicked"].ToString()</p>
+                        <p>Choose a different date:</p>*@
+                        ViewBag.datePicked = Session["datePicked"].ToString();
+                    }
+                      else
                       {
-                        <p>@Session["datePicked"].ToString()</p>
-                    }}                      
-
+                          ViewBag.datePicked = "";
+                      }
+                    }
 
                     <div class="container">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div id="datetimepicker12"></div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div id="datetimepicker12"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <script type="text/javascript">
-                        $(function () {
-                            $('#datetimepicker12').datetimepicker({
-                                inline: true,
-                                sideBySide: true,
-                                format: 'd/m/Y H:i',
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datetimepicker12').datetimepicker({
+                                    inline: true,
+                                    sideBySide: true,
+                                    format: 'd/m/Y H:i',
 
 
-                                onChangeDateTime: function (dp, $input) {
-                                    //alert($input.val())
-                                    var chosenDateTime = document.getElementById('chosenDate');
-                                    chosenDateTime.value = $input.val();
-                                }
+                                    onChangeDateTime: function (dp, $input) {
+                                        //alert($input.val())
+                                        var chosenDateTime = document.getElementById('date');
+                                        chosenDateTime.value = $input.val();
+
+
+                                    }
+                                });
                             });
-                        });
 
 
-                    </script>
-                    <input type="text" name="chosenDate" id="chosenDate" readonly="readonly" />
-                        </div>
+                        </script>
 
-
+                    </div>
 
 
 
 
 
-                    @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@{if (Session["datePicked"] == "" || Session["datePicked"]==null)
+                                          {
+                                              Session["datePicked"] = Request["chosenDate"];
+                                          }
+
+                        }*@
+                    @*@{if (Session["datePicked"] != null)
+                        {
+                            var datePicked = Session["datePicked"].ToString();
+                            <script>onChangeDateTime(dp, datePicked)</script>
+                        }
+                        }*@
+
+                    
+                    
+                    @Html.TextBoxFor(model => model.date, new { @Value = ViewBag.datePicked })
                     @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
                 </div>
             </div>

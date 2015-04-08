@@ -150,6 +150,7 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
+            Session["datePicked"] = "";
 
             //int user = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
             //Session["userBookings"] = null;
