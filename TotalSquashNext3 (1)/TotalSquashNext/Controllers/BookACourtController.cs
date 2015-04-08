@@ -11,10 +11,12 @@ namespace TotalSquashNext.Controllers
     {
         private PrimarySquashDBContext db = new PrimarySquashDBContext();
         // GET: BookACourt
-        public ActionResult BookACourt([Bind(Include = "datePicked")] DateTime datePicked)
+
+  
+        public ActionResult BookACourt(string chosenDate)
         {
 
-            Session["datePicked"] = datePicked;
+            Session["datePicked"] = chosenDate;
 
             //var dateHolder = (from x in db.Bookings
             //                  where x.bookingDate == datePicked

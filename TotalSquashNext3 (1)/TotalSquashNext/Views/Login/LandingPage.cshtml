@@ -18,7 +18,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="layout" content="main" />
-
+    <link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.css" />
+    <script type="text/javascript" src="~/js/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="~/js/jquery/moment.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap/bootstrap-transition.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap/bootstrap-collapse.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap/bootstrap.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script src="../../js/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
     <link href="~/Content/customize-template.css" type="text/css" media="screen, projection" rel="stylesheet" />
@@ -46,55 +52,55 @@
             <div class="body-nav body-nav-horizontal body-nav-fixed" style="padding-bottom:18px;">
                 <div class=" container">
 
-                <br />
-                <ul>
-                    <li>
-
-                        <a href="@Url.Action("Create","Booking", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
-                            <i class="icon-calendar icon-large"></i>
-                            <span class="sr-only">Book a Court</span>
-                        </a>
-                    </li>
-
-                    <li>
-
-                        <a href="@Url.Action("Edit","Users", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
-
-                            <i class="icon-group icon-large"></i>
-                            <span class="sr-only">Edit Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index","Ladder", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
-                            <i class="icon-list-alt icon-large"></i>
-                            <span class="sr-only">Squash Ladder</span>
-                        </a>
-                    </li>
-                    <li>
-
-                        <a href="@Url.Action("Index","UserMatch", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
-                            <i class="icon-bar-chart icon-large"></i>
-                            <span class="sr-only">Match History</span>
-                        </a>
-                    </li>
-
-                    <!--Shows link to administration only, for easy navigation to court booking rules, ladder rules, etc.-->
-                    @if ((((TotalSquashNext.Models.User)Session["currentUser"]).accountId == 1))
-                    {
+                    <br />
+                    <ul>
                         <li>
 
-                            <a href="@Url.Action("AdministrativeTools","Login", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
-                                <i class="icon-cogs icon-large"></i>
-                                <span class="sr-only">Administration</span>
+                            <a href="@Url.Action("Create","Booking", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-calendar icon-large"></i>
+                                <span class="sr-only">Book a Court</span>
                             </a>
                         </li>
-                    }
-                </ul>
+
+                        <li>
+
+                            <a href="@Url.Action("Edit","Users", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+
+                                <i class="icon-group icon-large"></i>
+                                <span class="sr-only">Edit Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index","Ladder", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-list-alt icon-large"></i>
+                                <span class="sr-only">Squash Ladder</span>
+                            </a>
+                        </li>
+                        <li>
+
+                            <a href="@Url.Action("Index","UserMatch", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-bar-chart icon-large"></i>
+                                <span class="sr-only">Match History</span>
+                            </a>
+                        </li>
+
+                        <!--Shows link to administration only, for easy navigation to court booking rules, ladder rules, etc.-->
+                        @if ((((TotalSquashNext.Models.User)Session["currentUser"]).accountId == 2))
+                        {
+                            <li>
+
+                                <a href="@Url.Action("AdministrativeTools","Login", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                    <i class="icon-cogs icon-large"></i>
+                                    <span class="sr-only">Administration</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
 
             </div>
 
-            </div>
-           
             <section class="nav nav-page">
                 <div class="container">
                     <div class="row">
@@ -167,38 +173,46 @@
                                 <p>Pick a Date & Time</p>
 
                                 <tr>
-                                    @using (Html.BeginForm())
+                                    @using (Html.BeginForm("BookACourt","BookACourt",FormMethod.Post))
                                     {
 
                                         <td>
-                                            <p><input id="datetimepicker3" type="text" style="display: none;"><div class="xdsoft_datetimepicker xdsoft_ xdsoft_noselect  xdsoft_showweeks xdsoft_inline"><div class="xdsoft_datepicker active"><div class="xdsoft_mounthpicker"><button type="button" class="xdsoft_prev"></button><button type="button" class="xdsoft_today_button" style="visibility: visible;"></button><div class="xdsoft_label xdsoft_month"><span>November</span><div class="xdsoft_select xdsoft_monthselect xdsoft_scroller_box"><div style="margin-top: 0px;"><div class="xdsoft_option " data-value="0">January</div><div class="xdsoft_option " data-value="1">February</div><div class="xdsoft_option " data-value="2">March</div><div class="xdsoft_option " data-value="3">April</div><div class="xdsoft_option " data-value="4">May</div><div class="xdsoft_option " data-value="5">June</div><div class="xdsoft_option " data-value="6">July</div><div class="xdsoft_option " data-value="7">August</div><div class="xdsoft_option " data-value="8">September</div><div class="xdsoft_option " data-value="9">October</div><div class="xdsoft_option xdsoft_current" data-value="10">November</div><div class="xdsoft_option " data-value="11">December</div></div><div class="xdsoft_scrollbar"><div class="xdsoft_scroller" style="display: block; height: 10px; margin-top: 0px;"></div></div></div><i></i></div><div class="xdsoft_label xdsoft_year"><span>2015</span><div class="xdsoft_select xdsoft_yearselect xdsoft_scroller_box"><div style="margin-top: 0px;"><div class="xdsoft_option " data-value="1950">1950</div><div class="xdsoft_option " data-value="1951">1951</div><div class="xdsoft_option " data-value="1952">1952</div><div class="xdsoft_option " data-value="1953">1953</div><div class="xdsoft_option " data-value="1954">1954</div><div class="xdsoft_option " data-value="1955">1955</div><div class="xdsoft_option " data-value="1956">1956</div><div class="xdsoft_option " data-value="1957">1957</div><div class="xdsoft_option " data-value="1958">1958</div><div class="xdsoft_option " data-value="1959">1959</div><div class="xdsoft_option " data-value="1960">1960</div><div class="xdsoft_option " data-value="1961">1961</div><div class="xdsoft_option " data-value="1962">1962</div><div class="xdsoft_option " data-value="1963">1963</div><div class="xdsoft_option " data-value="1964">1964</div><div class="xdsoft_option " data-value="1965">1965</div><div class="xdsoft_option " data-value="1966">1966</div><div class="xdsoft_option " data-value="1967">1967</div><div class="xdsoft_option " data-value="1968">1968</div><div class="xdsoft_option " data-value="1969">1969</div><div class="xdsoft_option " data-value="1970">1970</div><div class="xdsoft_option " data-value="1971">1971</div><div class="xdsoft_option " data-value="1972">1972</div><div class="xdsoft_option " data-value="1973">1973</div><div class="xdsoft_option " data-value="1974">1974</div><div class="xdsoft_option " data-value="1975">1975</div><div class="xdsoft_option " data-value="1976">1976</div><div class="xdsoft_option " data-value="1977">1977</div><div class="xdsoft_option " data-value="1978">1978</div><div class="xdsoft_option " data-value="1979">1979</div><div class="xdsoft_option " data-value="1980">1980</div><div class="xdsoft_option " data-value="1981">1981</div><div class="xdsoft_option " data-value="1982">1982</div><div class="xdsoft_option " data-value="1983">1983</div><div class="xdsoft_option " data-value="1984">1984</div><div class="xdsoft_option " data-value="1985">1985</div><div class="xdsoft_option " data-value="1986">1986</div><div class="xdsoft_option " data-value="1987">1987</div><div class="xdsoft_option " data-value="1988">1988</div><div class="xdsoft_option " data-value="1989">1989</div><div class="xdsoft_option " data-value="1990">1990</div><div class="xdsoft_option " data-value="1991">1991</div><div class="xdsoft_option " data-value="1992">1992</div><div class="xdsoft_option " data-value="1993">1993</div><div class="xdsoft_option " data-value="1994">1994</div><div class="xdsoft_option " data-value="1995">1995</div><div class="xdsoft_option " data-value="1996">1996</div><div class="xdsoft_option " data-value="1997">1997</div><div class="xdsoft_option " data-value="1998">1998</div><div class="xdsoft_option " data-value="1999">1999</div><div class="xdsoft_option " data-value="2000">2000</div><div class="xdsoft_option " data-value="2001">2001</div><div class="xdsoft_option " data-value="2002">2002</div><div class="xdsoft_option " data-value="2003">2003</div><div class="xdsoft_option " data-value="2004">2004</div><div class="xdsoft_option " data-value="2005">2005</div><div class="xdsoft_option " data-value="2006">2006</div><div class="xdsoft_option " data-value="2007">2007</div><div class="xdsoft_option " data-value="2008">2008</div><div class="xdsoft_option " data-value="2009">2009</div><div class="xdsoft_option " data-value="2010">2010</div><div class="xdsoft_option " data-value="2011">2011</div><div class="xdsoft_option " data-value="2012">2012</div><div class="xdsoft_option " data-value="2013">2013</div><div class="xdsoft_option " data-value="2014">2014</div><div class="xdsoft_option xdsoft_current" data-value="2015">2015</div><div class="xdsoft_option " data-value="2016">2016</div><div class="xdsoft_option " data-value="2017">2017</div><div class="xdsoft_option " data-value="2018">2018</div><div class="xdsoft_option " data-value="2019">2019</div><div class="xdsoft_option " data-value="2020">2020</div><div class="xdsoft_option " data-value="2021">2021</div><div class="xdsoft_option " data-value="2022">2022</div><div class="xdsoft_option " data-value="2023">2023</div><div class="xdsoft_option " data-value="2024">2024</div><div class="xdsoft_option " data-value="2025">2025</div><div class="xdsoft_option " data-value="2026">2026</div><div class="xdsoft_option " data-value="2027">2027</div><div class="xdsoft_option " data-value="2028">2028</div><div class="xdsoft_option " data-value="2029">2029</div><div class="xdsoft_option " data-value="2030">2030</div><div class="xdsoft_option " data-value="2031">2031</div><div class="xdsoft_option " data-value="2032">2032</div><div class="xdsoft_option " data-value="2033">2033</div><div class="xdsoft_option " data-value="2034">2034</div><div class="xdsoft_option " data-value="2035">2035</div><div class="xdsoft_option " data-value="2036">2036</div><div class="xdsoft_option " data-value="2037">2037</div><div class="xdsoft_option " data-value="2038">2038</div><div class="xdsoft_option " data-value="2039">2039</div><div class="xdsoft_option " data-value="2040">2040</div><div class="xdsoft_option " data-value="2041">2041</div><div class="xdsoft_option " data-value="2042">2042</div><div class="xdsoft_option " data-value="2043">2043</div><div class="xdsoft_option " data-value="2044">2044</div><div class="xdsoft_option " data-value="2045">2045</div><div class="xdsoft_option " data-value="2046">2046</div><div class="xdsoft_option " data-value="2047">2047</div><div class="xdsoft_option " data-value="2048">2048</div><div class="xdsoft_option " data-value="2049">2049</div><div class="xdsoft_option " data-value="2050">2050</div></div><div class="xdsoft_scrollbar"><div class="xdsoft_scroller" style="display: block; height: 10px; margin-top: 0px;"></div></div></div><i></i></div><button type="button" class="xdsoft_next"></button></div><div class="xdsoft_calendar"><table><thead><tr><th></th><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead><tbody><tr><th>45</th><td data-date="1" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week0 xdsoft_date xdsoft_weekend"><div>1</div></td><td data-date="2" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week1 xdsoft_date xdsoft_weekend"><div>2</div></td><td data-date="3" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week2 xdsoft_date xdsoft_weekend"><div>3</div></td><td data-date="4" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week3 xdsoft_date xdsoft_weekend"><div>4</div></td><td data-date="5" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week4 xdsoft_date xdsoft_weekend"><div>5</div></td><td data-date="6" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week5 xdsoft_date xdsoft_weekend"><div>6</div></td><td data-date="7" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week6 xdsoft_date xdsoft_weekend"><div>7</div></td></tr><tr><th>46</th><td data-date="8" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week0 xdsoft_date xdsoft_current xdsoft_weekend"><div>8</div></td><td data-date="9" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week1 xdsoft_date xdsoft_weekend"><div>9</div></td><td data-date="10" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week2 xdsoft_date xdsoft_weekend"><div>10</div></td><td data-date="11" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week3 xdsoft_date xdsoft_weekend"><div>11</div></td><td data-date="12" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week4 xdsoft_date xdsoft_weekend"><div>12</div></td><td data-date="13" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week5 xdsoft_date xdsoft_weekend"><div>13</div></td><td data-date="14" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week6 xdsoft_date xdsoft_weekend"><div>14</div></td></tr><tr><th>47</th><td data-date="15" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week0 xdsoft_date xdsoft_weekend"><div>15</div></td><td data-date="16" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week1 xdsoft_date xdsoft_weekend"><div>16</div></td><td data-date="17" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week2 xdsoft_date xdsoft_weekend"><div>17</div></td><td data-date="18" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week3 xdsoft_date xdsoft_weekend"><div>18</div></td><td data-date="19" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week4 xdsoft_date xdsoft_weekend"><div>19</div></td><td data-date="20" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week5 xdsoft_date xdsoft_weekend"><div>20</div></td><td data-date="21" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week6 xdsoft_date xdsoft_weekend"><div>21</div></td></tr><tr><th>48</th><td data-date="22" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week0 xdsoft_date xdsoft_weekend"><div>22</div></td><td data-date="23" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week1 xdsoft_date xdsoft_weekend"><div>23</div></td><td data-date="24" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week2 xdsoft_date xdsoft_weekend"><div>24</div></td><td data-date="25" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week3 xdsoft_date xdsoft_weekend"><div>25</div></td><td data-date="26" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week4 xdsoft_date xdsoft_weekend"><div>26</div></td><td data-date="27" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week5 xdsoft_date xdsoft_weekend"><div>27</div></td><td data-date="28" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week6 xdsoft_date xdsoft_weekend"><div>28</div></td></tr><tr><th>49</th><td data-date="29" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week0 xdsoft_date xdsoft_weekend"><div>29</div></td><td data-date="30" data-month="10" data-year="2015" class="xdsoft_date xdsoft_day_of_week1 xdsoft_date xdsoft_weekend"><div>30</div></td><td data-date="1" data-month="11" data-year="2015" class="xdsoft_date xdsoft_day_of_week2 xdsoft_date xdsoft_other_month xdsoft_weekend"><div>1</div></td><td data-date="2" data-month="11" data-year="2015" class="xdsoft_date xdsoft_day_of_week3 xdsoft_date xdsoft_other_month xdsoft_weekend"><div>2</div></td><td data-date="3" data-month="11" data-year="2015" class="xdsoft_date xdsoft_day_of_week4 xdsoft_date xdsoft_other_month xdsoft_weekend"><div>3</div></td><td data-date="4" data-month="11" data-year="2015" class="xdsoft_date xdsoft_day_of_week5 xdsoft_date xdsoft_other_month xdsoft_weekend"><div>4</div></td><td data-date="5" data-month="11" data-year="2015" class="xdsoft_date xdsoft_day_of_week6 xdsoft_date xdsoft_other_month xdsoft_weekend"><div>5</div></td></tr></tbody></table></div></div><div class="xdsoft_timepicker active"><button type="button" class="xdsoft_prev"></button><div class="xdsoft_time_box xdsoft_scroller_box"><div class="xdsoft_time_variant" style="margin-top: -326px;"><div class="xdsoft_time " data-hour="0" data-minute="0">00:00</div><div class="xdsoft_time " data-hour="1" data-minute="0">01:00</div><div class="xdsoft_time " data-hour="2" data-minute="0">02:00</div><div class="xdsoft_time " data-hour="3" data-minute="0">03:00</div><div class="xdsoft_time " data-hour="4" data-minute="0">04:00</div><div class="xdsoft_time " data-hour="5" data-minute="0">05:00</div><div class="xdsoft_time " data-hour="6" data-minute="0">06:00</div><div class="xdsoft_time " data-hour="7" data-minute="0">07:00</div><div class="xdsoft_time " data-hour="8" data-minute="0">08:00</div><div class="xdsoft_time " data-hour="9" data-minute="0">09:00</div><div class="xdsoft_time " data-hour="10" data-minute="0">10:00</div><div class="xdsoft_time " data-hour="11" data-minute="0">11:00</div><div class="xdsoft_time " data-hour="12" data-minute="0">12:00</div><div class="xdsoft_time xdsoft_current" data-hour="13" data-minute="0">13:00</div><div class="xdsoft_time " data-hour="14" data-minute="0">14:00</div><div class="xdsoft_time " data-hour="15" data-minute="0">15:00</div><div class="xdsoft_time " data-hour="16" data-minute="0">16:00</div><div class="xdsoft_time " data-hour="17" data-minute="0">17:00</div><div class="xdsoft_time " data-hour="18" data-minute="0">18:00</div><div class="xdsoft_time " data-hour="19" data-minute="0">19:00</div><div class="xdsoft_time " data-hour="20" data-minute="0">20:00</div><div class="xdsoft_time " data-hour="21" data-minute="0">21:00</div><div class="xdsoft_time " data-hour="22" data-minute="0">22:00</div><div class="xdsoft_time " data-hour="23" data-minute="0">23:00</div></div><div class="xdsoft_scrollbar"><div class="xdsoft_scroller" style="display: block; height: 37px; margin-top: 80.9578713968958px;"></div></div></div><button type="button" class="xdsoft_next"></button></div></div></p>
-                                            <script>
-                                                jQuery(function () {
-                                                    jQuery('#_datetimepicker3').datetimepicker({
-                                                        format: 'd.m.Y H:i',
-                                                        inline: true,
-                                                        lang: 'en'
+                                            <div class="container">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <div id="datetimepicker12"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    $(function () {
+                                                        $('#datetimepicker12').datetimepicker({
+                                                            inline: true,
+                                                            sideBySide: true,
+                                                            format: 'd/m/Y H:i',
+
+
+                                                            onChangeDateTime: function (dp, $input) {
+                                                                //alert($input.val())
+                                                                var chosenDateTime = document.getElementById('chosenDate');
+                                                                chosenDateTime.value = $input.val();
+                                                            }
+                                                        });
                                                     });
-                                                });
 
-                                                //Date.parseDate = function (input, format) {
-                                                //    return Date.parse(input);
-                                                //};
 
-                                                //Date.prototype.dateFormat = function (format) {
-                                                //    switch (format) {
-                                                //        case 'd': return this.getDate();
-                                                //        case 'H:i:s': return this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds();
-                                                //        case 'h:i a': return ((this.getHours() % 12) ? this.getHours() % 12 : 12) + ':' + this.getMinutes() + (this.getHours() < 12 ? 'am' : 'pm');
-                                                //    }
-                                                //    return this.getDate()+'.'+(this.getMonth()+1)+'.'+this.getFullYear();
-                                                //};
-                                                //Session["datePicked"] = Date.prototype.dateFormat;
-                                            </script>
+                                                </script>
+
+
                                         </td>
-                                        @*<td>
+                                        <td>
+                                           
+                                            <input type="text" name="chosenDate" id="chosenDate" readonly="readonly" />
                                             <input type="submit" value="Check Date" class="btn-xs" style="margin-top:1em;" />
-                                        </td>*@
+                                        </td>
                                     }
                                 </tr>
                                 @*<div id="datepicker" class="input-prepend date">
@@ -222,9 +236,9 @@
                                     </form>*@
                             </div>
                             <div class="box-footer">
-                                <a href="booking.html" class="btn btn-primary">
-                                    <i class="icon-ok"></i>
-                                    Check Availabilty
+                                @*<a href="@Url.Action("Edit","Use class="btn btn-primary">*@
+                                <i class="icon-ok"></i>
+                                Check Availabilty
                                 </a>
                             </div>
                         </div>
@@ -330,7 +344,7 @@
 
     <script type="text/javascript">
         $(function () {
-            $('#sample-table').tablesorter();
+            //$('#sample-table').tablesorter();
             $('#datepicker').datepicker();
             $(".chosen").chosen();
         });

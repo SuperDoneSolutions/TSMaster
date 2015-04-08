@@ -151,16 +151,16 @@ namespace TotalSquashNext.Controllers
                 return RedirectToAction("VerifyLogin");
             }
 
-            int user = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
-            Session["userBookings"] = null;
-            var userBookings = (from x in db.Bookings
-                                where user == x.userId
-                                orderby x.bookingNumber descending
-                                select x).First();
-            if (userBookings!=null)
-            {
-                Session["userBookings"] = userBookings;
-            }
+            //int user = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
+            //Session["userBookings"] = null;
+            //var userBookings = (from x in db.Bookings
+            //                    where user == x.userId
+            //                    orderby x.bookingNumber descending
+            //                    select x).First();
+            //if (userBookings!=null)
+            //{
+            //    Session["userBookings"] = userBookings;
+            //}
             
 
 

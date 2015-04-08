@@ -46,7 +46,11 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
-            Session["datePicked"] = new DateTime(2011, 6, 10, 15, 24, 16);
+            if(Session["datePicked"]==null)
+            {
+                Session["datePicked"] = "";
+            }
+            
             ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description");
             //ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId");
             ViewBag.courtId = new SelectList(db.Courts, "courtId", "courtDescription");
