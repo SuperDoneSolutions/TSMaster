@@ -1937,7 +1937,7 @@ textarea.input-lg {
   .form-inline .form-group {
     display: inline-block;
     margin-bottom: 0;
-    vertical-align: middle;
+    vertical-align: central;
   }
   .form-inline .form-control {
     display: inline-block;
