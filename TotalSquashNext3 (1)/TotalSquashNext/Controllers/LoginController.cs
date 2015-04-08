@@ -133,11 +133,12 @@ namespace TotalSquashNext.Controllers
                 }
                 else
                 {
-                    return HttpNotFound();
+                    TempData["message"] = "Incorrect email or password. Please try again.";
+                    return RedirectToAction("VerifyLogin", "Login");
                 }
             }
 
-
+            TempData["message"] = "Incorrect email or password. Please try again.";
             return View();
         }
 
