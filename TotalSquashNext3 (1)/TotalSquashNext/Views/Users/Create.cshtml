@@ -25,7 +25,7 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a href="@Url.Action("LandingPage", "Login")" class="brand"><img src="~/Images/TSheader02.png" style="padding-top: 10px;" /></a>
+                @Html.ActionLink("Total Squash", "LandingPage", "Login", null, new { @class = "brand" })
             </div>
         </div>
     </div>
