@@ -73,7 +73,7 @@ namespace TotalSquashNext.Controllers
                 UserMatch user = new UserMatch();
                 user.userId = userIds[i];
                 user.gameId = gameId;
-                user.score = 00;
+                user.score = -1;
                 db.UserMatches.Add(user);
                 db.SaveChanges();
             }
@@ -84,6 +84,14 @@ namespace TotalSquashNext.Controllers
         }
         public ActionResult UpdateScores(int gameId, int userId)
         {
+            int userScore = (int)(db.UserMatches.Where(x=>x.gameId==gameId).Where(x=>x.userId==userId).Select(x=>x.score).Single());
+            
+            if (userScore>0)
+            {
+                TempData["message"] = "Scores cannot be edited. Please contact an administrator for assistance.";
+                return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });
+            }
+            
             ViewBag.user = db.Users.Find(userId).username;
             return View();
         }
@@ -109,8 +117,6 @@ namespace TotalSquashNext.Controllers
             var game = from x in db.UserMatches
                        where x.gameId == gameId
                        select x;
-
-            //for(int i=0;i<game.Count();i++)
             
                 var players = (from x in game
                            orderby x.userId
@@ -122,41 +128,60 @@ namespace TotalSquashNext.Controllers
                 var player2 = players[1];
                 var score1 = score[0];
                 var score2 = score[1];
-            if(score1==00||score2==00)
+                User user = db.Users.Find(player1);
+                User user2 = db.Users.Find(player2);
+                int user1wins = (int)(user.wins);
+                int user2wins = (int)user2.wins;
+                int user1ties = (int)(user.ties);
+                int user2ties = (int)user2.ties;
+                int user1losses = (int)(user.losses);
+                int user2losses = (int)user2.losses;
+
+
+            //both scores have not yet been entered.
+            if(score1==-1||score2==-1)
             {
                 return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });
             }
+
+            //player1 won
             if(score1>score2)
             {
-                User user = db.Users.Find(player1);
-                User user2 = db.Users.Find(player2);
-                user.wins = user.wins++;
-                user2.losses = user2.losses++;
-                
+
+                user1wins = user1wins++;
+                user2losses = user2losses++;
+
+                user.wins = user1wins;
+                user2.losses = user2losses;
                 db.Entry(user).State = EntityState.Modified;
                 db.Entry(user2).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });
             }
-
+            //tie
             if (score1 == score2)
             {
-                User user = db.Users.Find(player1);
-                User user2 = db.Users.Find(player2);
-                user.wins = user.ties++;
-                user2.losses = user2.ties++;
+
+                user1ties = user1ties++;
+                user2ties = user2ties++;
+
+                user.ties = user1ties;
+                user2.ties = user2ties;
 
                 db.Entry(user).State = EntityState.Modified;
                 db.Entry(user2).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });
             }
+                //player2 won
             else
             {
-                User user = db.Users.Find(player1);
-                User user2 = db.Users.Find(player2);
-                user2.wins = user.wins++;
-                user.losses = user2.losses++;
+
+                user1losses = user1losses++;
+                user2wins = user2wins++;
+
+                user.losses = user1losses;
+                user2.wins = user2wins;
 
                 db.Entry(user).State = EntityState.Modified;
                 db.Entry(user2).State = EntityState.Modified;
