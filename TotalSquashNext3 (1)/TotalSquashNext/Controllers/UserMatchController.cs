@@ -113,6 +113,8 @@ namespace TotalSquashNext.Controllers
 
         public ActionResult CalculateWinners(int gameId)
         {
+            int cUser = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
+
             
             var game = from x in db.UserMatches
                        where x.gameId == gameId
@@ -148,37 +150,50 @@ namespace TotalSquashNext.Controllers
             if(score1>score2)
             {
 
-                user1wins = user1wins++;
-                user2losses = user2losses++;
+                user1wins++;
+                user2losses++;
 
                 user.wins = user1wins;
                 user2.losses = user2losses;
+
+               
                 db.Entry(user).State = EntityState.Modified;
                 db.Entry(user2).State = EntityState.Modified;
                 db.SaveChanges();
+                //var currentUser = (from x in db.Users
+                //                   where x.id == cUser
+                //                   select x).ToList();
+
+                //User selectedUser = currentUser[0];
+                //Session["currentUser"] = selectedUser;
+                //((TotalSquashNext.Models.User)Session["currentUser"]).wins = ((TotalSquashNext.Models.User)Session["currentUser"]).wins;
+                //((TotalSquashNext.Models.User)Session["currentUser"]).losses = ((TotalSquashNext.Models.User)Session["currentUser"]).losses;
+                //((TotalSquashNext.Models.User)Session["currentUser"]).ties = ((TotalSquashNext.Models.User)Session["currentUser"]).ties;
                 return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });
             }
             //tie
             if (score1 == score2)
             {
 
-                user1ties = user1ties++;
-                user2ties = user2ties++;
+                user1ties++;
+                user2ties++;
 
                 user.ties = user1ties;
                 user2.ties = user2ties;
 
+
                 db.Entry(user).State = EntityState.Modified;
                 db.Entry(user2).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });
             }
                 //player2 won
             else
             {
 
-                user1losses = user1losses++;
-                user2wins = user2wins++;
+                user1losses++;
+                user2wins++;
 
                 user.losses = user1losses;
                 user2.wins = user2wins;
@@ -186,6 +201,7 @@ namespace TotalSquashNext.Controllers
                 db.Entry(user).State = EntityState.Modified;
                 db.Entry(user2).State = EntityState.Modified;
                 db.SaveChanges();
+                
                 return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });
             }
 

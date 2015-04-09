@@ -86,10 +86,18 @@ namespace TotalSquashNext.Controllers
                         var passHolder = (from x in db.Users
                                           where x.emailAddress == tempEmailVerify
                                           select x.password).Single();
+                        var isLocked = (from x in db.Users
+                                        where x.emailAddress == tempEmailVerify
+                                        select x.locked).Single();
 
 
                         if (passHolder.ToString() == tempPassVerify)
                         {
+                            if (isLocked)
+                            {
+                                TempData["message"] = "Your account is locked until an administrator unlocks it.";
+                                return RedirectToAction("VerifyLogin", "Login");
+                            }
 
                             var currentUser = (from x in db.Users
                                                where x.emailAddress == tempEmailVerify
@@ -119,7 +127,7 @@ namespace TotalSquashNext.Controllers
                                                        where x.emailAddress == tempEmailVerify
                                                        select x.photo).Single();
 
-                            if (Session["currentImage"] == null)
+                            if (Session["currentImage"] == null || Session["currentImage"] == "")
                             {
                                 Session["currentImage"] = "../../Images/anon.png";
                             }
@@ -142,10 +150,9 @@ namespace TotalSquashNext.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                TempData["message"] = "Incorrect email or password. Please try again.";
-                return View();
+
             }
 
             TempData["message"] = "Incorrect email or password. Please try again.";
@@ -160,10 +167,19 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
+            int user = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
             Session["datePicked"] = "";
 
-            int user = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
+            //refresh session variables.
+            var currentUser = (from x in db.Users
+                               where x.id == user
+                               select x).ToList();
+
+            User selectedUser = currentUser[0];
+            Session["currentUser"] = selectedUser;
+
             
+
             Booking defaultBook = new Booking();
             defaultBook.date = DateTime.Today;
             defaultBook.courtId = 0;

@@ -125,6 +125,20 @@ namespace TotalSquashNext.Controllers
                 string encryptedPass = ep.Encrypt(tempPass);
 
                 user.password = encryptedPass;
+                if(user.accountId==1)
+                {
+                    user.locked=true;
+                    //string command = "mailto:superdonesolutions@gmail.com?subject=Administrator Request";
+                    //ProcessInfo.Start(command);
+
+                    //System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+                    //message.To.Add("superdonesolutions@gmail.com");
+                    //message.Subject = "Locked Administrator";
+                    //message.From = new System.Net.Mail.MailAddress("From@online.microsoft.com");
+                    //message.Body = "An administrator account has been requested. Please go to admin tools and verify to unlock.";
+                    //System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("yoursmtphost");
+                    //smtp.Send(message);
+                }
                 if (Session["photoUpload"] != null)
                 {
                     user.photo = Session["photoUpload"].ToString();
@@ -177,6 +191,7 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,username,skillId,password,photo,wins,losses,ties,firstName,lastName,streetAddress,city,provinceId,postalCode,countryId,phoneNumber,emailAddress,gender,birthDate,accountId,locked,organizationId")] User user)
         {
+            
             SimplerAES ep = new SimplerAES();
             if (Session["currentUser"] == null)
             {
@@ -203,10 +218,10 @@ namespace TotalSquashNext.Controllers
                 //    user.photo = Session["photoUpload"].ToString();
                 //}
 
-                user.wins = (((TotalSquashNext.Models.User)Session["currentUser"]).wins);
-                user.losses = (((TotalSquashNext.Models.User)Session["currentUser"]).losses);
-                user.ties = (((TotalSquashNext.Models.User)Session["currentUser"]).ties);
-                user.emailAddress = (((TotalSquashNext.Models.User)Session["currentUser"]).emailAddress);
+                //user.wins = (((TotalSquashNext.Models.User)Session["currentUser"]).wins);
+                //user.losses = (((TotalSquashNext.Models.User)Session["currentUser"]).losses);
+                //user.ties = (((TotalSquashNext.Models.User)Session["currentUser"]).ties);
+                //user.emailAddress = (((TotalSquashNext.Models.User)Session["currentUser"]).emailAddress);
                 user.password = (((TotalSquashNext.Models.User)Session["currentUser"]).password);
                 db.Entry(user).State = EntityState.Modified;
 
