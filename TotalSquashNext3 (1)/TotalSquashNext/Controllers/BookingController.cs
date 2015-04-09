@@ -46,12 +46,13 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
-            if(Session["datePicked"]==null)
+            if (Session["datePicked"] == null)
             {
                 Session["datePicked"] = "";
             }
-            
+
             ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description");
+            ViewBag.buildingId = new SelectList(db.Buildings, "buildingId", "address");
             //ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId");
             ViewBag.courtId = new SelectList(db.Courts, "courtId", "courtDescription");
             return View();
@@ -62,32 +63,34 @@ namespace TotalSquashNext.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "courtId,bookingNumber,bookingDate,bookingCode,userId,date,bookingRulesId")] Booking booking)
+        public ActionResult Create([Bind(Include = "courtId,bookingDate,bookingCode,userId,date,bookingRulesId,buildingId")] Booking booking)
         {
-            const int NUMBER = 9;
+            //const int NUMBER = 9;
             const int RULES = 1;
-            DateTime NODATE = new DateTime(2011, 6, 10, 15, 24, 16);
+            //DateTime NODATE = new DateTime(2011, 6, 10, 15, 24, 16);
 
             if (ModelState.IsValid)
             {
                 int userQuery = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
                 booking.userId = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
                 booking.bookingDate = DateTime.Now;
-                var dateHolder = NUMBER;
+                //var dateHolder = NUMBER;
                 booking.bookingRulesId = RULES;
+                
 
-                if ((DateTime)Session["datePicked"] != NODATE)
-                {
-                    dateHolder = (from x in db.Bookings
-                                  where x.date == (DateTime)Session["datePicked"]
-                                  select x.date).Count();
-                }
-                else
-                {
-                    dateHolder = (from x in db.Bookings
-                                  where x.date == booking.date
-                                  select x.date).Count();
-                }
+
+                //if ((DateTime)Session["datePicked"] != NODATE)
+                //{
+                //    dateHolder = (from x in db.Bookings
+                //                  where x.date == (DateTime)Session["datePicked"]
+                //                  select x.date).Count();
+                //}
+                //else
+                //{
+                var dateHolder = (from x in db.Bookings
+                              where x.date == booking.date
+                              select x.date).Count();
+                //}
 
                 var dateRules = (from x in db.BookingRules
                                  where x.bookingRuleId == RULES
@@ -110,7 +113,7 @@ namespace TotalSquashNext.Controllers
                                     select x.bookingLength).Single();
 
                 TimeSpan bookingLength = new TimeSpan(0, timeSpanRule, 0);
-                
+
                 DateTime currentDate = DateTime.Now;
                 DateTime datePicked = booking.date;
                 DateTime checkDayRule = currentDate.AddDays((double)dateRules);
@@ -121,7 +124,7 @@ namespace TotalSquashNext.Controllers
                 {
                     if (datePicked <= checkDayRule && datePicked.TimeOfDay >= dayStart && numBookings <= numBookAllowed)
                     {
-                        TempData["Message"] = "Your court has been booked.";
+                        TempData["message"] = "Your court has been booked.";
                         db.Bookings.Add(booking);
                         db.SaveChanges();
                         return RedirectToAction("LandingPage", "Login");
@@ -130,17 +133,17 @@ namespace TotalSquashNext.Controllers
                     {
                         if (datePicked > checkDayRule)
                         {
-                            TempData["Message"] = "Sorry friend. You cannot book more than " + dateRules.ToString() + " in advance!";
+                            TempData["message"] = "Sorry friend. You cannot book more than " + dateRules.ToString() + " in advance!";
                             return RedirectToAction("Create", "Booking");
                         }
                         else if (datePicked.TimeOfDay < dayStart)
                         {
-                            TempData["Message"] = "Sorry friend. You cannot book a court earlier than " + dayStart.ToString() + " am!";
+                            TempData["message"] = "Sorry friend. You cannot book a court earlier than " + dayStart.ToString() + " am!";
                             return RedirectToAction("Create", "Booking");
                         }
                         else if (numBookings >= numBookAllowed)
                         {
-                            TempData["Message"] = "Sorry friend. You cannot have more than " + numBookAllowed.ToString() + " bookings!";
+                            TempData["message"] = "Sorry friend. You cannot have more than " + numBookAllowed.ToString() + " bookings!";
                             return RedirectToAction("Create", "Booking");
                         }
                     }
@@ -153,7 +156,7 @@ namespace TotalSquashNext.Controllers
 
                     if (availCourts != null)
                     {
-                        TempData["Message"] = "Sorry that court is taken. Do any of these work?";
+                        TempData["message"] = "Sorry that court is taken. Do any of these work?";
                         ViewBag.alternateCourts = new SelectList(availCourts);
                         return RedirectToAction("AlternateCourts", "Booking");
                     }
