@@ -5,21 +5,22 @@
 }
 
 <body>
-<h2>Edit</h2>
-    
+    <h2>Edit</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
- 
-    
-    <div class="form-inline">
-        <h4>User</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
-      
+    @*@using (Html.BeginForm())*@
+    <form method="post" enctype="multipart/form-data">
+        {
+        @Html.AntiForgeryToken()
+
+
+
+        <div class="form-inline">
+            <h4>User</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.id)
+
             <div class="form-group">
                 @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -36,45 +37,59 @@
                 </div>
             </div>
 
+            @using CloudinaryDotNet;
             <div class="form-group">
-                @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(model => model.password,new { htmlAttributes = new { @class = "form-control",} })
-                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-                </div>
+                <form action="" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <p>
+                            <label for="fileToUpload">Pick a Profile Image</label><br />
+                            <input type="file" name="fileToUpload" />
+                        </p>
+                        <input type="submit" value="Upload" />
+                    </fieldset>
+                    <div id="displayImage">
+                        @{
+
+                            if (IsPost)
+                            {
+                                try
+                                {
+                                    WebImage image = WebImage.GetImageFromRequest();
+                                    if (image != null)
+                                    {
+                                        String sImagePath = Request.PhysicalApplicationPath + "App_Data/" + Path.GetFileName(image.FileName);
+                                        image.Resize(width: 320, height: 320, preserveAspectRatio: true, preventEnlarge: true);
+
+
+                                        image.Save(sImagePath);
+
+                                        // now we will add it to cloudinary
+                                        Cloudinary cloudinary = new Cloudinary("cloudinary://347569431798466:H0Y5lsH8s9kgsklpVyOQtdA-0MY@dmxlkkyrk");
+                                        CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
+                                        {
+                                            File = new CloudinaryDotNet.Actions.FileDescription(sImagePath)
+                                        };
+
+                                        CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+                                        string url = cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));
+                                        Session["photoUpload"] = url;
+                                        File.Delete(sImagePath);
+                                        <img src="@url" alt="User Uploaded Image" title="User Uploaded Image" />
+
+
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    <p>Error @e.Message</p>
+                                }
+                            }
+                        }
+                    </div>
+                </form>
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.photo, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.photo, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.wins, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.wins, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.wins, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.losses, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.losses, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.losses, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ties, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ties, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ties, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.firstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -140,14 +155,6 @@
                 </div>
             </div>
 
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.emailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.emailAddress, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.emailAddress, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
             <div class="form-group">
                 @Html.LabelFor(model => model.gender, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -196,10 +203,9 @@
                 </div>
             </div>
         </div>
-     
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+        }
+    </form>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 </body>

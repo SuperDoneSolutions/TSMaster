@@ -61,9 +61,9 @@ namespace TotalSquashNext.Controllers
             if (Session["currentUser"] == null)
             {
                 TempData["message"] = "Please login to continue.";
-                return RedirectToAction("VerifyLogin","Login");
+                return RedirectToAction("VerifyLogin", "Login");
             }
-            if(((TotalSquashNext.Models.User)Session["currentUser"]).accountId!=1)
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
             {
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
@@ -101,6 +101,7 @@ namespace TotalSquashNext.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
+            Session["photoUpload"] = null;
             ViewBag.accountId = new SelectList(db.AccountTypes, "accountId", "description");
             ViewBag.countryId = new SelectList(db.Countries, "countryId", "countryName");
             ViewBag.organizationId = new SelectList(db.Organizations, "organizationId", "orgName");
@@ -124,7 +125,10 @@ namespace TotalSquashNext.Controllers
                 string encryptedPass = ep.Encrypt(tempPass);
 
                 user.password = encryptedPass;
-                user.photo = Session["photoUpload"].ToString();
+                if (Session["photoUpload"] != null)
+                {
+                    user.photo = Session["photoUpload"].ToString();
+                }
                 user.strike = 0;
                 db.Users.Add(user);
                 db.SaveChanges();
@@ -157,6 +161,7 @@ namespace TotalSquashNext.Controllers
             {
                 return HttpNotFound();
             }
+            Session["photoUpload"] = null;
             ViewBag.accountId = new SelectList(db.AccountTypes, "accountId", "description", user.accountId);
             ViewBag.countryId = new SelectList(db.Countries, "countryId", "countryName", user.countryId);
             ViewBag.organizationId = new SelectList(db.Organizations, "organizationId", "orgName", user.organizationId);
@@ -181,18 +186,20 @@ namespace TotalSquashNext.Controllers
 
             if (ModelState.IsValid)
             {
+                if (Session["photoUpload"] == null)
+                {
+                    user.photo = (((TotalSquashNext.Models.User)Session["currentUser"]).photo);
+                }
+                else
+                {
+                    user.photo = Session["photoUpload"].ToString();
+                }
+
                 user.wins = (((TotalSquashNext.Models.User)Session["currentUser"]).wins);
                 user.losses = (((TotalSquashNext.Models.User)Session["currentUser"]).losses);
                 user.ties = (((TotalSquashNext.Models.User)Session["currentUser"]).ties);
                 user.emailAddress = (((TotalSquashNext.Models.User)Session["currentUser"]).emailAddress);
-                string tempPass = user.password;
-                string encryptedPass = ep.Encrypt(tempPass);
-
-                user.password = encryptedPass;
-
-
-
-
+                user.password = (((TotalSquashNext.Models.User)Session["currentUser"]).password);
                 db.Entry(user).State = EntityState.Modified;
 
                 db.SaveChanges();
@@ -236,7 +243,7 @@ namespace TotalSquashNext.Controllers
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("VerifyLogin","Login");
+            return RedirectToAction("VerifyLogin", "Login");
         }
 
         protected override void Dispose(bool disposing)

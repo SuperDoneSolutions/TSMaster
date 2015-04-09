@@ -11,7 +11,6 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Ladder
     {
@@ -19,14 +18,9 @@ namespace TotalSquashNext.Models
         {
             this.UserLadders = new HashSet<UserLadder>();
         }
-
-        [Display(Name = "Ladder")]
+    
         public int ladderId { get; set; }
-
-        [Display(Name = "Description of Ladder")]
         public string ladderDescription { get; set; }
-
-        [Display(Name = "Ladder Rules")]
         public int ladderRuleId { get; set; }
     
         public virtual ICollection<UserLadder> UserLadders { get; set; }

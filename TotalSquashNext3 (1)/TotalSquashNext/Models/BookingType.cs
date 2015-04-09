@@ -11,7 +11,6 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class BookingType
     {
@@ -19,11 +18,8 @@ namespace TotalSquashNext.Models
         {
             this.Bookings = new HashSet<Booking>();
         }
-
-        [Display(Name = "Booking Code")]
+    
         public int bookingCode { get; set; }
-        
-        [Display(Name = "Description")]
         public string description { get; set; }
     
         public virtual ICollection<Booking> Bookings { get; set; }

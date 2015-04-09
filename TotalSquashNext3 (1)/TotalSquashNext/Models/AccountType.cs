@@ -11,7 +11,6 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class AccountType
     {
@@ -19,11 +18,8 @@ namespace TotalSquashNext.Models
         {
             this.Users = new HashSet<User>();
         }
-
-        [Display(Name = "Account")]
+    
         public int accountId { get; set; }
-       
-        [Display(Name = "Description")]
         public string description { get; set; }
     
         public virtual ICollection<User> Users { get; set; }
