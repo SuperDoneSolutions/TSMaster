@@ -118,6 +118,7 @@
             <section class="page container">
 
                 <div class="span8">
+                    <p>@TempData["message"]</p>
                     <div>
 
                         <p>
@@ -215,31 +216,7 @@
                                         </td>
                                     }
                                 </tr>
-                                @*<div id="datepicker" class="input-prepend date">
-                                            <span class="add-on"><i class="icon-th"></i></span>
-                                            <input class="span2" type="text" value="Today's date...'">
-                                        </div>
-                                        <select class="chosen span4" data-placeholder="Choose a Time...">
-                                            <option value="530">5:30am-6:15am</option>
-                                            <option value=""></option>
-                                            <option value=""></option>
-                                            <option value="United States">9:00-9:45am</option>
-                                            <option value="United Kingdom">9:45-10:30am</option>
-                                            <option value="Afghanistan">10:30-11:15am</option>
-                                            <option value="Albania">11:15am-12:00pm</option>
-                                            <option value="Algeria">12:00-12:45pm</option>
-                                            <option value="American Samoa">12:45-1:30pm</option>
-                                            <option value="Andorra">1:30-2:15pm</option>
-                                            <option value="Angola">etc...</option>
 
-                                        </select>
-                                    </form>*@
-                            </div>
-                            <div class="box-footer">
-                                @*<a href="@Url.Action("Edit","Use class="btn btn-primary">*@
-                                <i class="icon-ok"></i>
-                                Check Availabilty
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -262,19 +239,19 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>4</td>
-                                            <td>February 16th, 2015 4:00-4:45pm</td>
+                                            <td>@(((TotalSquashNext.Models.Booking)Session["userBookingsOne"]).courtId)</td>
+                                            <td>@(((TotalSquashNext.Models.Booking)Session["userBookingsOne"]).date)</td>
                                             <td class="td-actions">
-                                                <a href="javascript:;" class="btn btn-small btn-danger">
+                                                <a href="@Url.Action("Delete","Booking",new {id=(((TotalSquashNext.Models.Booking)Session["userBookingsOne"]).bookingNumber)})" class="btn btn-small btn-danger">
                                                     <i class="btn-icon-only icon-remove"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>3</td>
-                                            <td>March 23rd, 2015 2:15-3:00pm</td>
+                                            <td>@(((TotalSquashNext.Models.Booking)Session["userBookingsTwo"]).courtId)</td>
+                                            <td>@(((TotalSquashNext.Models.Booking)Session["userBookingsTwo"]).date)</td>
                                             <td class="td-actions">
-                                                <a href="javascript:;" class="btn btn-small btn-danger">
+                                                <a href="@Url.Action("Delete","Booking",new {id=(((TotalSquashNext.Models.Booking)Session["userBookingsTwo"]).bookingNumber)})" class="btn btn-small btn-danger">
                                                     <i class="btn-icon-only icon-remove"></i>
                                                 </a>
                                             </td>

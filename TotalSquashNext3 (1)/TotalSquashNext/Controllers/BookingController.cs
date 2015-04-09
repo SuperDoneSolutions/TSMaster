@@ -122,7 +122,7 @@ namespace TotalSquashNext.Controllers
 
                 if (dateHolder == 0)
                 {
-                    if (datePicked <= checkDayRule && datePicked.TimeOfDay >= dayStart && numBookings <= numBookAllowed)
+                    if (datePicked <= checkDayRule && datePicked.TimeOfDay >= dayStart && numBookings < numBookAllowed)
                     {
                         TempData["message"] = "Your court has been booked.";
                         db.Bookings.Add(booking);
@@ -133,7 +133,7 @@ namespace TotalSquashNext.Controllers
                     {
                         if (datePicked > checkDayRule)
                         {
-                            TempData["message"] = "Sorry friend. You cannot book more than " + dateRules.ToString() + " in advance!";
+                            TempData["message"] = "Sorry friend. You cannot book more than " + dateRules.ToString() + " days in advance!";
                             return RedirectToAction("Create", "Booking");
                         }
                         else if (datePicked.TimeOfDay < dayStart)
@@ -197,6 +197,7 @@ namespace TotalSquashNext.Controllers
 
             ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description", booking.bookingCode);
             ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
+            ViewBag.buildingId = new SelectList(db.Buildings, "buildingId", "address");
             ViewBag.courtId = new SelectList(db.Courts, "courtId", "courtDescription", booking.courtId);
             return View(booking);
         }

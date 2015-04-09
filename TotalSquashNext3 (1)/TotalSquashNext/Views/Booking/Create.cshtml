@@ -58,7 +58,8 @@
                 <div class="col-md-10">
                     @{if (Session["datePicked"] != null)
                     {
-                        ViewBag.datePicked = Session["datePicked"].ToString();
+                        ViewBag.datePicked = Session["datePicked"];
+                        Session["datePicked"] = "";
                     }
                       else
                       {
@@ -99,7 +100,7 @@
 
                     </div>                   
                     
-                    @Html.EditorFor(model => model.date, new { @Value = ViewBag.datePicked })
+                    @Html.TextBoxFor(model => model.date, new { @Value = ViewBag.datePicked })
                     @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
                 </div>
             </div>

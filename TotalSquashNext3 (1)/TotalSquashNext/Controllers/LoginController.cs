@@ -152,19 +152,45 @@ namespace TotalSquashNext.Controllers
             }
             Session["datePicked"] = "";
 
-            //int user = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
-            //Session["userBookings"] = null;
-            //var userBookings = (from x in db.Bookings
-            //                    where user == x.userId
-            //                    orderby x.bookingNumber descending
-            //                    select x).First();
-            //if (userBookings!=null)
-            //{
-            //    Session["userBookings"] = userBookings;
-            //}
+            int user = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
             
+            Booking defaultBook = new Booking();
+            defaultBook.date = DateTime.Today;
+            defaultBook.courtId = 0;
+            defaultBook.buildingId = 0;
+            defaultBook.bookingNumber = 0;
+            defaultBook.bookingCode = 1;
+            defaultBook.bookingDate = DateTime.Today;
+            defaultBook.bookingRulesId = 0;
+            defaultBook.userId = user;
+            Session["userBookingsOne"] = defaultBook;
+            Session["userBookingsTwo"] = defaultBook;
 
 
+            var userBookingOne = (from x in db.Bookings
+                                  where user == x.userId
+                                  orderby x.bookingNumber descending
+                                  select x).FirstOrDefault();
+            var userBookingTwo = (from x in db.Bookings
+                                  where user == x.userId
+                                  orderby x.bookingNumber descending
+                                  select x).Skip(1).FirstOrDefault();
+            if (userBookingOne != null)
+            {
+                Session["userBookingsOne"] = userBookingOne;
+                if (userBookingTwo != null)
+                {
+                    Session["userBookingsTwo"] = userBookingTwo;
+                }
+                else
+                {
+                    Session["userBookingsTwo"] = defaultBook;
+                }
+            }
+            else
+            {
+                Session["userBookingsOne"] = defaultBook;
+            }
             return View();
         }
         public ActionResult AdministrativeTools()
