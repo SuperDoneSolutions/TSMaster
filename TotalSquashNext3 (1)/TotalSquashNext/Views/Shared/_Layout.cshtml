@@ -62,7 +62,7 @@
 
                             <a href="@Url.Action("Index","UserMatch", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
                                 <i class="icon-bar-chart icon-large"></i>
-                                <span>Statistics</span>
+                                <span>Matches</span>
                             </a>
                         </li>
                         <!--Shows link to administration only, for easy navigation to court booking rules, ladder rules, etc.-->
@@ -85,6 +85,7 @@
 
             
             <div class="container body-content">
+                <br>
                 <p class="text-danger">@TempData["message"]</p>
                 @RenderBody()
                 <hr />

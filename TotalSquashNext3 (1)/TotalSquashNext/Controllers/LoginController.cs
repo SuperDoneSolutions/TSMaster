@@ -69,59 +69,70 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult VerifyLogin([Bind(Include = "emailAddress,password")] User user)
         {
-            SimplerAES ep = new SimplerAES();
-
-            if (ModelState.IsValid)
+            try
             {
 
-                string tempEmailVerify = user.emailAddress;
-                string tempPassVerify = ep.Encrypt(user.password);
 
-                if (db.Users.Where(x => x.emailAddress == tempEmailVerify).Count() > 0)
+                SimplerAES ep = new SimplerAES();
+
+                if (ModelState.IsValid)
                 {
-                    var passHolder = (from x in db.Users
-                                      where x.emailAddress == tempEmailVerify
-                                      select x.password).Single();
 
+                    string tempEmailVerify = user.emailAddress;
+                    string tempPassVerify = ep.Encrypt(user.password);
 
-                    if (passHolder.ToString() == tempPassVerify)
+                    if (db.Users.Where(x => x.emailAddress == tempEmailVerify).Count() > 0)
                     {
-
-                        var currentUser = (from x in db.Users
-                                           where x.emailAddress == tempEmailVerify
-                                           select x).ToList();
-
-                        User selectedUser = currentUser[0];
-
-                        int selectedOrg = selectedUser.organizationId;
-                        int selectedSkill = selectedUser.skillId;
-                        int selectedAccount = selectedUser.accountId;
-                        string selectedImage = selectedUser.photo;
+                        var passHolder = (from x in db.Users
+                                          where x.emailAddress == tempEmailVerify
+                                          select x.password).Single();
 
 
-                        Session["currentOrg"] = (from x in db.Organizations
-                                                 where x.organizationId == selectedOrg
-                                                 select x.orgName).Single();
-                        Session["currentSkill"] = (from x in db.Skills
-                                                   where x.skillId == selectedSkill
-                                                   select x.description).Single();
-                        Session["currentAccount"] = (from x in db.AccountTypes
-                                                     where x.accountId == selectedAccount
-                                                     select x.description).Single();
-
-                        Session["currentUser"] = selectedUser;
-
-                        Session["currentImage"] = (from x in db.Users
-                                                   where x.emailAddress == tempEmailVerify
-                                                   select x.photo).Single();
-
-                        if (Session["currentImage"] == null || Session["currentImage"] == "")
+                        if (passHolder.ToString() == tempPassVerify)
                         {
-                            Session["currentImage"] = "../../Images/anon.png";
+
+                            var currentUser = (from x in db.Users
+                                               where x.emailAddress == tempEmailVerify
+                                               select x).ToList();
+
+                            User selectedUser = currentUser[0];
+
+                            int selectedOrg = selectedUser.organizationId;
+                            int selectedSkill = selectedUser.skillId;
+                            int selectedAccount = selectedUser.accountId;
+                            string selectedImage = selectedUser.photo;
+
+
+                            Session["currentOrg"] = (from x in db.Organizations
+                                                     where x.organizationId == selectedOrg
+                                                     select x.orgName).Single();
+                            Session["currentSkill"] = (from x in db.Skills
+                                                       where x.skillId == selectedSkill
+                                                       select x.description).Single();
+                            Session["currentAccount"] = (from x in db.AccountTypes
+                                                         where x.accountId == selectedAccount
+                                                         select x.description).Single();
+
+                            Session["currentUser"] = selectedUser;
+
+                            Session["currentImage"] = (from x in db.Users
+                                                       where x.emailAddress == tempEmailVerify
+                                                       select x.photo).Single();
+
+                            if (Session["currentImage"] == null)
+                            {
+                                Session["currentImage"] = "../../Images/anon.png";
+                            }
+
+
+                            return RedirectToAction("LandingPage");
+
                         }
-
-
-                        return RedirectToAction("LandingPage");
+                        else
+                        {
+                            TempData["message"] = "Incorrect email or password. Please try again.";
+                            return RedirectToAction("VerifyLogin", "Login");
+                        }
 
                     }
                     else
@@ -129,13 +140,12 @@ namespace TotalSquashNext.Controllers
                         TempData["message"] = "Incorrect email or password. Please try again.";
                         return RedirectToAction("VerifyLogin", "Login");
                     }
-
                 }
-                else
-                {
-                    TempData["message"] = "Incorrect email or password. Please try again.";
-                    return RedirectToAction("VerifyLogin", "Login");
-                }
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = "Incorrect email or password. Please try again.";
+                return View();
             }
 
             TempData["message"] = "Incorrect email or password. Please try again.";

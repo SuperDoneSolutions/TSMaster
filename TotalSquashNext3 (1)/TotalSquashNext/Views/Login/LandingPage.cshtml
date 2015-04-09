@@ -58,7 +58,7 @@
 
                             <a href="@Url.Action("Create","Booking", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
                                 <i class="icon-calendar icon-large"></i>
-                                <span class="sr-only">Book a Court</span>
+                                <span>Book a Court</span>
                             </a>
                         </li>
 
@@ -67,20 +67,20 @@
                             <a href="@Url.Action("Edit","Users", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
 
                                 <i class="icon-group icon-large"></i>
-                                <span class="sr-only">Edit Profile</span>
+                                <span>Edit Profile</span>
                             </a>
                         </li>
                         <li>
                             <a href="@Url.Action("Index","Ladder", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
                                 <i class="icon-list-alt icon-large"></i>
-                                <span class="sr-only">Squash Ladder</span>
+                                <span>Squash Ladder</span>
                             </a>
                         </li>
                         <li>
 
                             <a href="@Url.Action("Index","UserMatch", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
                                 <i class="icon-bar-chart icon-large"></i>
-                                <span class="sr-only">Match History</span>
+                                <span>Matches</span>
                             </a>
                         </li>
 
@@ -91,7 +91,7 @@
 
                                 <a href="@Url.Action("AdministrativeTools","Login", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
                                     <i class="icon-cogs icon-large"></i>
-                                    <span class="sr-only">Administration</span>
+                                    <span>Administration</span>
                                 </a>
                             </li>
                         }
