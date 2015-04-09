@@ -25,6 +25,7 @@
     <NavigationProperty Name="BookingRule" Relationship="Self.FK_BookingRules" FromRole="Booking" ToRole="BookingRules" />
     <NavigationProperty Name="Building" Relationship="Self.FK_building_Booking" FromRole="Booking" ToRole="Building" />
     <NavigationProperty Name="Court" Relationship="Self.FK_courtId" FromRole="Booking" ToRole="Court" />
+    <Property Name="checkedIn" Type="Boolean" />
   </EntityType>
   <EntityType Name="BookingRule">
     <Key>

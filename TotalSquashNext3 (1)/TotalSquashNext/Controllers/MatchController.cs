@@ -15,9 +15,16 @@ namespace TotalSquashNext.Controllers
         private PrimarySquashDBContext db = new PrimarySquashDBContext();
 
         // GET: Match
+        //Displays ALL Matches. Probs best jsut for admin?
         public ActionResult Index()
         {
-            var matches = db.Matches.Include(m => m.Booking);
+           var matches = db.Matches.Include(m => m.Booking);
+           return View(matches.ToList());
+        }
+        //Displays all matches for user - not including who they challenged. 
+        public ActionResult UsersMatches(int id)
+        {
+            var matches = db.Matches.Include(m => m.Booking).Where(m=>m.Booking.userId==id);
             return View(matches.ToList());
         }
 
@@ -35,6 +42,62 @@ namespace TotalSquashNext.Controllers
             }
             return View(match);
         }
+
+        public ActionResult Challenge(int id)
+        {
+            //Current User
+            ViewBag.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).username;
+            int currentUserId = ViewBag.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
+
+            //User To Challenge
+            TotalSquashNext.Models.User user = db.Users.Find(id);
+            ViewBag.userToChallenge = user.username;
+            Session["userToChallenge"] = user;
+
+            //Current Users Bookings to connect to match.
+            IQueryable<TotalSquashNext.Models.Booking> usersBookings = from x in db.Bookings
+                                                                       where x.userId == currentUserId
+                                                                       select x;
+            if (usersBookings == null)
+            {
+                TempData["message"] = "You must have a court booking to challenge another player.";
+                RedirectToAction("Create", "Booking");
+            }
+
+            ViewBag.bookingNumber = new SelectList(usersBookings, "bookingNumber", "date");
+
+
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Challenge([Bind(Include = "matchId,bookingNumber")] Match match)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Matches.Add(match);
+                db.SaveChanges();
+                return RedirectToAction("CreateFromChallenge", "UserMatch", new { gameId = match.matchId });
+            }
+            //Current User
+            ViewBag.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).username;
+            int currentUserId = ViewBag.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
+
+            //User To Challenge
+
+            //ViewBag.userToChallenge = user.username;
+
+            //Current Users Bookings to connect to match.
+            IQueryable<TotalSquashNext.Models.Booking> usersBookings = from x in db.Bookings
+                                                                       where x.userId == currentUserId
+                                                                       select x;
+
+            ViewBag.bookingNumber = new SelectList(usersBookings, "bookingNumber", "date");
+            return RedirectToAction("CreateFromChallenge", "UserMatch", new { gameId=match.matchId});
+        }
+
 
         // GET: Match/Create
         public ActionResult Create()
@@ -115,6 +178,12 @@ namespace TotalSquashNext.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Match match = db.Matches.Find(id);
+            var userMatches = db.UserMatches.Where(x => x.gameId == id);
+            foreach(var m in userMatches)
+            {
+                db.UserMatches.Remove(m);
+            }
+            
             db.Matches.Remove(match);
             db.SaveChanges();
             return RedirectToAction("Index");

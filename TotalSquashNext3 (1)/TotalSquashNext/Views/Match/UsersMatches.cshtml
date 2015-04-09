@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TotalSquashNext.Models.Match>
+
+@{
+    ViewBag.Title = "Your Matches";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Booking.bookingNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.matchId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Booking.date)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Booking.bookingNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.matchId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Booking.date)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Match", new { id=item.matchId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -161,7 +161,7 @@ namespace TotalSquashNext.Controllers
             {
                 return HttpNotFound();
             }
-            Session["photoUpload"] = null;
+            Session["photoEdit"] = null;
             ViewBag.accountId = new SelectList(db.AccountTypes, "accountId", "description", user.accountId);
             ViewBag.countryId = new SelectList(db.Countries, "countryId", "countryName", user.countryId);
             ViewBag.organizationId = new SelectList(db.Organizations, "organizationId", "orgName", user.organizationId);
@@ -186,14 +186,22 @@ namespace TotalSquashNext.Controllers
 
             if (ModelState.IsValid)
             {
-                if (Session["photoUpload"] == null)
+                if (Session["photoEdit"] != null)
                 {
-                    user.photo = (((TotalSquashNext.Models.User)Session["currentUser"]).photo);
+                    user.photo = Session["photoEdit"].ToString();
                 }
                 else
                 {
-                    user.photo = Session["photoUpload"].ToString();
+                    user.photo = (((TotalSquashNext.Models.User)Session["currentUser"]).photo);
                 }
+                //if (Session["photoUpload"] == null)
+                //{
+                //    user.photo = (((TotalSquashNext.Models.User)Session["currentUser"]).photo);
+                //}
+                //else
+                //{
+                //    user.photo = Session["photoUpload"].ToString();
+                //}
 
                 user.wins = (((TotalSquashNext.Models.User)Session["currentUser"]).wins);
                 user.losses = (((TotalSquashNext.Models.User)Session["currentUser"]).losses);

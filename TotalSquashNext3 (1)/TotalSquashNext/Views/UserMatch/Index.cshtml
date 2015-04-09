@@ -34,8 +34,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.User.username)
         </td>
+        <td>
+            @Html.ActionLink("Submit/Edit Score", "UpdateScores", new { gameId = item.Match.matchId, userId = item.userId })
+        </td>
+
     </tr>
 }
 
 </table>
+<p>To delete a match, go to <a href="@Url.Action("UsersMatches", "Match", new { id=((TotalSquashNext.Models.User)Session["currentUser"]).id})">your matches.</a></p>
 

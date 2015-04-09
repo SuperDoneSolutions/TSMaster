@@ -19,6 +19,7 @@
     <Property Name="date" Type="datetime" Nullable="false" />
     <Property Name="bookingRulesId" Type="int" Nullable="false" />
     <Property Name="buildingId" Type="int" Nullable="false" />
+    <Property Name="checkedIn" Type="bit" />
   </EntityType>
   <EntityType Name="BookingRules">
     <Key>

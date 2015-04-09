@@ -124,9 +124,10 @@ namespace TotalSquashNext.Controllers
                 {
                     if (datePicked <= checkDayRule && datePicked.TimeOfDay >= dayStart && numBookings < numBookAllowed)
                     {
-                        TempData["message"] = "Your court has been booked.";
+                        
                         db.Bookings.Add(booking);
                         db.SaveChanges();
+                        TempData["message"] = "Your court has been booked.";
                         return RedirectToAction("LandingPage", "Login");
                     }
                     else
@@ -156,7 +157,7 @@ namespace TotalSquashNext.Controllers
 
                     if (availCourts != null)
                     {
-                        TempData["message"] = "Sorry that court is taken. Do any of these work?";
+                        TempData["message"] = "Sorry that court is taken at that time. Do any of these work?";
                         ViewBag.alternateCourts = new SelectList(availCourts);
                         return RedirectToAction("AlternateCourts", "Booking");
                     }
@@ -187,7 +188,7 @@ namespace TotalSquashNext.Controllers
                             }
                         } while (alternateBooking.Count() != 6);
 
-                        TempData["Message"] = "Sorry nothing is available then. Do any of these work?";
+                        TempData["Message"] = "Sorry nothing is available at that time. Do any of these work?";
                         ViewBag.alternateBookings = new SelectList(alternateBooking);
                         return RedirectToAction("AlternateBookings", "Booking"); // <----- Should work and should have a list of times available earlier and later than the desired time if unavailable BUT how do we call this shit??
                     }
@@ -216,6 +217,7 @@ namespace TotalSquashNext.Controllers
             }
             ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description", booking.bookingCode);
             ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
+            ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
             ViewBag.courtId = new SelectList(db.Courts, "courtId", "courtDescription", booking.courtId);
             return View(booking);
         }
@@ -234,6 +236,7 @@ namespace TotalSquashNext.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description", booking.bookingCode);
+            ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
             ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
             ViewBag.courtId = new SelectList(db.Courts, "courtId", "courtDescription", booking.courtId);
             return View(booking);

@@ -512,6 +512,9 @@
     <Content Include="Views\Match\Index.cshtml" />
     <Content Include="Views\Login\ForgotPasswordSecurityCheck.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
+    <Content Include="Views\Match\Challenge.cshtml" />
+    <Content Include="Views\Match\UsersMatches.cshtml" />
+    <Content Include="Views\UserMatch\UpdateScores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

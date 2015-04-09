@@ -88,6 +88,7 @@ namespace TotalSquashNext.Controllers
             }
             if (ModelState.IsValid)
             {
+                ladder.ladderRuleId = 1;
                 db.Ladders.Add(ladder);
                 db.SaveChanges();
                 return RedirectToAction("Index");

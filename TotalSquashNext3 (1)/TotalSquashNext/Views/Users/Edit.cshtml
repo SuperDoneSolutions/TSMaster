@@ -10,13 +10,13 @@
 
     @*@using (Html.BeginForm())*@
     <form method="post" enctype="multipart/form-data">
-        {
+        @{
         @Html.AntiForgeryToken()
 
 
 
         <div class="form-inline">
-            <h4>User</h4>
+            
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.id)
@@ -40,6 +40,7 @@
             @using CloudinaryDotNet;
             <div class="form-group">
                 <form action="" method="post" enctype="multipart/form-data">
+                    
                     <fieldset>
                         <p>
                             <label for="fileToUpload">Pick a Profile Image</label><br />
@@ -72,7 +73,7 @@
 
                                         CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
                                         string url = cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));
-                                        Session["photoUpload"] = url;
+                                        Session["photoEdit"] = url;
                                         File.Delete(sImagePath);
                                         <img src="@url" alt="User Uploaded Image" title="User Uploaded Image" />
 
@@ -203,7 +204,7 @@
                 </div>
             </div>
         </div>
-        }
+      }
     </form>
     <div>
         @Html.ActionLink("Back to List", "Index")

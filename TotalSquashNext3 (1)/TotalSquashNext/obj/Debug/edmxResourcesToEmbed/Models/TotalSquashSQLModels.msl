@@ -12,6 +12,7 @@
     <EntitySetMapping Name="Bookings">
       <EntityTypeMapping TypeName="PrimarySquashDBModel.Booking">
         <MappingFragment StoreEntitySet="Booking">
+          <ScalarProperty Name="checkedIn" ColumnName="checkedIn" />
           <ScalarProperty Name="courtId" ColumnName="courtId" />
           <ScalarProperty Name="bookingNumber" ColumnName="bookingNumber" />
           <ScalarProperty Name="bookingDate" ColumnName="bookingDate" />
