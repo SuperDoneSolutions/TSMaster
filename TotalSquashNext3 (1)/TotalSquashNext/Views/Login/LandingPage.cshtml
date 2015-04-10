@@ -178,7 +178,7 @@
                                 @using (Html.BeginForm("BookACourt", "BookACourt", FormMethod.Post))
                                 {
 
-                                    <td>
+                                    <td style="display:inline-block; margin:auto;">
                                         <div class="container">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
@@ -208,17 +208,18 @@
 
                                             </script>
 
-
                                     </td>
-                                    <td>
-
-                                        <input type="text" name="chosenDate" id="chosenDate" readonly="readonly" />
-                                        <input type="submit" value="Check Date" class="btn-xs" style="margin-top:1em;" />
+                                    <td style="display:inline-block;"align="center">
+                                        <br />
+                                        <input type="text" name="chosenDate" id="chosenDate" readonly="readonly" />          
+                                        <input type="submit" value="Check Date" class="btn-mini" style="margin-top:1em;" />
                                     </td>
                                 }
                             </tr>
 
                         </div>
+
+                    </div>
                     </div>
                 </div>
                 <div class="span8">

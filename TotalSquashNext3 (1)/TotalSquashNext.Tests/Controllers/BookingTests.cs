@@ -11,7 +11,7 @@ using TotalSquashNext.Models;
 namespace TotalSquashNext.Tests.Controllers
 {
     [TestClass]
-    public class BookingTest
+    class BookingTests
     {
         PrimarySquashDBContext db = new PrimarySquashDBContext();
 
@@ -65,7 +65,7 @@ namespace TotalSquashNext.Tests.Controllers
             ActionResult result = bookingController.Create(booking);
 
             Assert.IsTrue(result.GetType().Name != "ViewResult");
-            List<Booking> newBooking = db.Bookings.Where(a => a.bookingNumber == bookingNumber).ToList();
+            List<Booking> newBooking = db.Bookings.Where(a => a.bookingNumber == booking.bookingNumber).ToList();
             Assert.IsTrue(newBooking.Count != 0);
 
         }
@@ -88,3 +88,6 @@ namespace TotalSquashNext.Tests.Controllers
 
     }
 }
+
+
+

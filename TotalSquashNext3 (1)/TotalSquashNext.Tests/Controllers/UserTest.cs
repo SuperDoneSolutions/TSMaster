@@ -11,10 +11,13 @@ using TotalSquashNext.Models;
 namespace TotalSquashNext.Tests.Controllers
 {
     [TestClass]
+    class UserTest
+    {
+        [TestClass]
     public class UserTests
     {
         #region methods to create a sample user object and delete them from the db
-        private PrimarySquashDBContext db = new PrimarySquashDBContext();
+        PrimarySquashDBContext db = new PrimarySquashDBContext();
 
         private User GenericUser()
         {
@@ -31,7 +34,7 @@ namespace TotalSquashNext.Tests.Controllers
             user.phoneNumber = "519-998-4868";
             user.emailAddress = "jim@gmail.com";
             user.gender = "M";
-            user.birthDate = "05/27/1990";
+            user.birthDate = DateTime.Today.AddDays(-1000);
             user.accountId = 1;
             user.organizationId = 1;
 
@@ -96,7 +99,7 @@ namespace TotalSquashNext.Tests.Controllers
         public void NullSkillIdShouldErrorOut()
         {
             User user = GenericUser();
-            user.skillId = null;
+            user.skillId = 0;
             UsersController usersController = new UsersController();
 
             //Act
@@ -282,3 +285,5 @@ namespace TotalSquashNext.Tests.Controllers
 
     }
 }
+    }
+
