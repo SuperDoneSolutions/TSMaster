@@ -20,20 +20,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ladderDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LadderRule.LadderRuleId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ladderId }) |
-            @Html.ActionLink("View Ladder", "DisplayByLadder", "UserLadder", new { ladderId = item.ladderId, userId = (((TotalSquashNext.Models.User)Session["currentUser"]).id) }, null) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ladderId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ladderDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LadderRule.LadderRuleId)
+            </td>
+            <td>
+                @Html.ActionLink("View Ladder", "DisplayByLadder", "UserLadder", new { ladderId = item.ladderId, userId = (((TotalSquashNext.Models.User)Session["currentUser"]).id) }, null) |
 
-</table>
+                @if ((((TotalSquashNext.Models.User)Session["currentUser"]).accountId == 1))
+                {
+                @Html.ActionLink("Edit |", "Edit", new { id=item.ladderId })  
+                @Html.ActionLink(" Delete", "Delete", new { id=item.ladderId })
+                }
+
+
+            </td>
+        </tr>
+    }
+
+    </table>

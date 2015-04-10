@@ -22,7 +22,7 @@ namespace TotalSquashNext.Models
 
         [Display(Name = "Account Type")]
         public int accountId { get; set; }
-        [Display(Name = "Description")
+        [Display(Name = "Description")]
         public string description { get; set; }
     
         public virtual ICollection<User> Users { get; set; }

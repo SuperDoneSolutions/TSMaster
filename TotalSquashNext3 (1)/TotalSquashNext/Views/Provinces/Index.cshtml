@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<TotalSquashNext.Models.Province>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = null;
+    ViewBag.Title = "Provinces";
+    
 }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New Province/State", "Create")
 </p>
+<p><b>Note: Respective country must be created to add a province.</b></p>
 <table class="table">
     <tr>
         <th>
