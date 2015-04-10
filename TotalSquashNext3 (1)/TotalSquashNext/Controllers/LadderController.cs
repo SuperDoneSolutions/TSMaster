@@ -82,12 +82,22 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+
+            try
             {
-                ladder.ladderRuleId = 1;
-                db.Ladders.Add(ladder);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    ladder.ladderRuleId = 1;
+                    db.Ladders.Add(ladder);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
             }
 
             ViewBag.ladderRuleId = new SelectList(db.LadderRules, "LadderRuleId", "LadderRuleId", ladder.ladderRuleId);
@@ -137,12 +147,23 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+
+            try
             {
-                db.Entry(ladder).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(ladder).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
+
             ViewBag.ladderRuleId = new SelectList(db.LadderRules, "LadderRuleId", "LadderRuleId", ladder.ladderRuleId);
             return View(ladder);
         }

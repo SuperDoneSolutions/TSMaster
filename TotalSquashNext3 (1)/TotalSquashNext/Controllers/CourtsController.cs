@@ -90,11 +90,21 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+
+            try
             {
-                db.Courts.Add(court);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Courts.Add(court);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
             }
 
             ViewBag.buildingId = new SelectList(db.Buildings, "buildingId", "address", court.buildingId);
