@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
+//This controller contains all of the logic (edit/create/delete) for court bookings. SuperDoneSolutions 2015
+
+
 namespace TotalSquashNext.Controllers
 {
     public class BookingController : Controller

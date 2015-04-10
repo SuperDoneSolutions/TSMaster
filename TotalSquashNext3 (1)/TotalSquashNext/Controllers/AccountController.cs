@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TotalSquashNext.Models;
 
+//This controller was automatically generated. SuperDoneSolutions 2015
+
 namespace TotalSquashNext.Controllers
 {
     [Authorize]

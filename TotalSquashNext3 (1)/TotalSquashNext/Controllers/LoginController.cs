@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
+//This controller is used for verifying users and user roles.  SuperDoneSolutions 2015
+
 namespace TotalSquashNext.Controllers
 {
     public class LoginController : Controller

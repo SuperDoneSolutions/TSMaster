@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
+//This controller is just something a date gets passed through when a User Books a Court. SuperDoneSolutions 2015
+
 namespace TotalSquashNext.Controllers
 {
     public class BookACourtController : Controller

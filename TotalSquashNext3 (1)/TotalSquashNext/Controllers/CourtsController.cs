@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
+//This controller is only for administrators.  Here they create/edit/delete courts.  SuperDoneSolutions 2015
+
 namespace TotalSquashNext.Controllers
 {
     public class CourtsController : Controller
