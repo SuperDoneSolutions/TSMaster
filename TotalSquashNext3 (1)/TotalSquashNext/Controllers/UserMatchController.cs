@@ -17,6 +17,11 @@ namespace TotalSquashNext.Controllers
         // GET: UserMatch
         public ActionResult Index(int id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             var userMatches = db.UserMatches.Include(u => u.Match).Include(u => u.User).Where(u => u.userId == id);
             //int currentUserId = ViewBag.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
             //var matches = db.Matches.Include(m => m.Booking).Where(m => m.Booking.userId == currentUserId);
@@ -49,6 +54,11 @@ namespace TotalSquashNext.Controllers
         // GET: UserMatch/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -63,8 +73,72 @@ namespace TotalSquashNext.Controllers
 
         public ActionResult CreateFromChallenge(int gameId)
         {
-            
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+
             int currentUser = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
+            int challengee=((TotalSquashNext.Models.User)Session["userToChallenge"]).id;
+            int chosenLadderId = (int)Session["ladderId"];
+
+            var userOnLadder = from x in db.UserLadders
+                               where x.userId == currentUser
+                               select x;
+            
+            var challengeLower= (from x in db.LadderRules
+                              select x.challengeLower).Single();
+
+            var challengeRange = (from x in db.LadderRules
+                                 select x.challengeRange).Single();
+
+            var usersLadder = (from x in db.UserLadders
+                               where x.userId == currentUser
+                               where x.ladderId == chosenLadderId
+                               select x).Count();
+
+            var challengeeLadders=(from x in db.UserLadders
+                            where x.userId==challengee
+                            where x.ladderId==chosenLadderId
+                            select x).Count();
+
+            var allUsersOnLadder = db.UserLadders.Include(x => x.User)
+                .Where(x => x.ladderId == chosenLadderId).OrderByDescending(x => x.User.wins)
+                .ThenBy(x => x.User.losses).ToList();
+
+            int userPosition = allUsersOnLadder.FindIndex(x => x.userId == currentUser);
+            int challengeePosition = allUsersOnLadder.FindIndex(x => x.userId == challengee);
+
+           
+            if(userOnLadder.Count()==0)
+            {
+                TempData["message"] = "You must be registered for at least one ladder to challenge another player.";
+                return RedirectToAction("Index", "Ladder");
+            }
+            if(usersLadder==0 || challengeeLadders==0)
+            {
+                TempData["message"] = "You must both be registered on the same ladder to challenge this player.";
+                return RedirectToAction("Index", "Ladder");
+            }
+
+            if((userPosition>challengeePosition)&&(challengeLower=true))
+            {
+                TempData["message"] = "Current rules do not allow you to challenge a user who is in a lower position on the ladder.";
+                return RedirectToAction("Index", "Ladder");
+            }
+            if(challengeePosition-userPosition>challengeRange)
+            {
+                TempData["message"] = "Current rules do not allow you to challenge a user who is greater than" + challengeRange +" spaces above you on the ladder.";
+                return RedirectToAction("Index", "Ladder");
+            }
+            if ((userPosition - challengeePosition > challengeRange) && (challengeLower=false))
+            {
+                TempData["message"] = "Current rules do not allow you to challenge a user who is greater than" + challengeRange + " spaces above you on the ladder.";
+                return RedirectToAction("Index", "Ladder");
+            }
+
+            
             int[] userIds = new int[2];
             userIds[0] = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
             userIds[1] = ((TotalSquashNext.Models.User)Session["userToChallenge"]).id;
@@ -84,6 +158,11 @@ namespace TotalSquashNext.Controllers
         }
         public ActionResult UpdateScores(int gameId, int userId)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             int userScore = (int)(db.UserMatches.Where(x=>x.gameId==gameId).Where(x=>x.userId==userId).Select(x=>x.score).Single());
             
             if (userScore>0)
@@ -98,6 +177,11 @@ namespace TotalSquashNext.Controllers
         [HttpPost]
         public ActionResult UpdateScores([Bind(Include = "userId,gameId,score")] UserMatch userMatch)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             
             if (ModelState.IsValid)
             {
@@ -113,6 +197,11 @@ namespace TotalSquashNext.Controllers
 
         public ActionResult CalculateWinners(int gameId)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             int cUser = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
 
             
@@ -215,6 +304,17 @@ namespace TotalSquashNext.Controllers
         //Creates a match - Use only for administrators.
         public ActionResult Create()
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
+
             ViewBag.gameId = new SelectList(db.Matches, "matchId", "matchId");
             ViewBag.userId = new SelectList(db.Users, "id", "username");
             return View();
@@ -229,6 +329,17 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "userId,gameId,score")] UserMatch userMatch)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+                        if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
+
             if (ModelState.IsValid)
             {
                 db.UserMatches.Add(userMatch);
@@ -244,6 +355,16 @@ namespace TotalSquashNext.Controllers
         // GET: UserMatch/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -265,6 +386,16 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "userId,gameId,score")] UserMatch userMatch)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(userMatch).State = EntityState.Modified;
@@ -279,6 +410,12 @@ namespace TotalSquashNext.Controllers
         // GET: UserMatch/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -297,6 +434,12 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+
             var userMatch = db.UserMatches.Where(x => x.gameId == id);
             foreach (var u in userMatch)
             {

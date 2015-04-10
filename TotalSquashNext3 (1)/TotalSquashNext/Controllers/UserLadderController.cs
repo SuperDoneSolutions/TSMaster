@@ -30,6 +30,12 @@ namespace TotalSquashNext.Controllers
         //Displays chosen Ladder with users ordered by most wins, then least losses (eg if user1 has 10 wins and 5 losses, and user2 has 10 wins and 0 losses, user2 is higher in the ladder)
         public ActionResult DisplayByLadder(int ladderId,int userId)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            Session["ladderId"] = ladderId;
             var users = db.UserLadders.Include(u => u.Ladder).Include(u => u.User).Where(x=>x.ladderId==ladderId).OrderByDescending(u=>u.User.wins).ThenBy(u=>u.User.losses);
             return View(users.ToList());
         }
@@ -81,6 +87,19 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin","Login");
             }
+            var amountOfLadders = (from x in db.LadderRules
+                                  select x.numLadders).Single();
+            var usersLadders = from x in db.UserLadders
+                               where x.userId == userLadder.userId
+                               select x;
+            if(usersLadders.Count()>=amountOfLadders)
+            {
+                TempData["message"] = "Current rules allow you to be registered on " + amountOfLadders + " ladders at a given time.";
+                return RedirectToAction("Index", "Ladder");
+            }
+
+
+
             userLadder.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
             if (ModelState.IsValid)
             {
@@ -169,6 +188,7 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
+
             UserLadder userLadder = db.UserLadders.Find(id);
             db.UserLadders.Remove(userLadder);
             db.SaveChanges();

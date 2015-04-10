@@ -27,11 +27,7 @@ namespace TotalSquashNext.Controllers
             return View(ladders);
         }
 
-        //public ActionResult ViewBySkill(int id)
-        //{
-        //    UserLadder userLadder = new UserLadder();
-        //    userLadder.Index(id);
-        //}
+
         public ActionResult Details(int? id)
         {
             if (Session["currentUser"] == null)
