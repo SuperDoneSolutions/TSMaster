@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<TotalSquashNext.Models.Building>
 
 @{
-    ViewBag.Title = "Building Index";
+    ViewBag.Title = "Building";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add Building", "Create")
 </p>
+<p><b>Note: Respective organization must be created to add buildings. </b></p>
 <table class="table">
     <tr>
         <th>

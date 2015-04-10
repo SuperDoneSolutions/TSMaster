@@ -1,7 +1,7 @@
 ﻿@model TotalSquashNext.Models.BookingRule
 
 @{
-    ViewBag.Title = "Edit Booking Rule";
+    ViewBag.Title = "Edit Booking Rules";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -10,8 +10,8 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>BookingRule</h4>
+    <div class="form-inline">
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.bookingRuleId)

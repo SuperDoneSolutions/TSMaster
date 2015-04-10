@@ -68,7 +68,7 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            var users = db.Users.Include(u => u.AccountType).Include(u => u.Country).Include(u => u.Organization).Include(u => u.Province).Include(u => u.Skill);
+            var users = db.Users.Include(u => u.AccountType).Include(u => u.Country).Include(u => u.Organization).Include(u => u.Province).Include(u => u.Skill).OrderByDescending(x=>x.locked);
             return View(users.ToList());
         }
 

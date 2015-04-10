@@ -1,16 +1,19 @@
 ﻿@model IEnumerable<TotalSquashNext.Models.User>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "All Registered Users";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New User", "Create")
 </p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.locked)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.username)
         </th>
@@ -50,9 +53,7 @@
         <th>
             @Html.DisplayNameFor(model => model.birthDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.locked)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.AccountType.description)
         </th>
@@ -73,6 +74,9 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.locked)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.username)
         </td>
@@ -112,9 +116,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.birthDate)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.locked)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.AccountType.description)
         </td>

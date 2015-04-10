@@ -21,9 +21,11 @@
     <a href="@Url.Action("Index","BookingTypes", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
         Manage Booking Types
     </a><br />
-
+    <a href="@Url.Action("Create","Ladder", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+        Create Squash Ladder
+    </a><br />
     <a href="@Url.Action("Index","Ladder", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
-        Manage Ladders
+        Manage Squash Ladders
     </a><br />
 
     <a href="@Url.Action("Edit","LadderRule", new{id=1})">
