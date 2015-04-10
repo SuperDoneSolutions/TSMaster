@@ -313,6 +313,19 @@ namespace TotalSquashNext.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult CheckIn(int bookingId)
+        {
+            Booking booking = new Booking();
+            booking.checkedIn = true;
+            db.Entry(booking).State = EntityState.Modified;
+            db.SaveChanges();
+            TempData["message"] = "Successfully checked in to your court booking!";
+            return RedirectToAction("LandingPagge","Login");
+            
+            
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

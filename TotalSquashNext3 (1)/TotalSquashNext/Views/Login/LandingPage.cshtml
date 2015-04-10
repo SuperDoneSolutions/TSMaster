@@ -235,7 +235,8 @@
                                     <tr>
                                         <th>Court</th>
                                         <th>Date & Time</th>
-                                        <th class="td-actions"></th>
+                                        <th>Cancel Booking</th>
+                                        <th>Check In</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -247,6 +248,11 @@
                                                 <i class="btn-icon-only icon-remove"></i>
                                             </a>
                                         </td>
+                                        <td class="td-actions">
+                                            <a href="@Url.Action("CheckIn","Booking",new {id=(((TotalSquashNext.Models.Booking)Session["userBookingsOne"]).bookingNumber)})" class="btn btn-small btn-danger">
+                                                <i class="btn-icon-only icon-check"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>@(((TotalSquashNext.Models.Booking)Session["userBookingsTwo"]).courtId)</td>
@@ -254,6 +260,11 @@
                                         <td class="td-actions">
                                             <a href="@Url.Action("Delete","Booking",new {id=(((TotalSquashNext.Models.Booking)Session["userBookingsTwo"]).bookingNumber)})" class="btn btn-small btn-danger">
                                                 <i class="btn-icon-only icon-remove"></i>
+                                            </a>
+                                        </td>
+                                        <td class="td-actions">
+                                            <a href="@Url.Action("CheckIn","Booking",new {id=(((TotalSquashNext.Models.Booking)Session["userBookingsOne"]).bookingNumber)})" class="btn btn-small btn-danger">
+                                                <i class="btn-icon-only icon-check"></i>
                                             </a>
                                         </td>
                                     </tr>
