@@ -1,15 +1,16 @@
 ﻿@model TotalSquashNext.Models.Booking
 
 @{
-    Layout = null;
+    ViewBag.Title = "Edit Booking";
 }
 
+<h2>@ViewBag.Title</h2>
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
+    <title>@ViewBag.Title</title>
 </head>
 <body>
     @using (Html.BeginForm())
