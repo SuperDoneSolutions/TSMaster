@@ -52,6 +52,10 @@ namespace TotalSquashNext.Controllers
             }
             return View(booking);
         }
+        public ActionResult AlternateCourt()
+        {
+            return View();
+        }
 
         // GET: Booking/Create
         public ActionResult Create()
@@ -170,7 +174,7 @@ namespace TotalSquashNext.Controllers
                     {
                         TempData["message"] = "Sorry that court is taken at that time. Do any of these work?";
                         ViewBag.alternateCourts = new SelectList(availCourts);
-                        return RedirectToAction("AlternateCourts", "Booking");
+                        return RedirectToAction("AlternateCourt", "Booking");
                     }
                     else
                     {
