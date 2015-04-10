@@ -11,14 +11,10 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class TournamentRule
     {
-        [Display(Name = "Tournament Rules")]
         public int tournamentRuleId { get; set; }
-
-        [Display(Name = "Placeholder")]
         public string placeholder { get; set; }
     }
 }

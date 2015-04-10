@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model '\\Fs04d\stu6\Home\Wwiltshire-cc\GitHub\TSMaster\TotalSquashNext3 (1)\TotalSquashNext\Models\TotalSquashSQLModels.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Kirsti\Desktop\TSMaster\TotalSquashNext3 (1)\TotalSquashNext\Models\TotalSquashSQLModels.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
