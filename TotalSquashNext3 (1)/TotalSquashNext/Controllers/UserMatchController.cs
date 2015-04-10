@@ -166,8 +166,8 @@ namespace TotalSquashNext.Controllers
                 return RedirectToAction("VerifyLogin");
             }
             int userScore = (int)(db.UserMatches.Where(x=>x.gameId==gameId).Where(x=>x.userId==userId).Select(x=>x.score).Single());
-            
-            if (userScore>0)
+
+            if (userScore > 0 && (((TotalSquashNext.Models.User)Session["currentUser"]).accountId)!=1)
             {
                 TempData["message"] = "Scores cannot be edited. Please contact an administrator for assistance.";
                 return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });

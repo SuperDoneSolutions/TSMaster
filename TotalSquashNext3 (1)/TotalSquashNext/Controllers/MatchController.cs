@@ -76,6 +76,7 @@ namespace TotalSquashNext.Controllers
 
             //User To Challenge
             TotalSquashNext.Models.User user = db.Users.Find(id);
+            
             ViewBag.userToChallenge = user.username;
             Session["userToChallenge"] = user;
 
