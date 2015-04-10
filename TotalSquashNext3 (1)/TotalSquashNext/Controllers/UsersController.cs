@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
+//This controller controls user profiles.  Users can create and edit their profiles while administrators can create/edit/delete profiles.  SuperDoneSolutions 2015
 
 namespace TotalSquashNext.Controllers
 {

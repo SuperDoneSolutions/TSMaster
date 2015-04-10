@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+//This controller was automatically generated.  SuperDoneSolutions 2015
+
 namespace TotalSquashNext.Controllers
 {
     public class HomeController : Controller

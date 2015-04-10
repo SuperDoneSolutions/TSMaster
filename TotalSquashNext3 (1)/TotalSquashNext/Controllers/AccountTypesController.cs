@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
+//This controller defines which account type can access specific parts of the system. SuperDoneSolutions 2015
+
+
 namespace TotalSquashNext.Controllers
 {
     public class AccountTypesController : Controller

@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
+//Connects matches to specific bookings. Administrator has full create/edit/delete access.  SuperDoneSolutions 2015
+
 namespace TotalSquashNext.Controllers
 {
     public class MatchController : Controller
