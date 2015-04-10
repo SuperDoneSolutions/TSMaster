@@ -249,15 +249,7 @@ namespace TotalSquashNext.Controllers
                 db.Entry(user).State = EntityState.Modified;
                 db.Entry(user2).State = EntityState.Modified;
                 db.SaveChanges();
-                //var currentUser = (from x in db.Users
-                //                   where x.id == cUser
-                //                   select x).ToList();
-
-                //User selectedUser = currentUser[0];
-                //Session["currentUser"] = selectedUser;
-                //((TotalSquashNext.Models.User)Session["currentUser"]).wins = ((TotalSquashNext.Models.User)Session["currentUser"]).wins;
-                //((TotalSquashNext.Models.User)Session["currentUser"]).losses = ((TotalSquashNext.Models.User)Session["currentUser"]).losses;
-                //((TotalSquashNext.Models.User)Session["currentUser"]).ties = ((TotalSquashNext.Models.User)Session["currentUser"]).ties;
+                
                 return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });
             }
             //tie

@@ -87,12 +87,13 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin","Login");
             }
+            int currentUser = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
             var amountOfLadders = (from x in db.LadderRules
                                   select x.numLadders).Single();
-            var usersLadders = from x in db.UserLadders
-                               where x.userId == userLadder.userId
-                               select x;
-            if(usersLadders.Count()>=amountOfLadders)
+            var usersLadders = (from x in db.UserLadders
+                               where x.userId == currentUser
+                               select x).Count();
+            if(usersLadders>=amountOfLadders)
             {
                 TempData["message"] = "Current rules allow you to be registered on " + amountOfLadders + " ladders at a given time.";
                 return RedirectToAction("Index", "Ladder");
@@ -159,7 +160,7 @@ namespace TotalSquashNext.Controllers
         }
 
         // GET: UserLadder/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, int? ladderId)
         {
             if (Session["currentUser"] == null)
             {
@@ -170,7 +171,7 @@ namespace TotalSquashNext.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserLadder userLadder = db.UserLadders.Find(id);
+            var userLadder = db.UserLadders.Where(x => x.userId == id).Where(x=>x.ladderId==ladderId).Single();
             if (userLadder == null)
             {
                 return HttpNotFound();
@@ -181,7 +182,7 @@ namespace TotalSquashNext.Controllers
         // POST: UserLadder/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, int ladderId)
         {
             if (Session["currentUser"] == null)
             {
@@ -189,8 +190,11 @@ namespace TotalSquashNext.Controllers
                 return RedirectToAction("VerifyLogin", "Login");
             }
 
-            UserLadder userLadder = db.UserLadders.Find(id);
-            db.UserLadders.Remove(userLadder);
+            var userLadder = db.UserLadders.Where(x => x.userId == id).Where(x => x.ladderId == ladderId).Single();
+
+                db.UserLadders.Remove(userLadder);
+
+            
             db.SaveChanges();
             return RedirectToAction("Index");
         }

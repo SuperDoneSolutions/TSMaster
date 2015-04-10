@@ -105,6 +105,16 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
+            var bookingMatchAlreadyExists = (from x in db.Matches
+                                            where x.bookingNumber == match.bookingNumber
+                                            select x).Count();
+            if(bookingMatchAlreadyExists>0)
+            {
+                TempData["message"] = "You can only have one match per booking, and you already have a match set for this booking.";
+                return RedirectToAction("Index", "Ladder");
+            }
+
+
             if (ModelState.IsValid)
             {
                 db.Matches.Add(match);

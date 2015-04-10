@@ -23,7 +23,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.position)
@@ -37,6 +38,13 @@
         <td>
             <a href="mailto:" +item.user.email>Contact</a>
         </td>
+@{if ((((TotalSquashNext.Models.User)Session["currentUser"]).id == item.userId))
+{
+    <td>
+        @Html.ActionLink("Remove From Ladder", "Delete", new { id = item.userId, ladderId=item.ladderId })
+    </td>
+}
+}
     </tr>
 }
 
