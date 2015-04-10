@@ -125,22 +125,42 @@ namespace TotalSquashNext.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string tempPass = user.password;
-                    string encryptedPass = ep.Encrypt(tempPass);
+                    int emailCheck = (from x in db.Users
+                                      where x.emailAddress == user.emailAddress
+                                      select x.emailAddress).Count();
 
-                    user.password = encryptedPass;
-                    if (user.accountId == 1)
+                    int usernameCheck = (from x in db.Users
+                                         where x.username == user.username
+                                         select x.username).Count();
+
+                    if (emailCheck > 0)
                     {
-                        user.locked = true;
+                        TempData["Message"] = "Sorry, an account with that email already exists...";
                     }
-                    if (Session["photoUpload"] != null)
+                    if (usernameCheck > 0)
                     {
-                        user.photo = Session["photoUpload"].ToString();
+                        TempData["Message"] = "Sorry, you need to pick a different Username...";
+                       
                     }
-                    user.strike = 0;
-                    db.Users.Add(user);
-                    db.SaveChanges();
-                    return RedirectToAction("VerifyLogin", "Login");
+                    else
+                    {
+                        string tempPass = user.password;
+                        string encryptedPass = ep.Encrypt(tempPass);
+
+                        user.password = encryptedPass;
+                        if (user.accountId == 1)
+                        {
+                            user.locked = true;
+                        }
+                        if (Session["photoUpload"] != null)
+                        {
+                            user.photo = Session["photoUpload"].ToString();
+                        }
+                        user.strike = 0;
+                        db.Users.Add(user);
+                        db.SaveChanges();
+                        return RedirectToAction("VerifyLogin", "Login");
+                    }
                 }
             }
 
