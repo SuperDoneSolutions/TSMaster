@@ -8,8 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
-//This controller shows the match that relates to the booking.  SuperDoneSolutions 2015
-
 namespace TotalSquashNext.Controllers
 {
     public class MatchController : Controller

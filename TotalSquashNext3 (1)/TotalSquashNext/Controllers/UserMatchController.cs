@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
-//This controller controls scores and matches.  Users can create/edit/delete matches and can post create/delete scores but only administrators can edit scores. SuperDoneSolutions 2015
+
 
 namespace TotalSquashNext.Controllers
 {
