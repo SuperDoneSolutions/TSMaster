@@ -85,32 +85,22 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
-            //const int NUMBER = 9;
+            
             const int RULES = 1;
-            //DateTime NODATE = new DateTime(2011, 6, 10, 15, 24, 16);
+            
 
             if (ModelState.IsValid)
             {
                 int userQuery = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
                 booking.userId = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
                 booking.bookingDate = DateTime.Now;
-                //var dateHolder = NUMBER;
+                
                 booking.bookingRulesId = RULES;
                 
-
-
-                //if ((DateTime)Session["datePicked"] != NODATE)
-                //{
-                //    dateHolder = (from x in db.Bookings
-                //                  where x.date == (DateTime)Session["datePicked"]
-                //                  select x.date).Count();
-                //}
-                //else
-                //{
                 var dateHolder = (from x in db.Bookings
                               where x.date == booking.date
                               select x.date).Count();
-                //}
+                
 
                 var dateRules = (from x in db.BookingRules
                                  where x.bookingRuleId == RULES
@@ -137,7 +127,8 @@ namespace TotalSquashNext.Controllers
                 DateTime currentDate = DateTime.Now;
                 DateTime datePicked = booking.date;
                 DateTime checkDayRule = currentDate.AddDays((double)dateRules);
-
+                Session["datePicked"] = datePicked;
+                
 
 
                 if (dateHolder == 0)
@@ -173,7 +164,7 @@ namespace TotalSquashNext.Controllers
                 {
                     var availCourts = (from x in db.Bookings
                                        where x.courtId != booking.courtId && x.date == null
-                                       select x.date).ToList();
+                                       select x.courtId).ToList();
 
                     if (availCourts != null)
                     {
