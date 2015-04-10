@@ -107,11 +107,21 @@ namespace TotalSquashNext.Controllers
 
 
             userLadder.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
-            if (ModelState.IsValid)
+
+            try
             {
-                db.UserLadders.Add(userLadder);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.UserLadders.Add(userLadder);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
             }
 
             ViewBag.ladderId = new SelectList(db.Ladders, "ladderId", "ladderDescription", userLadder.ladderId);
@@ -153,12 +163,22 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(userLadder).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(userLadder).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
+
             ViewBag.ladderId = new SelectList(db.Ladders, "ladderId", "ladderDescription", userLadder.ladderId);
             ViewBag.userId = new SelectList(db.Users, "id", "username", userLadder.userId);
             return View(userLadder);

@@ -184,15 +184,24 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
-            
-            if (ModelState.IsValid)
+            try
             {
-                
-                db.Entry(userMatch).State = EntityState.Modified;
-                db.SaveChanges();
-                CalculateWinners(userMatch.gameId);
-                return RedirectToAction("Index",new { id =  ((TotalSquashNext.Models.User)Session["currentUser"]).id});
+                if (ModelState.IsValid)
+                {
+
+                    db.Entry(userMatch).State = EntityState.Modified;
+                    db.SaveChanges();
+                    CalculateWinners(userMatch.gameId);
+                    return RedirectToAction("Index", new { id = ((TotalSquashNext.Models.User)Session["currentUser"]).id });
+                }
             }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
+
             ViewBag.user = db.Users.Find(userMatch.userId).username;
             return View();
         }
@@ -334,12 +343,21 @@ namespace TotalSquashNext.Controllers
                 return RedirectToAction("VerifyLogin", "Login");
             }
 
-            if (ModelState.IsValid)
-            {
-                db.UserMatches.Add(userMatch);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                        try
+                        {
+                            if (ModelState.IsValid)
+                            {
+                                db.UserMatches.Add(userMatch);
+                                db.SaveChanges();
+                                return RedirectToAction("Index");
+                            }
+                        }
+
+                        catch
+                        {
+                            TempData["Message"] = "ERROR - Please try again";
+                            return View();
+                        }
 
             ViewBag.gameId = new SelectList(db.Matches, "matchId", "matchId", userMatch.gameId);
             ViewBag.userId = new SelectList(db.Users, "id", "username", userMatch.userId);
@@ -390,12 +408,23 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+
+            try
             {
-                db.Entry(userMatch).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(userMatch).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
+
             ViewBag.gameId = new SelectList(db.Matches, "matchId", "matchId", userMatch.gameId);
             ViewBag.userId = new SelectList(db.Users, "id", "username", userMatch.userId);
             return View(userMatch);

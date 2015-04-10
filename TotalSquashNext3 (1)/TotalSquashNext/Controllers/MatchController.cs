@@ -114,20 +114,26 @@ namespace TotalSquashNext.Controllers
                 return RedirectToAction("Index", "Ladder");
             }
 
-
-            if (ModelState.IsValid)
+            try
             {
-                db.Matches.Add(match);
-                db.SaveChanges();
-                return RedirectToAction("CreateFromChallenge", "UserMatch", new { gameId = match.matchId });
+                if (ModelState.IsValid)
+                {
+                    db.Matches.Add(match);
+                    db.SaveChanges();
+                    return RedirectToAction("CreateFromChallenge", "UserMatch", new { gameId = match.matchId });
+                }
+            }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
             }
             //Current User
             ViewBag.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).username;
             int currentUserId = ViewBag.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
 
             //User To Challenge
-
-            //ViewBag.userToChallenge = user.username;
 
             //Current Users Bookings to connect to match.
             IQueryable<TotalSquashNext.Models.Booking> usersBookings = from x in db.Bookings
@@ -163,11 +169,20 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
-            if (ModelState.IsValid)
+            try
             {
-                db.Matches.Add(match);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Matches.Add(match);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
             }
 
             ViewBag.bookingNumber = new SelectList(db.Bookings, "bookingNumber", "bookingNumber", match.bookingNumber);
@@ -217,12 +232,22 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(match).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(match).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
+
             ViewBag.bookingNumber = new SelectList(db.Bookings, "bookingNumber", "bookingNumber", match.bookingNumber);
             return View(match);
         }

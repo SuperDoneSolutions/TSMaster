@@ -18,6 +18,7 @@ namespace TotalSquashNext.Controllers
     {
         private PrimarySquashDBContext db = new PrimarySquashDBContext();
 
+        #region encrypt
         public class SimplerAES
         {
             private static byte[] key = { 123, 217, 19, 11, 24, 26, 85, 45, 114, 184, 27, 162, 37, 112, 222, 209, 241, 24, 175, 144, 173, 53, 196, 29, 24, 26, 17, 218, 131, 236, 53, 209 };
@@ -52,7 +53,7 @@ namespace TotalSquashNext.Controllers
                 return stream.ToArray();
             }
         }
-
+        #endregion
 
         // GET: Users
         //Returns a list of users.
@@ -119,34 +120,33 @@ namespace TotalSquashNext.Controllers
         {
             SimplerAES ep = new SimplerAES();
 
-            if (ModelState.IsValid)
+            try
             {
-                string tempPass = user.password;
-                string encryptedPass = ep.Encrypt(tempPass);
-
-                user.password = encryptedPass;
-                if(user.accountId==1)
+                if (ModelState.IsValid)
                 {
-                    user.locked=true;
-                    //string command = "mailto:superdonesolutions@gmail.com?subject=Administrator Request";
-                    //ProcessInfo.Start(command);
+                    string tempPass = user.password;
+                    string encryptedPass = ep.Encrypt(tempPass);
 
-                    //System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
-                    //message.To.Add("superdonesolutions@gmail.com");
-                    //message.Subject = "Locked Administrator";
-                    //message.From = new System.Net.Mail.MailAddress("From@online.microsoft.com");
-                    //message.Body = "An administrator account has been requested. Please go to admin tools and verify to unlock.";
-                    //System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("yoursmtphost");
-                    //smtp.Send(message);
+                    user.password = encryptedPass;
+                    if (user.accountId == 1)
+                    {
+                        user.locked = true;
+                    }
+                    if (Session["photoUpload"] != null)
+                    {
+                        user.photo = Session["photoUpload"].ToString();
+                    }
+                    user.strike = 0;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("VerifyLogin", "Login");
                 }
-                if (Session["photoUpload"] != null)
-                {
-                    user.photo = Session["photoUpload"].ToString();
-                }
-                user.strike = 0;
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("VerifyLogin", "Login");
+            }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
             }
 
             ViewBag.accountId = new SelectList(db.AccountTypes, "accountId", "description", user.accountId);

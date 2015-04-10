@@ -90,11 +90,21 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+
+            try
             {
-                db.Provinces.Add(province);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Provinces.Add(province);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
             }
 
             ViewBag.countryId = new SelectList(db.Countries, "countryId", "countryName", province.countryId);
@@ -144,12 +154,22 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(province).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(province).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
+
             ViewBag.countryId = new SelectList(db.Countries, "countryId", "countryName", province.countryId);
             return View(province);
         }
