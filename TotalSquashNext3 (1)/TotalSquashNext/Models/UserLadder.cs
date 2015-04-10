@@ -11,11 +11,17 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class UserLadder
     {
+        [Display(Name = "Position")]
         public int position { get; set; }
+
+        [Display(Name = "User ID")]
         public int userId { get; set; }
+
+        [Display(Name = "Ladder ID")]
         public int ladderId { get; set; }
     
         public virtual Ladder Ladder { get; set; }
