@@ -5,22 +5,78 @@
 }
 
 <body>
- 
+
     <h2>@ViewBag.Title</h2>
 
+    @*@using CloudinaryDotNet;
+    <div class="form-group">
+        <form action="" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()*@
 
-    @*@using (Html.BeginForm())*@
+            @*<div id="displayImage">
+                    @{
+
+                        if (IsPost)
+                        {
+                            try
+                            {
+                                WebImage image = WebImage.GetImageFromRequest();
+                                if (image != null)
+                                {
+                                    String sImagePath = Request.PhysicalApplicationPath + "App_Data/" + Path.GetFileName(image.FileName);
+                                    image.Resize(width: 320, height: 320, preserveAspectRatio: true, preventEnlarge: true);
+
+
+                                    image.Save(sImagePath);
+
+                                    // now we will add it to cloudinary
+                                    Cloudinary cloudinary = new Cloudinary("cloudinary://347569431798466:H0Y5lsH8s9kgsklpVyOQtdA-0MY@dmxlkkyrk");
+                                    CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
+                                    {
+                                        File = new CloudinaryDotNet.Actions.FileDescription(sImagePath)
+                                    };
+
+                                    CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+                                    string url = cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));
+                                    Session["photoEdit"] = url;
+                                    File.Delete(sImagePath);
+                                    <img src="@url" alt="User Uploaded Image" title="User Uploaded Image" />
+
+
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                <p>Error @e.Message</p>
+                            }
+                        }
+                    }
+                </div>*@
+        @*</form>
+    </div>*@
+
+
+
+
+
     <form method="post" enctype="multipart/form-data">
         @{
             @Html.AntiForgeryToken()
 
-
+            <fieldset>
+                <p>
+                    <label for="fileToUpload">Pick a Profile Image</label><br />
+                    <input type="file" name="fileToUpload" />
+                </p>
+                <input type="submit" value="Upload" />
+            </fieldset>
 
             <div class="form-inline">
 
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.id)
+                @*<input type="hidden" name="url" value="@Session["photoEdit"]"/>*@
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -44,61 +100,6 @@
                         @Html.ValidationMessageFor(model => model.skillId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-                @using CloudinaryDotNet;
-                <div class="form-group">
-                    <form action="" method="post" enctype="multipart/form-data">
-
-                        <fieldset>
-                            <p>
-                                <label for="fileToUpload">Pick a Profile Image</label><br />
-                                <input type="file" name="fileToUpload" />
-                            </p>
-                            <input type="submit" value="Upload" />
-                        </fieldset>
-                        <div id="displayImage">
-                            @{
-
-                                if (IsPost)
-                                {
-                                    try
-                                    {
-                                        WebImage image = WebImage.GetImageFromRequest();
-                                        if (image != null)
-                                        {
-                                            String sImagePath = Request.PhysicalApplicationPath + "App_Data/" + Path.GetFileName(image.FileName);
-                                            image.Resize(width: 320, height: 320, preserveAspectRatio: true, preventEnlarge: true);
-
-
-                                            image.Save(sImagePath);
-
-                                            // now we will add it to cloudinary
-                                            Cloudinary cloudinary = new Cloudinary("cloudinary://347569431798466:H0Y5lsH8s9kgsklpVyOQtdA-0MY@dmxlkkyrk");
-                                            CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
-                                            {
-                                                File = new CloudinaryDotNet.Actions.FileDescription(sImagePath)
-                                            };
-
-                                            CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
-                                            string url = cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));
-                                            Session["photoEdit"] = url;
-                                            File.Delete(sImagePath);
-                                            <img src="@url" alt="User Uploaded Image" title="User Uploaded Image" />
-
-
-                                        }
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        <p>Error @e.Message</p>
-                                    }
-                                }
-                            }
-                        </div>
-                    </form>
-                </div>
-
-
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.firstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -201,23 +202,23 @@
                     </div>
                 }
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.organizationId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("organizationId", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.organizationId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.organizationId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("organizationId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.organizationId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                }
-            </form>
-            <div>
-                @Html.ActionLink("Back to List", "Index")
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
-        </body>
+        }
+    </form>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudinaryDotNet;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -8,6 +9,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using TotalSquashNext.Models;
 
@@ -222,27 +224,44 @@ namespace TotalSquashNext.Controllers
 
             if (ModelState.IsValid)
             {
-                if (Session["photoEdit"] != null)
-                {
-                    user.photo = Session["photoEdit"].ToString();
-                }
-                else
-                {
-                    user.photo = (((TotalSquashNext.Models.User)Session["currentUser"]).photo);
-                }
-                //if (Session["photoUpload"] == null)
-                //{
-                //    user.photo = (((TotalSquashNext.Models.User)Session["currentUser"]).photo);
-                //}
-                //else
-                //{
-                //    user.photo = Session["photoUpload"].ToString();
-                //}
 
-                //user.wins = (((TotalSquashNext.Models.User)Session["currentUser"]).wins);
-                //user.losses = (((TotalSquashNext.Models.User)Session["currentUser"]).losses);
-                //user.ties = (((TotalSquashNext.Models.User)Session["currentUser"]).ties);
-                //user.emailAddress = (((TotalSquashNext.Models.User)Session["currentUser"]).emailAddress);
+
+                try
+                        {
+                            WebImage image = WebImage.GetImageFromRequest();
+                            if (image != null)
+                            {
+                                String sImagePath = Request.PhysicalApplicationPath + "App_Data/" + Path.GetFileName(image.FileName);
+                                image.Resize(width: 320, height: 320, preserveAspectRatio: true, preventEnlarge: true);
+
+
+                                image.Save(sImagePath);
+
+                                // now we will add it to cloudinary
+                                Cloudinary cloudinary = new Cloudinary("cloudinary://347569431798466:H0Y5lsH8s9kgsklpVyOQtdA-0MY@dmxlkkyrk");
+                                CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
+                                {
+                                    File = new CloudinaryDotNet.Actions.FileDescription(sImagePath)
+                                };
+
+                                CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+                                string url = cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));
+                                Session["photoEdit"] = url;
+                                System.IO.File.Delete(sImagePath);
+                                user.photo = url;
+
+
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            TempData["message"] = "TRY AGAIN!!!"; 
+                        }
+
+                user.wins = (((TotalSquashNext.Models.User)Session["currentUser"]).wins);
+                user.losses = (((TotalSquashNext.Models.User)Session["currentUser"]).losses);
+                user.ties = (((TotalSquashNext.Models.User)Session["currentUser"]).ties);
+                user.emailAddress = (((TotalSquashNext.Models.User)Session["currentUser"]).emailAddress);
                 user.password = (((TotalSquashNext.Models.User)Session["currentUser"]).password);
                 db.Entry(user).State = EntityState.Modified;
 
