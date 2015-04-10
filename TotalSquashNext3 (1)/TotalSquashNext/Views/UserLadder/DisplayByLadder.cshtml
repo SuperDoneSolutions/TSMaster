@@ -39,7 +39,7 @@
             @{if ((((TotalSquashNext.Models.User)Session["currentUser"]).id != item.userId))
               {
             <td>
-                <a href="mailto:" +item.user.email>Contact</a>
+                <a href="mailto:@item.User.emailAddress">Contact</a>
             </td>
             <td>
                 <a href="@Url.Action("Challenge","Match",new{id=item.userId})">Challenge</a>

@@ -43,6 +43,12 @@
       <HintPath>..\packages\CloudinaryDotNet.1.0.21\lib\net40\CloudinaryDotNet.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Postal">
+      <HintPath>..\packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -515,6 +521,8 @@
     <Content Include="Views\Match\Challenge.cshtml" />
     <Content Include="Views\Match\UsersMatches.cshtml" />
     <Content Include="Views\UserMatch\UpdateScores.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
