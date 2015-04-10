@@ -11,6 +11,7 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Building
     {
@@ -19,9 +20,11 @@ namespace TotalSquashNext.Models
             this.Bookings = new HashSet<Booking>();
             this.Courts = new HashSet<Court>();
         }
-    
+        [Display(Name = "Building")]
         public int buildingId { get; set; }
+        [Display(Name = "Address")]
         public string address { get; set; }
+        [Display(Name = "Organization")]
         public int organizationId { get; set; }
     
         public virtual ICollection<Booking> Bookings { get; set; }

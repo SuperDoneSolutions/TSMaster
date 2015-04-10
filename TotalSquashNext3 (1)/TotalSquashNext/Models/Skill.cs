@@ -11,6 +11,7 @@ namespace TotalSquashNext.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Skill
     {
@@ -18,8 +19,9 @@ namespace TotalSquashNext.Models
         {
             this.Users = new HashSet<User>();
         }
-    
+        [Display(Name = "Skill Id")]
         public int skillId { get; set; }
+        [Display(Name = "Skill Level Description")]
         public string description { get; set; }
     
         public virtual ICollection<User> Users { get; set; }
