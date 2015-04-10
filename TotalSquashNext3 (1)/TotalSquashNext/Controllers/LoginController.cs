@@ -127,7 +127,7 @@ namespace TotalSquashNext.Controllers
                                                        where x.emailAddress == tempEmailVerify
                                                        select x.photo).Single();
 
-                            if (Session["currentImage"] == null || Session["currentImage"] == "")
+                            if (Session["currentImage"] == null)
                             {
                                 Session["currentImage"] = "../../Images/anon.png";
                             }
