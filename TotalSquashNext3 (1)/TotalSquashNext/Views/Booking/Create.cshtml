@@ -2,15 +2,22 @@
 
 @{
     ViewBag.Title = "Create Booking";
+  Layout = null;
 }
 
-<h2>@ViewBag.Title</h2>
+
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Total Squash</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="layout" content="main" />
     <link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.css" />
     <script type="text/javascript" src="~/js/jquery/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="~/js/jquery/moment.js"></script>
@@ -20,125 +27,208 @@
     <script type="text/javascript" src="~/js/bootstrap/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script src="../../js/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
-    <title>@ViewBag.Title</title>
+    <link href="~/Content/customize-template.css" type="text/css" media="screen, projection" rel="stylesheet" />
+    <style>
+    </style>
 </head>
+
 <body>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+    
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a href="@Url.Action("LandingPage", "Login")" class=" brand"><img src="~/Images/TSheader02.png" style="padding-top: 10px;" /></a>
+                @*@Html.ActionLink("Total Squash", "LandingPage", "Login", null, new { @class = "brand" })*@
+                <ul class="nav pull-right">
+                    <li>
+                        @Html.ActionLink("Logout", "VerifyLogin", Session["currentUser"] == null)
+                    </li>
 
-        <div class="form-inline">
-            <h4>Booking</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <p>@TempData["message"]</p>
-            <div class="form-group">
-                @Html.LabelFor(model => model.buildingId, "buildingId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("buildingId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.buildingId, "", new { @class = "text-danger" })
-                </div>
+                </ul>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.courtId, "courtId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("courtId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.courtId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div id="body-container">
+        <div id="body-content">
+            <div class="body-nav body-nav-horizontal body-nav-fixed" style="padding-bottom:18px;">
+                <div class=" container">
+
+                    <br />
+                    <ul>
+                        <li>
+
+                            <a href="@Url.Action("Create","Booking", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-calendar icon-large"></i>
+                                <span>Book a Court</span>
+                            </a>
+                        </li>
+
+                        <li>
+
+                            <a href="@Url.Action("Edit","Users", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+
+                                <i class="icon-group icon-large"></i>
+                                <span>Edit Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index","Ladder", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-list-alt icon-large"></i>
+                                <span>Squash Ladder</span>
+                            </a>
+                        </li>
+                        <li>
+
+                            <a href="@Url.Action("Index","UserMatch", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                <i class="icon-bar-chart icon-large"></i>
+                                <span>Matches</span>
+                            </a>
+                        </li>
+
+                        <!--Shows link to administration only, for easy navigation to court booking rules, ladder rules, etc.-->
+                        @if ((((TotalSquashNext.Models.User)Session["currentUser"]).accountId == 1))
+                        {
+                            <li>
+
+                                <a href="@Url.Action("AdministrativeTools","Login", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
+                                    <i class="icon-cogs icon-large"></i>
+                                    <span>Administration</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
                 </div>
+
             </div>
+            <div class="container body-content">
+                <br />
+                <br />
+                <h2>@ViewBag.Title</h2>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.bookingCode, "bookingCode", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("bookingCode", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.bookingCode, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    <div class="form-inline">
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @{if (Session["datePicked"] != null)
-                    {
-                        ViewBag.datePicked = Session["datePicked"];
-                        Session["datePicked"] = "";
-                    }
-                      else
-                      {
-                          ViewBag.datePicked = "";
-                      }
-                    }
-
-                    <div class="container">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div id="datetimepicker12"></div>
-                                    </div>
-                                </div>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <p>@TempData["message"]</p>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.buildingId, "buildingId", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("buildingId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.buildingId, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <script type="text/javascript">
-                            $(function () {
-                                $('#datetimepicker12').datetimepicker({
-                                    inline: true,
-                                    sideBySide: true,
-                                    format: 'm/d/Y H:i:00',
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.courtId, "courtId", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("courtId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.courtId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.bookingCode, "bookingCode", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("bookingCode", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.bookingCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @{if (Session["datePicked"] != null)
+                                {
+                                    ViewBag.datePicked = Session["datePicked"];
+                                    Session["datePicked"] = "";
+                                }
+                                else
+                                {
+                                    ViewBag.datePicked = "";
+                                }
+                                }
+
+                                <div class="container">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div id="datetimepicker12"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#datetimepicker12').datetimepicker({
+                                                inline: true,
+                                                sideBySide: true,
+                                                format: 'm/d/Y H:i:00',
 
 
-                                    onChangeDateTime: function (dp, $input) {
-                                        //alert($input.val())
-                                        var chosenDateTime = document.getElementById('date');
-                                        chosenDateTime.value = $input.val();
+                                                onChangeDateTime: function (dp, $input) {
+                                                    //alert($input.val())
+                                                    var chosenDateTime = document.getElementById('date');
+                                                    chosenDateTime.value = $input.val();
 
 
-                                    }
-                                });
-                            });
+                                                }
+                                            });
+                                        });
 
 
-                        </script>
+                                    </script>
 
-                    </div>                   
-                    
-                    @Html.TextBoxFor(model => model.date, new { @Value = ViewBag.datePicked })
-                    @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                                </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                                @Html.TextBoxFor(model => model.date, new { @Value = ViewBag.datePicked })
+                                @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Book" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
                 </div>
             </div>
         </div>
-    }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+    <footer class="application-footer">
+        <div class="container">
+            <p>Total Squash</p>
+            <div class="disclaimer">
+                <a style="color:#dfdfdf;" href="mailto:superdonesolutions@gmail.com">Contact Us</a>
+                <p>Copyright © Super Done Solutions 2015</p>
+            </div>
+        </div>
+    </footer>
 
-
-    <script src="../../js/bootstrap/bootstrap-transition.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-alert.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-modal.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-dropdown.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-scrollspy.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-tab.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-tooltip.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-popover.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-button.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-collapse.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-carousel.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-typeahead.js" type="text/javascript"></script>
-    <script src="../../js/bootstrap/bootstrap-affix.js" type="text/javascript"></script>
-    <script src="../../js/jquery/jquery-tablesorter.js" type="text/javascript"></script>
-    <script src="../../js/jquery/jquery-chosen.js" type="text/javascript"></script>
-    <script src="../../js/jquery/virtual-tour.js" type="text/javascript"></script>
-    <script src="~/js/bootstrap/bootstrap-datepicker.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" /> >
-    <script src="~/js/jquery/jquery.js"></script>
-    <script src="~/js/jquery/jquery.datetimepicker.js"></script>
+                <script src="../../js/bootstrap/bootstrap-transition.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-alert.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-modal.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-dropdown.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-scrollspy.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-tab.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-tooltip.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-popover.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-button.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-collapse.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-carousel.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-typeahead.js" type="text/javascript"></script>
+                <script src="../../js/bootstrap/bootstrap-affix.js" type="text/javascript"></script>
+                <script src="../../js/jquery/jquery-tablesorter.js" type="text/javascript"></script>
+                <script src="../../js/jquery/jquery-chosen.js" type="text/javascript"></script>
+                <script src="../../js/jquery/virtual-tour.js" type="text/javascript"></script>
+                <script src="~/js/bootstrap/bootstrap-datepicker.js" type="text/javascript"></script>
+                <link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" />
+                <script src="~/js/jquery/jquery.js"></script>
+                <script src="~/js/jquery/jquery.datetimepicker.js"></script>
 </body>
-</html>
+            </html>

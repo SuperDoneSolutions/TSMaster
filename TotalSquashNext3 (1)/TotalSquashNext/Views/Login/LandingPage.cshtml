@@ -36,7 +36,7 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a href="~/Views/Login/LandingPage.cshtml" class="brand"><img src="~/Images/TSheader02.png" style="padding-top: 10px;" /></a>
+                <a href="@Url.Action("LandingPage","Login")" class="brand"><img src="~/Images/TSheader02.png" style="padding-top: 10px;" /></a>
                 @*@Html.ActionLink("Total Squash", "LandingPage", "Login", null, new { @class = "brand" })*@
                 <ul class="nav pull-right">
                     <li>
@@ -115,7 +115,7 @@
                     </div>
                 </div>
             </section>
-            <section class="page container">
+            <div class="container body-content">
 
                 <div class="span8">
                     <p>@TempData["message"]</p>
@@ -174,7 +174,7 @@
                                 <p>Pick a Date & Time</p>
 
                                 <tr>
-                                    @using (Html.BeginForm("BookACourt","BookACourt",FormMethod.Post))
+                                    @using (Html.BeginForm("BookACourt", "BookACourt", FormMethod.Post))
                                     {
 
                                         <td>
@@ -210,7 +210,7 @@
 
                                         </td>
                                         <td>
-                                           
+
                                             <input type="text" name="chosenDate" id="chosenDate" readonly="readonly" />
                                             <input type="submit" value="Check Date" class="btn-xs" style="margin-top:1em;" />
                                         </td>
@@ -285,8 +285,8 @@
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+                </section>
+            </div>
     </div>
     <footer class="application-footer">
         <div class="container">

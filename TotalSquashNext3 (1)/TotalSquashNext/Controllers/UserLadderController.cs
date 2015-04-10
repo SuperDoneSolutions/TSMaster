@@ -35,6 +35,11 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
             }
+
+            Session["ladderName"] = (from x in db.Ladders
+                                     where x.ladderId == ladderId
+                                     select x.ladderDescription).Single();
+
             Session["ladderId"] = ladderId;
             var users = db.UserLadders.Include(u => u.Ladder).Include(u => u.User).Where(x=>x.ladderId==ladderId).OrderByDescending(u=>u.User.wins).ThenBy(u=>u.User.losses);
             return View(users.ToList());
