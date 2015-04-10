@@ -35,6 +35,5 @@ C:\Users\Kirsti\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\bin\Debug\T
 C:\Users\Kirsti\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\bin\Debug\CloudinaryDotNet.dll
 C:\Users\Kirsti\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Kirsti\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Kirsti\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\obj\Debug\TSClassLibrary.csprojResolveAssemblyReference.cache
 C:\Users\Kirsti\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\obj\Debug\TSClassLibrary.dll
 C:\Users\Kirsti\Desktop\TSMaster\TotalSquashNext3 (1)\TSClassLibrary\obj\Debug\TSClassLibrary.pdb
