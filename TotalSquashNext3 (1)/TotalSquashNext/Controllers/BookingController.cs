@@ -52,8 +52,9 @@ namespace TotalSquashNext.Controllers
             }
             return View(booking);
         }
-        public ActionResult AlternateCourt()
+        public ActionResult AlternateCourt(List<Booking>alternateBookings)
         {
+            ViewBag.alternateBookings = new SelectList(alternateBookings);
             return View();
         }
 
@@ -166,50 +167,55 @@ namespace TotalSquashNext.Controllers
                 }
                 else
                 {
-                    var availCourts = (from x in db.Bookings
-                                       where x.courtId != booking.courtId && x.date == null
-                                       select x.courtId).ToList();
+                    //var availCourts = (from x in db.Bookings
+                    //                   where x.courtId != booking.courtId && x.date == null
+                    //                   select x.courtId).ToList();
 
-                    if (availCourts != null)
-                    {
-                        TempData["message"] = "Sorry that court is taken at that time. Do any of these work?";
-                        ViewBag.alternateCourts = new SelectList(availCourts);
-                        return RedirectToAction("AlternateCourt", "Booking");
-                    }
-                    else
-                    {
+                    //if (availCourts != null)
+                    //{
+                    //    TempData["message"] = "Sorry that court is taken at that time. Do any of these work?";
+                    //    ViewBag.alternateCourts = new SelectList(availCourts);
+                    //    return RedirectToAction("AlternateCourt", "Booking", new { alternateBookings =  ViewBag.availCourts });
+                    //}
+                    //else
+                    //{
 
-                        List<DateTime> alternateBooking = new List<DateTime>();
-                        do
-                        {
-                            var alternateDateHolder = (from x in db.Bookings
-                                                       where x.bookingDate == ((DateTime)Session["datePicked"] + bookingLength)
-                                                       select x.date).Single();
+                    //    List<DateTime> alternateBooking = new List<DateTime>();
+                    //    do
+                    //    {
+                    //        var alternateDateHolder = (from x in db.Bookings
+                    //                                   where x.bookingDate == ((DateTime)Session["datePicked"] + bookingLength)
+                    //                                   select x.date).Single();
 
-                            if (alternateDateHolder == null)
-                            {
-                                alternateBooking.Add(((DateTime)Session["datePicked"] + bookingLength));
-                            }
+                    //        if (alternateDateHolder == null)
+                    //        {
+                    //            alternateBooking.Add(((DateTime)Session["datePicked"] + bookingLength));
+                    //        }
 
-                        } while (alternateBooking.Count() != 3);
-                        do
-                        {
-                            var alternateDateHolder = (from x in db.Bookings
-                                                       where x.bookingDate == ((DateTime)Session["datePicked"] - bookingLength)
-                                                       select x.date).Single();
-                            if (alternateDateHolder == null)
-                            {
-                                alternateBooking.Add(((DateTime)Session["datePicked"] - bookingLength));
-                            }
-                        } while (alternateBooking.Count() != 6);
+                    //    } while (alternateBooking.Count() != 3);
+                    //    do
+                    //    {
+                    //        var alternateDateHolder = (from x in db.Bookings
+                    //                                   where x.bookingDate == ((DateTime)Session["datePicked"] - bookingLength)
+                    //                                   select x.date).Single();
+                    //        if (alternateDateHolder == null)
+                    //        {
+                    //            alternateBooking.Add(((DateTime)Session["datePicked"] - bookingLength));
+                    //        }
+                    //    } while (alternateBooking.Count() != 6);
 
-                        TempData["Message"] = "Sorry nothing is available at that time. Do any of these work?";
-                        ViewBag.alternateBookings = new SelectList(alternateBooking);
-                        return RedirectToAction("AlternateBookings", "Booking"); // <----- Should work and should have a list of times available earlier and later than the desired time if unavailable BUT how do we call this shit??
+                        TempData["Message"] = "Sorry friend, try another booking this one isn't available.";
+
+                        ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description", booking.bookingCode);
+                        ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
+                        ViewBag.buildingId = new SelectList(db.Buildings, "buildingId", "address");
+                        ViewBag.courtId = new SelectList(db.Courts, "courtId", "courtDescription", booking.courtId);
+                        //ViewBag.alternateBookings = new SelectList(alternateBooking);
+                        return View("Create");
                     }
                 }
 
-            }
+            
 
             ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description", booking.bookingCode);
             ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
