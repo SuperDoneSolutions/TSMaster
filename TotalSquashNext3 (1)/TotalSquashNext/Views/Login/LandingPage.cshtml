@@ -51,6 +51,7 @@
         <div id="body-content">
             <div class="body-nav body-nav-horizontal body-nav-fixed" style="padding-bottom:18px;">
                 <div class=" container">
+                @*<div id="app-nav-top-bar" class="nav-collapse">*@
 
                     <br />
                     <ul>
@@ -116,8 +117,9 @@
                 </div>
             </section>
         </div>
+        
         <div class="container body-content">
-
+            <div class="row">
             <div class="span8">
                 <p>@TempData["message"]</p>
                 <div>
@@ -129,6 +131,67 @@
                     </p>
                 </div>
             </div>
+            <div class="span8">
+                <div class="box">
+                    <div class="box-header">
+                        <i class="icon-book"></i>
+                        <h5>Book a Court</h5>
+                    </div>
+                    <div class="box-content">
+
+                        
+                        <p>Pick a Date & Time</p>
+
+                        
+                            @using (Html.BeginForm("BookACourt", "BookACourt", FormMethod.Post))
+                            {
+
+                                
+                                    <div class="container">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div style="display:block; margin:auto;"class="row">
+                                                    <div class="col-md-8">
+                                                        <div id="datetimepicker12"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $('#datetimepicker12').datetimepicker({
+                                                    inline: true,
+                                                    sideBySide: true,
+                                                    format: 'm/d/Y H:i:00',
+
+
+                                                    onChangeDateTime: function (dp, $input) {
+                                                        //alert($input.val())
+                                                        var chosenDateTime = document.getElementById('chosenDate');
+                                                        chosenDateTime.value = $input.val();
+                                                    }
+                                                });
+                                            });
+
+
+                                        </script>
+                                        </div>
+
+                                
+                                
+                                    <br />
+                                    <input type="text" name="chosenDate" id="chosenDate" readonly="readonly" style="height:20px;"/>
+                                    <input type="submit" value="Check Date" class="btn-mini" />
+                                
+                            }
+                        
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
             <div class="row">
                 <div class="span8">
                     <div class="box pattern pattern-sandstone">
@@ -159,67 +222,6 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-
-
-                <div class="span8">
-                    <div class="box">
-                        <div class="box-header">
-                            <i class="icon-book"></i>
-                            <h5>Book a Court</h5>
-                        </div>
-                        <div class="box-content">
-
-                            @*<form class="form-inline">*@
-                            <p>Pick a Date & Time</p>
-
-                            <tr>
-                                @using (Html.BeginForm("BookACourt", "BookACourt", FormMethod.Post))
-                                {
-
-                                    <td style="display:inline-block; margin:auto;">
-                                        <div class="container">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <div id="datetimepicker12"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    $('#datetimepicker12').datetimepicker({
-                                                        inline: true,
-                                                        sideBySide: true,
-                                                        format: 'm/d/Y H:i:00',
-
-
-                                                        onChangeDateTime: function (dp, $input) {
-                                                            //alert($input.val())
-                                                            var chosenDateTime = document.getElementById('chosenDate');
-                                                            chosenDateTime.value = $input.val();
-                                                        }
-                                                    });
-                                                });
-
-
-                                            </script>
-
-                                    </td>
-                                    <td style="display:inline-block;"align="center">
-                                        <br />
-                                        <input type="text" name="chosenDate" id="chosenDate" readonly="readonly" />          
-                                        <input type="submit" value="Check Date" class="btn-mini" style="margin-top:1em;" />
-                                    </td>
-                                }
-                            </tr>
-
-                        </div>
-
-                    </div>
                     </div>
                 </div>
                 <div class="span8">
@@ -275,6 +277,11 @@
                         </div>
                     </div>
                 </div>
+                </div>
+
+            <div class="row">
+                
+                
             </div>
 
             <div class="row">
