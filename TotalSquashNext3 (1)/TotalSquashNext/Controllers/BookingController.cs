@@ -52,11 +52,6 @@ namespace TotalSquashNext.Controllers
             }
             return View(booking);
         }
-        //public ActionResult AlternateCourt(List<Booking>alternateBookings)
-        //{
-        //    ViewBag.alternateBookings = new SelectList(alternateBookings);
-        //    return View();
-        //}
 
         // GET: Booking/Create
         public ActionResult Create()
@@ -92,129 +87,99 @@ namespace TotalSquashNext.Controllers
             }
             
             const int RULES = 1;
-            
 
-            if (ModelState.IsValid)
+            try
             {
-                int userQuery = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
-                booking.userId = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
-                booking.bookingDate = DateTime.Now;
-                
-                booking.bookingRulesId = RULES;
-                
-                var dateHolder = (from x in db.Bookings
-                              where x.date == booking.date
-                              select x.date).Count();
-                
-
-                var dateRules = (from x in db.BookingRules
-                                 where x.bookingRuleId == RULES
-                                 select x.daysInAdvance).Single();
-
-                var dayStart = (from x in db.BookingRules
-                                where x.bookingRuleId == RULES
-                                select x.dayStart).Single();
-
-                var numBookings = (from x in db.Bookings
-                                   where x.userId == userQuery
-                                   select x).Count();
-
-                var numBookAllowed = (from x in db.BookingRules
-                                      where x.bookingRuleId == 1
-                                      select x.numOfBookings).Single();
-
-                var timeSpanRule = (from x in db.BookingRules
-                                    where x.bookingRuleId == RULES
-                                    select x.bookingLength).Single();
-
-                TimeSpan bookingLength = new TimeSpan(0, timeSpanRule, 0);
-
-                DateTime currentDate = DateTime.Now;
-                DateTime datePicked = booking.date;
-                DateTime checkDayRule = currentDate.AddDays((double)dateRules);
-                Session["datePicked"] = datePicked;
-                
-
-
-                if (dateHolder == 0)
+                if (ModelState.IsValid)
                 {
-                    if (datePicked <= checkDayRule && datePicked.TimeOfDay >= dayStart && numBookings < numBookAllowed)
+
+                    int userQuery = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
+                    booking.userId = (((TotalSquashNext.Models.User)Session["currentUser"]).id);
+                    booking.bookingDate = DateTime.Now;
+
+                    booking.bookingRulesId = RULES;
+
+                    var dateHolder = (from x in db.Bookings
+                                      where x.date == booking.date
+                                      select x.date).Count();
+
+
+                    var dateRules = (from x in db.BookingRules
+                                     where x.bookingRuleId == RULES
+                                     select x.daysInAdvance).Single();
+
+                    var dayStart = (from x in db.BookingRules
+                                    where x.bookingRuleId == RULES
+                                    select x.dayStart).Single();
+
+                    var numBookings = (from x in db.Bookings
+                                       where x.userId == userQuery
+                                       select x).Count();
+
+                    var numBookAllowed = (from x in db.BookingRules
+                                          where x.bookingRuleId == 1
+                                          select x.numOfBookings).Single();
+
+                    var timeSpanRule = (from x in db.BookingRules
+                                        where x.bookingRuleId == RULES
+                                        select x.bookingLength).Single();
+
+                    TimeSpan bookingLength = new TimeSpan(0, timeSpanRule, 0);
+
+                    DateTime currentDate = DateTime.Now;
+                    DateTime datePicked = booking.date;
+                    DateTime checkDayRule = currentDate.AddDays((double)dateRules);
+                    Session["datePicked"] = datePicked;
+
+
+
+                    if (dateHolder == 0)
                     {
-                        
-                        db.Bookings.Add(booking);
-                        db.SaveChanges();
-                        TempData["message"] = "Your court has been booked.";
-                        return RedirectToAction("LandingPage", "Login");
+                        if (datePicked <= checkDayRule && datePicked.TimeOfDay >= dayStart && numBookings < numBookAllowed)
+                        {
+
+                            db.Bookings.Add(booking);
+                            db.SaveChanges();
+                            TempData["message"] = "Your court has been booked.";
+                            return RedirectToAction("LandingPage", "Login");
+                        }
+                        else
+                        {
+                            if (datePicked > checkDayRule)
+                            {
+                                TempData["message"] = "Sorry friend. You cannot book more than " + dateRules.ToString() + " days in advance!";
+                                return RedirectToAction("Create", "Booking");
+                            }
+                            else if (datePicked.TimeOfDay < dayStart)
+                            {
+                                TempData["message"] = "Sorry friend. You cannot book a court earlier than " + dayStart.ToString() + " am!";
+                                return RedirectToAction("Create", "Booking");
+                            }
+                            else if (numBookings >= numBookAllowed)
+                            {
+                                TempData["message"] = "Sorry friend. You cannot have more than " + numBookAllowed.ToString() + " bookings!";
+                                return RedirectToAction("Create", "Booking");
+                            }
+                        }
                     }
                     else
                     {
-                        if (datePicked > checkDayRule)
-                        {
-                            TempData["message"] = "Sorry friend. You cannot book more than " + dateRules.ToString() + " days in advance!";
-                            return RedirectToAction("Create", "Booking");
-                        }
-                        else if (datePicked.TimeOfDay < dayStart)
-                        {
-                            TempData["message"] = "Sorry friend. You cannot book a court earlier than " + dayStart.ToString() + " am!";
-                            return RedirectToAction("Create", "Booking");
-                        }
-                        else if (numBookings >= numBookAllowed)
-                        {
-                            TempData["message"] = "Sorry friend. You cannot have more than " + numBookAllowed.ToString() + " bookings!";
-                            return RedirectToAction("Create", "Booking");
-                        }
-                    }
-                }
-                else
-                {
-                    //var availCourts = (from x in db.Bookings
-                    //                   where x.courtId != booking.courtId && x.date == null
-                    //                   select x.courtId).ToList();
-
-                    //if (availCourts != null)
-                    //{
-                    //    TempData["message"] = "Sorry that court is taken at that time. Do any of these work?";
-                    //    ViewBag.alternateCourts = new SelectList(availCourts);
-                    //    return RedirectToAction("AlternateCourt", "Booking", new { alternateBookings =  ViewBag.availCourts });
-                    //}
-                    //else
-                    //{
-
-                    //    List<DateTime> alternateBooking = new List<DateTime>();
-                    //    do
-                    //    {
-                    //        var alternateDateHolder = (from x in db.Bookings
-                    //                                   where x.bookingDate == ((DateTime)Session["datePicked"] + bookingLength)
-                    //                                   select x.date).Single();
-
-                    //        if (alternateDateHolder == null)
-                    //        {
-                    //            alternateBooking.Add(((DateTime)Session["datePicked"] + bookingLength));
-                    //        }
-
-                    //    } while (alternateBooking.Count() != 3);
-                    //    do
-                    //    {
-                    //        var alternateDateHolder = (from x in db.Bookings
-                    //                                   where x.bookingDate == ((DateTime)Session["datePicked"] - bookingLength)
-                    //                                   select x.date).Single();
-                    //        if (alternateDateHolder == null)
-                    //        {
-                    //            alternateBooking.Add(((DateTime)Session["datePicked"] - bookingLength));
-                    //        }
-                    //    } while (alternateBooking.Count() != 6);
-
+                        
                         TempData["Message"] = "Sorry friend, try another booking this one isn't available.";
 
                         ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description", booking.bookingCode);
                         ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
                         ViewBag.buildingId = new SelectList(db.Buildings, "buildingId", "address");
                         ViewBag.courtId = new SelectList(db.Courts, "courtId", "courtDescription", booking.courtId);
-                        //ViewBag.alternateBookings = new SelectList(alternateBooking);
                         return View("Create");
                     }
                 }
-
+            }
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
             
 
             ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description", booking.bookingCode);
@@ -270,12 +235,21 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(booking).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(booking).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
+            
             ViewBag.bookingCode = new SelectList(db.BookingTypes, "bookingCode", "description", booking.bookingCode);
             ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
             ViewBag.bookingRulesId = new SelectList(db.BookingRules, "bookingRuleId", "bookingRuleId", booking.bookingRulesId);
