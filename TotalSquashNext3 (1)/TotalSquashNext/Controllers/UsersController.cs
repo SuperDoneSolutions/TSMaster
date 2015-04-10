@@ -279,7 +279,7 @@ namespace TotalSquashNext.Controllers
         }
 
         // POST: Users/Delete/5
-        //Deletes account, redirects to login page KT april 4
+        //Deletes account, redirects to Index of users. only admin can see the accounts so this is okay
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -287,7 +287,7 @@ namespace TotalSquashNext.Controllers
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("VerifyLogin", "Login");
+            return RedirectToAction("Index", "Users");
         }
 
         protected override void Dispose(bool disposing)
