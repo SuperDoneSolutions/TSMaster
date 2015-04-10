@@ -41,7 +41,7 @@
                 @*@Html.ActionLink("Total Squash", "LandingPage", "Login", null, new { @class = "brand" })*@
                 <ul class="nav pull-right">
                     <li>
-                        @Html.ActionLink("Logout", "VerifyLogin", Session["currentUser"] == null)
+                        <a class="brand" style="font-size:12px;" href="@Url.Action("VerifyLogin","Login")">Logout</a>
                     </li>
 
                 </ul>
