@@ -22,18 +22,6 @@ namespace TotalSquashNext.Controllers
             }
             Session["datePicked"] = chosenDate;
             ViewBag.datePicked = chosenDate;
-            //Booking model = new Booking();
-            //DateTime datePicked = Convert.ToDateTime(chosenDate);
-            //model.date = datePicked;
-
-            //var dateHolder = (from x in db.Bookings
-            //                  where x.bookingDate == datePicked
-            //                  select x.bookingNumber).Single();
-
-            //if(dateHolder == null)
-            //{
-            //    var bookingOptions
-            //}
 
             return RedirectToAction("Create", "Booking");
         }
