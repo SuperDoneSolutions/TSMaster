@@ -52,11 +52,11 @@ namespace TotalSquashNext.Controllers
             }
             return View(booking);
         }
-        public ActionResult AlternateCourt(List<Booking>alternateBookings)
-        {
-            ViewBag.alternateBookings = new SelectList(alternateBookings);
-            return View();
-        }
+        //public ActionResult AlternateCourt(List<Booking>alternateBookings)
+        //{
+        //    ViewBag.alternateBookings = new SelectList(alternateBookings);
+        //    return View();
+        //}
 
         // GET: Booking/Create
         public ActionResult Create()
@@ -321,12 +321,12 @@ namespace TotalSquashNext.Controllers
 
         public ActionResult CheckIn(int bookingId)
         {
-            Booking booking = new Booking();
+            Booking booking = db.Bookings.Find(bookingId);
             booking.checkedIn = true;
             db.Entry(booking).State = EntityState.Modified;
             db.SaveChanges();
             TempData["message"] = "Successfully checked in to your court booking!";
-            return RedirectToAction("LandingPagge","Login");
+            return RedirectToAction("LandingPage","Login");
             
             
         }
