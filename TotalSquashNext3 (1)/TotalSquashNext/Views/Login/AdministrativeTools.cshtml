@@ -2,7 +2,8 @@
     ViewBag.Title = "Administrative Tools";
 }
 
-<h2>Administrative Tools</h2>
+<h2>@ViewBag.Title</h2>
+
 <br />
 <div class="body-nav-vertical">
     <a href="@Url.Action("Index","Users", new { id = (((TotalSquashNext.Models.User)Session["currentUser"]).id) })">
