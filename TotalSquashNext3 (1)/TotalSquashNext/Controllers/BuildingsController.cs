@@ -90,13 +90,22 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+            try
             {
-                db.Buildings.Add(building);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Buildings.Add(building);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
 
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
+            
             ViewBag.organizationId = new SelectList(db.Organizations, "organizationId", "orgName", building.organizationId);
             return View(building);
         }
@@ -144,12 +153,22 @@ namespace TotalSquashNext.Controllers
                 TempData["message"] = "You must be an administrator to access this page.";
                 return RedirectToAction("VerifyLogin", "Login");
             }
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(building).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(building).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+
+            catch
+            {
+                TempData["Message"] = "ERROR - Please try again";
+                return View();
+            }
+            
             ViewBag.organizationId = new SelectList(db.Organizations, "organizationId", "orgName", building.organizationId);
             return View(building);
         }
