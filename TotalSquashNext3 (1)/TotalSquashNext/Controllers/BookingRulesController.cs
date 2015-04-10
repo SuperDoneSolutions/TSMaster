@@ -17,12 +17,32 @@ namespace TotalSquashNext.Controllers
         // GET: BookingRules
         public ActionResult Index()
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             return View(db.BookingRules.ToList());
         }
 
         // GET: BookingRules/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -38,6 +58,16 @@ namespace TotalSquashNext.Controllers
         // GET: BookingRules/Create
         public ActionResult Create()
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             return View();
         }
 
@@ -48,6 +78,16 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "bookingRuleId,organizationID,daysInAdvance,numOfBookings,numOfStrikes,dayStart,bookingLength")] BookingRule bookingRule)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (ModelState.IsValid)
             {
                 db.BookingRules.Add(bookingRule);
@@ -61,6 +101,16 @@ namespace TotalSquashNext.Controllers
         // GET: BookingRules/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,6 +130,16 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "bookingRuleId,organizationID,daysInAdvance,numOfBookings,numOfStrikes,dayStart,bookingLength")] BookingRule bookingRule)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(bookingRule).State = EntityState.Modified;
@@ -92,6 +152,16 @@ namespace TotalSquashNext.Controllers
         // GET: BookingRules/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -109,6 +179,16 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             BookingRule bookingRule = db.BookingRules.Find(id);
             db.BookingRules.Remove(bookingRule);
             db.SaveChanges();

@@ -17,12 +17,32 @@ namespace TotalSquashNext.Controllers
         // GET: Organizations
         public ActionResult Index()
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             return View(db.Organizations.ToList());
         }
 
         // GET: Organizations/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -38,6 +58,16 @@ namespace TotalSquashNext.Controllers
         // GET: Organizations/Create
         public ActionResult Create()
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             return View();
         }
 
@@ -48,6 +78,16 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "organizationId,orgName,orgAddress,orgCity,orgPhoneNumber")] Organization organization)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (ModelState.IsValid)
             {
                 db.Organizations.Add(organization);
@@ -61,6 +101,16 @@ namespace TotalSquashNext.Controllers
         // GET: Organizations/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,6 +130,16 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "organizationId,orgName,orgAddress,orgCity,orgPhoneNumber")] Organization organization)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(organization).State = EntityState.Modified;
@@ -92,6 +152,16 @@ namespace TotalSquashNext.Controllers
         // GET: Organizations/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -109,6 +179,16 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             Organization organization = db.Organizations.Find(id);
             db.Organizations.Remove(organization);
             db.SaveChanges();

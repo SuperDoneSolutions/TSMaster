@@ -18,12 +18,27 @@ namespace TotalSquashNext.Controllers
         //Displays ALL Matches. Probs best jsut for admin?
         public ActionResult Index()
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
            var matches = db.Matches.Include(m => m.Booking);
            return View(matches.ToList());
         }
         //Displays all matches for user - not including who they challenged. 
         public ActionResult UsersMatches(int id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             var matches = db.Matches.Include(m => m.Booking).Where(m=>m.Booking.userId==id);
             return View(matches.ToList());
         }
@@ -31,6 +46,11 @@ namespace TotalSquashNext.Controllers
         // GET: Match/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -45,6 +65,11 @@ namespace TotalSquashNext.Controllers
 
         public ActionResult Challenge(int id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             //Current User
             ViewBag.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).username;
             int currentUserId = ViewBag.userId = ((TotalSquashNext.Models.User)Session["currentUser"]).id;
@@ -75,6 +100,11 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Challenge([Bind(Include = "matchId,bookingNumber")] Match match)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             if (ModelState.IsValid)
             {
                 db.Matches.Add(match);
@@ -102,6 +132,11 @@ namespace TotalSquashNext.Controllers
         // GET: Match/Create
         public ActionResult Create()
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             ViewBag.bookingNumber = new SelectList(db.Bookings, "bookingNumber", "bookingNumber");
             return View();
         }
@@ -113,6 +148,11 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "matchId,bookingNumber")] Match match)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             if (ModelState.IsValid)
             {
                 db.Matches.Add(match);
@@ -127,6 +167,16 @@ namespace TotalSquashNext.Controllers
         // GET: Match/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -147,6 +197,16 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "matchId,bookingNumber")] Match match)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(match).State = EntityState.Modified;
@@ -160,6 +220,11 @@ namespace TotalSquashNext.Controllers
         // GET: Match/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -177,6 +242,12 @@ namespace TotalSquashNext.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["currentUser"] == null)
+            {
+                TempData["message"] = "Please login to continue.";
+                return RedirectToAction("VerifyLogin");
+            }
+
             Match match = db.Matches.Find(id);
             var userMatches = db.UserMatches.Where(x => x.gameId == id);
             foreach(var m in userMatches)

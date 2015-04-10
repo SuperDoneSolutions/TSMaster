@@ -152,7 +152,8 @@ namespace TotalSquashNext.Controllers
             }
             catch (Exception ex)
             {
-
+                TempData["message"] = "Incorrect email or password. Please try again.";
+                return View();
             }
 
             TempData["message"] = "Incorrect email or password. Please try again.";
@@ -225,6 +226,11 @@ namespace TotalSquashNext.Controllers
             {
                 TempData["message"] = "Please login to continue.";
                 return RedirectToAction("VerifyLogin");
+            }
+            if (((TotalSquashNext.Models.User)Session["currentUser"]).accountId != 1)
+            {
+                TempData["message"] = "You must be an administrator to access this page.";
+                return RedirectToAction("VerifyLogin", "Login");
             }
             return View();
         }
